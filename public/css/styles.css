@@ -1,0 +1,27 @@
+#sigesescont {
+    background: gray;
+    width: 700px;
+    height: 700px;
+    padding: 1px;
+    border: 2px rgb(248, 158, 94) solid;
+    position: relative;
+}
+
+main {
+    background-color: rgba(129, 129, 129, 0.432);
+    border: 10px solid rgba(129, 129, 129, 0.432);
+    border-radius: 10px;
+}
+.input {
+    padding: 5px;
+    background-color: aliceblue; 
+    border: 0.5px solid aliceblue!important; 
+}
+
+input:focus, input[type]:focus{
+    border: 0.5px solid orange!important;
+    box-shadow: 0 1px 1px rgba(255, 165, 0, 0.6)inset, 0 0 1px rgba(255, 166, 0, 0.6);
+    outline: 0 none;
+}
+
+
