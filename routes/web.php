@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\EstacionesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Estaciones;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +21,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('/estaciones', EstacionesController::class);
+//Route::post('/estaciones.create', [App\Http\Controllers\HomeController::class, 'store']);
