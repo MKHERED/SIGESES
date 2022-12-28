@@ -20,9 +20,10 @@
 <main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
     <h2 class="h1 m-4">Ingrese los siguientes datos</h2>
     <div class="form-center text-start">
-        @csrf
+       
         <form class="form" action="{{route('estaciones.create')}}" method='GET'>
-            <div class="row w-max">
+             @csrf
+             <div class="row w-max">
                 <div class="col-6">
                 <table class="table">
                         <tr>
