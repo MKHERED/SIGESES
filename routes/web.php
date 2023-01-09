@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Estaciones;
 use App\Http\Controllers\EstacionesController;
-
-use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
