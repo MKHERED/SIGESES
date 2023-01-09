@@ -1,7 +1,6 @@
-@extends('...layouts.app')
-
+@extends('layouts.app')
 @section('content')
 
-Holis
+<p>Contenido</p>
 
 @endsection

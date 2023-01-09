@@ -24,4 +24,12 @@ input:focus, input[type]:focus{
     outline: 0 none;
 }
 
+.form-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    padding: 5px;
+}
+
 
