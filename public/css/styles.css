@@ -32,4 +32,20 @@ input:focus, input[type]:focus{
     padding: 5px;
 }
 
+.update {
+    width: 100% !important;
+    height: 80vh !important;
+    background-color: rgb(255, 255, 255);
+}
+
+.update-d {
+    width: 100% !important;
+    height: 77vh !important;
+    background-color: rgb(255, 255, 255);
+    
+}
+
+.extension {
+    width: 100% !important;
+}
 

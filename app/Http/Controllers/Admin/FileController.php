@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Estaciones;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -13,9 +14,14 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
-        return view('estaciones.update');
+        $id = $_SERVER['REQUEST_URI'];
+        $id1 = str_replace("update", "", $id);
+        $id = str_replace("//", "", $id1);
+
+        return view('estaciones.update', compact("id"));
+
     }
 
     /**
@@ -36,17 +42,26 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $files = request()->except(['_token', '_method']); 
+        $id = $request->id;
         
-        $files = $request->file('file');
-        //$filesName = time(). '.'. $files->extension();
-        //return redirect()->route("estaciones.index")->with(["mensaje" => "Los documentos han sido guardados",]);
-        return response()->json($files);
+        $request->validate([
+             'file' => 'required'
+        ]);
+
+        $estaciones = Estaciones::findOrFail($id);
+        if ($estaciones) {
+             $request->file('file')->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
+             
+            }
+        
+        //crear un link a la base de datos
+        //crear una notificacion de exito al subir
+        return redirect()->route('estaciones.index');
     }
         
         
         
-        //return response()->json($files);
+        
     
 
     /**

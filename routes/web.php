@@ -24,8 +24,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/estaciones', EstacionesControlle::class)->parameters(["estaciones"=>"estacion"]);
-Route::get('/update', 'App\Http\Controllers\Admin\FileController@index')->name('update');
-Route::post('/update-store', [FileController::class, 'store'])->name('update.store');
+Route::get('/update/{id}', 'App\Http\Controllers\Admin\FileController@index')->name('update');
+Route::post('/update-store/', [FileController::class, 'store'])->name('update.store');
 
 // Route::resource('/fileupdate', FileController::class)->parameters(["estaciones"=>"estacion"]);
 
