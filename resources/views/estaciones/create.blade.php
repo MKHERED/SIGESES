@@ -55,18 +55,30 @@
                         </tr>
                         <tr>
                             <td>
+                                <label for="dec">¿Las coordenas son decimales?</label>
+                            </td>
+                            <td class="text-center">
+                                <label for="dec">Si: &nbsp;</label><input type="checkbox" name="dec" id="dec">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <label for="Longitud">Longitud</label>
                             </td>
-                            <td>
-                                <input type="number" class="form-control" id="Longitud" placeholder="Longitud de la estación" name="longitud" value="{{old('longitud')}}">
-                            </td>                    
+                            <td style="display: flex">
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="{{old('longitud')}}">
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud1" value="{{old('longitud1')}}">
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud2" value="{{old('longitud2')}}">
+                            </td>                                             
                         </tr>
                         <tr>
                             <td>
                                 <label for="Latitud">Latitud</label>
                             </td>
-                            <td>
-                                <input type="number" class="form-control input" id="Latitud" placeholder="Latitud de la estación" name="latitud" value="{{old('latitud')}}">
+                            <td style="display: flex">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="{{old('latitud')}}">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud1" value="{{old('latitud1')}}">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud2" value="{{old('latitud2')}}">
                             </td>                    
                         </tr>
                         <tr>
@@ -166,7 +178,9 @@
                     </table>
 
             </div>
-            <input class="btn btn-success m-1" type='submit' value='Guardar'>
+            <div class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
+            </div>
         </form>
     </div>
 

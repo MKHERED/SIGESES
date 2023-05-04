@@ -12,9 +12,9 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{asset('css/signin.css') }}">
- 
+    <link rel="website icon" href="{{asset('recursos/icon.png')}}">
 
-    <!-- Scripts -->
+    <!-- Scripts  -->
     <script src="{{asset('js/bootstrap.bundle.min.js') }}"></script>
     
 </head>

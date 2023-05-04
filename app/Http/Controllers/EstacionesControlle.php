@@ -7,6 +7,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
+use Monolog\Handler\ElasticaHandler;
 
 class EstacionesControlle extends Controller
 {
@@ -51,26 +52,42 @@ class EstacionesControlle extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {       
+        
         $estaciones = new Estaciones;
         
         $estaciones->id = $request->id;
         $estaciones->siglas = $request->siglas;
         $estaciones->nombre = $request->nombre;
         $estaciones->ubicacion = $request->ubicacion;
-        $estaciones->longitud = $request->longitud;
-        $estaciones->latitud = $request->latitud;
+        
+        if ($request->dec == "on") {
+            //                             GRADOS                   Minutos                        Segundos
+            $estaciones->longitud = $request->longitud . "º " . $request->longitud1 . ' \" ' . $request->longitud2 . "'";
+            //$estaciones->longitud = $request->longitud;
+            $estaciones->latitud = $request->latitud. "º ". $request->latitud1 . ' \" ' . $request->latitud2 . "'";
+            //$estaciones->latitud = $request->latitud;
+        } else {
+            $estaciones->longitud = $request->longitud;
+            $estaciones->latitud = $request->latitud;
+
+        }
+
+
+
         $estaciones->altitud = $request->altitud;
         $estaciones->region = $request->region;
         $estaciones->estado = $request->estado;
         $estaciones->operativa = $request->operativa;
         $estaciones->imagen_n = "sin contenido";
         $estaciones->img_dir = "sin contenido";
-
+        
         //guardado de la imagen
         if ($request->hasFile('imagen_n')) {
             $estaciones->imagen_n=$request->file('imagen_n')->store('uploads/'.$estaciones["nombre"].'/', 'public');
             $estaciones->img_dir=$estaciones['imagen_n'];
+        } else {
+            return response()->json($estaciones);
         }
 
         //return response()->json($estaciones); 
@@ -81,10 +98,15 @@ class EstacionesControlle extends Controller
             return redirect()->route("estaciones.index")->with(["mensaje" => "Creada con exito",]);
 
         } elseif ($request->doc == "on") {
+            
             $estaciones->save();  
+            
+            $estacion = Estaciones::findOrFail($estaciones['id']);
+            
+            $id  = $estacion['id'];
 
-            //se crear la carpeta a partir del nombre
-            return redirect()->route("update", compact('estaciones'))->with(["mensaje" => "Creada con exito",]);
+            //se crear la carpeta a partir del nombre  compact('estaciones')
+            return redirect()->route("update",compact('id'))->with(["mensaje" => "Creada con exito",]);
 
             //se guardan los documentos
 
@@ -170,6 +192,7 @@ class EstacionesControlle extends Controller
     {
         $db = Estaciones::findOrFail($id);
         Storage::delete('public/'.$db->img_dir);
+        Storage::delete('public/uploads/'.$db->nombre);
         
         Estaciones::destroy($id);
         return redirect()->route("estaciones.index")->with(["mensaje" => "Estación Eliminada con exito",]);
