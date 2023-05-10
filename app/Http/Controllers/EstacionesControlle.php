@@ -63,9 +63,9 @@ class EstacionesControlle extends Controller
         
         if ($request->dec == "on") {
             //                             GRADOS                   Minutos                        Segundos
-            $estaciones->longitud = $request->longitud . "º " . $request->longitud1 . ' \" ' . $request->longitud2 . "'";
+            $estaciones->longitud = $request->longitud . "º " . $request->longitud1 . '" ' . $request->longitud2 . "'";
             //$estaciones->longitud = $request->longitud;
-            $estaciones->latitud = $request->latitud. "º ". $request->latitud1 . ' \" ' . $request->latitud2 . "'";
+            $estaciones->latitud = $request->latitud. "º ". $request->latitud1 . '" ' . $request->latitud2 . "'";
             //$estaciones->latitud = $request->latitud;
         } else {
             $estaciones->longitud = $request->longitud;
@@ -203,10 +203,10 @@ class EstacionesControlle extends Controller
         return view('estaciones/mapa'); 
     }
 
-    public function vistaDoc($id)
-    {   
-        return view('estaciones/updateDoc');
-    }
+    // public function vistaDoc($id)
+    // {   
+    //     return view('estaciones/updateDoc');
+    // }
     public function updateDoc(Request $request, $id){
         // verificar el $id
         Estaciones::where('id', '=', $id);
