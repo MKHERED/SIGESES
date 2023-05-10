@@ -1,26 +1,7 @@
-@extends('layouts.app')
-@section('content')
 
-
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registro de Estación</title>
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
-    
-</head>
-<body >
-  <!------------------------------------------------------------------------------------------------ Registro -->  
-<main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
-    <h2 class="h5 m-4" style="text-decoration: underline; text-decoration-color:orange;">Ingrese los siguientes datos</h2>
     <div class="form-center text-start">
        
-        <form method='POST' class="form small" action="{{route('estaciones.store')}}" enctype="multipart/form-data">
+        <form method='POST' class="form" action="{{route('estaciones.store')}}" enctype="multipart/form-data">
              @csrf
              <div class="row w-max">
                 <div class="col-6">
@@ -182,8 +163,3 @@
 
 
 </main>
-</body>
-</html>
-
-
-@endsection

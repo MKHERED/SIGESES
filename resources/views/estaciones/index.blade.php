@@ -6,7 +6,7 @@
 
 <div id="Box" class="">
 
-    <h1 class="text-center">Estaciones</h1>
+    <h6 class="text-center m-1">Estaciones</h6>
     <div class="box border text-primary text-center text-bold dark">    
         @if (Session::has('mensaje'))
             {{ Session::get('mensaje')}}
@@ -21,9 +21,9 @@
         
         @foreach ($estaciones as $estacion)
         <div class="col">
-          <div class="card shadow-sm">
+          <div class="card shadow-sm small">
             <img class="bd-placeholder-img card-img-top" src="{{ asset('storage').'/'.$estacion->imagen_n}}" width="100%" height="225" alt="Foto de {{ $estacion->nombre }}">
-            <div class="card-body">
+            <div class="card-body small">
               <p class="card-text h5">{{ $estacion->nombre }}</p>
                 <div class="p-2 card-body bg-light">
                     <h6 class="text-center">Ubicación</h6>
@@ -39,11 +39,11 @@
               </div>
               <div class="p-1 m-1 btn-group">   
                 &nbsp;
-                <p class="m-1"><b>Longitud: </b>{{ $estacion->longitud }}</p>
+                <p class="m-1 small"><b>Longitud: <br></b>{{ $estacion->longitud }}</p>
                 &nbsp;
-                <p class="m-1"><b>Latitud: </b>{{ $estacion->latitud }}</p>
+                <p class="m-1 small"><b>Latitud: <br></b>{{ $estacion->latitud }}</p>
                 &nbsp;
-                <p class="m-1"><b>Altitud: </b>{{ $estacion->altitud }}</p>
+                <p class="m-1 small"><b>Altitud: <br></b>{{ $estacion->altitud }}</p>
               </div>
 
               <div class="d-flex justify-content-between align-items-center">

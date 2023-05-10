@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Estacion\DetailsController;
 use App\Http\Controllers\EstacionesControlle;
-use App\Models\Estaciones;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('/estaciones', EstacionesControlle::class)->parameters(["estaciones"=>"estacion"]);
 Route::get('/update/{id}', 'App\Http\Controllers\Admin\FileController@index')->name('update');
 Route::post('/update-store/', [FileController::class, 'store'])->name('update.store');
+Route::get('/details', [DetailsController::class, 'index'])->name('destails');
 
 // Route::resource('/fileupdate', FileController::class)->parameters(["estaciones"=>"estacion"]);
 
