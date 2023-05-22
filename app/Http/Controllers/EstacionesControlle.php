@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Details;
 use App\Models\Estaciones;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Monolog\Handler\ElasticaHandler;
 
@@ -31,7 +32,6 @@ class EstacionesControlle extends Controller
         return view('estaciones.index', compact('estaciones'));
         
  
-
         
     }
 
@@ -61,7 +61,7 @@ class EstacionesControlle extends Controller
         $estaciones->nombre = $request->nombre;
         $estaciones->ubicacion = $request->ubicacion;
         
-        if ($request->dec == "on") {
+        if ($request->gms == "on"){
             //                             GRADOS                   Minutos                        Segundos
             $estaciones->longitud = $request->longitud . "º " . $request->longitud1 . '" ' . $request->longitud2 . "'";
             //$estaciones->longitud = $request->longitud;
@@ -69,11 +69,10 @@ class EstacionesControlle extends Controller
             //$estaciones->latitud = $request->latitud;
         } else {
             $estaciones->longitud = $request->longitud;
-            $estaciones->latitud = $request->latitud;
-
-        }
-
-
+            $estaciones->latitud = $request->latitud;            
+        
+        
+        } 
 
         $estaciones->altitud = $request->altitud;
         $estaciones->region = $request->region;
@@ -81,7 +80,7 @@ class EstacionesControlle extends Controller
         $estaciones->operativa = $request->operativa;
         $estaciones->imagen_n = "sin contenido";
         $estaciones->img_dir = "sin contenido";
-        
+
         //guardado de la imagen
         if ($request->hasFile('imagen_n')) {
             $estaciones->imagen_n=$request->file('imagen_n')->store('uploads/'.$estaciones["nombre"].'/', 'public');
@@ -95,7 +94,12 @@ class EstacionesControlle extends Controller
         if ($request->doc == null){
             $estaciones->save();
             
-            return redirect()->route("estaciones.index")->with(["mensaje" => "Creada con exito",]);
+            $estacion = Estaciones::findOrFail($estaciones['id']);
+            
+            $id  = $estacion['id'];
+            $id = "/".$id;
+            //compact('id')
+            return redirect()->route("details.index", $id)->with(["mensaje" => "Creada con exito",]);
 
         } elseif ($request->doc == "on") {
             
@@ -140,7 +144,21 @@ class EstacionesControlle extends Controller
         //aqui hacer una plantilla igual al registro, donde los campos carguen el contenido anterior para visualizar y el nuevo para reemplazar
         $estaciones = Estaciones::findOrFail($id);
 
-        return view('estaciones.edit', compact('estaciones'));
+        $sigla = $estaciones['siglas'];
+        
+        $details = DB::table('details')->where('siglas', $sigla)->first();
+
+         if ($details) {
+             // cambiar componente
+             $validador = 'cambiar';
+         } else {
+             // agregar los componentes
+             $validador = 'agregar';
+         }
+
+        
+
+        return view('estaciones.edit', compact('estaciones', 'validador'));
     }
 
     /**

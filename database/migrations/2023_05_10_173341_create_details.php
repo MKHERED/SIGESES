@@ -49,6 +49,8 @@ return new class extends Migration
             //------------------------------
             $table->string("trompeta_satelital");
             $table->string("trompeta_satelital_esp");
+            //------------------------------
+            $table->string("instalacion_satelital");
             //-----------------------------------------------------------------------
             
             $table->timestamps();
@@ -66,7 +68,7 @@ return new class extends Migration
 
             $table->timestamps();
         });
-        Schema::create('antena_parabolica', function (Blueprint $table) {
+        Schema::create('antenaparabolica', function (Blueprint $table) {
             $table->id()->autoIncrement();
             
             //------------------------------------------------- Datos a pertenecer --------------
@@ -183,6 +185,18 @@ return new class extends Migration
 
             $table->timestamps();
         });
+        Schema::create('instalacionsatelital', function (Blueprint $table) {
+            $table->id()->autoIncrement();
+            
+            //------------------------------------------------- Datos a pertenecer --------------
+            $table->string("estacion");
+            $table->string("siglas");
+            //------------------------------------------------- Componente ----------------------
+            $table->string("instalacion_satelital");
+            //-----------------------------------------------------------------------------------
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -193,5 +207,16 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('details');
+        Schema::dropIfExists('antenagps');
+        Schema::dropIfExists('antenaparabolica');
+        Schema::dropIfExists('bateria');
+        Schema::dropIfExists('controladorcarga');
+        Schema::dropIfExists('digitalizador');
+        Schema::dropIfExists('modemsatelital');
+        Schema::dropIfExists('panelsolar');
+        Schema::dropIfExists('reguladorcarga');
+        Schema::dropIfExists('sismometro');
+        Schema::dropIfExists('trompetasatelital');
+        Schema::dropIfExists('instalacionsatelital');
     }
 };

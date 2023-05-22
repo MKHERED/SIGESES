@@ -17,18 +17,20 @@
 <body >
   <!------------------------------------------------------------------------------------------------ Registros de los detalles de la estacion -->  
     <main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
-        <h6 class="m-2" style="text-decoration: underline; text-decoration-color:orange;" >Ingrese los siguientes datos de la Estación</h6>
+        <h5 class="m-2" style="text-decoration: underline; text-decoration-color:orange;" >Ingrese los siguientes datos de la Estación</h5>
         <div class="form-center text-start">
-            <form method='POST' class="form" action="" enctype="multipart/form-data">
+            <form id="form" method='POST' class="form" action="{{route('details.index')}}" enctype="multipart/form-data">
                 @csrf
+                <tag id="foreach" >
                 <div class="text-center">
+                    <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
                     <table class="table">
                         <tr class="row">
                             <td class="col-6">
                                 <label for="inst">Instalación</label>
                             </td>
                             <td class="col-6">
-                                <input class="form-control" style=" width: 300px" type="date" name="inst" id="inst">
+                                <input class="form-control" style=" width: 300px" type="date" name="inst" id="inst" value="">
                             </td>
                         </tr>
                     </table>    
@@ -36,6 +38,7 @@
                     
                 </div>                
                 <div class="row w-max">
+                    
                     <div class="col-6">
                         <table class="table">
                             <tr>
@@ -133,8 +136,14 @@
                                     <input class="form-control" type="text" name="trompeta_satelital_esp" id="trompeta_satelital_esp" placeholder="Especificaciones">
                                 </td> 
                             </tr>
+                        </table>    
+                    </div>
+            <div class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
+                <a class="btn btn-warning m-1 text-light" style="width: 200px;" href="{{route('estaciones.index')}}">Terminar mas tarde</a>
+            </div>
     </main>
-
+    
 </body>
 </html>
 

@@ -19,7 +19,7 @@
 
     </nav>
 <main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
-    <h2 class="h1 m-4">Actualice los siguientes datos</h2>
+    <h3 class="h3 m-4">Actualice los siguientes datos</h3>
     <div class="form-center text-start">
        
         <form method='POST' class="form" action="{{ url('/estaciones/'.$estaciones->id) }}"  enctype="multipart/form-data">
@@ -134,7 +134,7 @@
                             </td>
                             <td>
                                 <input type="file" class="form-control" id="Imagen" name="imagen_n" value="{{$estaciones->imagen_n}}">
-                                <p class="form-control text box btn-ms btn disable">
+                                <p class="form-control text box btn-ms disable">
                                     {{$estaciones->img_dir}}
                                 </p>
                             </td>   
@@ -142,8 +142,22 @@
                     </table>
                 </div>
             </div>
+            <div id="guardar" class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1" style="width:fit-content;" type='submit' value='Guardar'>
+                 <!-- agregar el boton para agregar los componentes luego de consultar -->
+                <script> 
+                    const validador =  @json($validador);
+                    var guardar = document.getElementById('guardar');
 
-            <input class="btn btn-success m-1" type='submit' value='Guardar'>
+                    if (validador == "agregar") {
+                        guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.index', $estaciones->id)}}'>Agregar Componentes</a>");
+                    } 
+                    if (validador == "cambiar"){
+                        guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.edit',$estaciones->id)}}'>Cambiar Componentes</a>");
+                    }
+                    void(validador);                    
+                </script>
+            </div>
         </form>
     </div>
 

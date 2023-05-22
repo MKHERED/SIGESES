@@ -50,33 +50,34 @@
                             </td>                    
                         </tr>
                         <tr>
+                           
                             <td>
-                                <label for="dec">¿Las coordenas son decimales?</label>
+                                <label for="dec">¿Que tipo de coordenada es?</label>
                             </td>
                             <td class="text-center">
-                                <label for="dec">Si: &nbsp;</label><input type="checkbox" name="dec" id="dec">
+                                <label for="dec">GMS: &nbsp;</label><input type="checkbox" name="gms" id="gms" onclick="gmsutm()">
+                            
                             </td>
+   
                         </tr>
                         <tr>
                             <td>
                                 <label for="Longitud">Longitud</label>
                             </td>
-                            <td style="display: flex">
-                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="{{old('longitud')}}">
-                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud1" value="{{old('longitud1')}}">
-                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud2" value="{{old('longitud2')}}">
+                            <td style="display: flex" id="Long"> 
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="">                               
                             </td>                                             
                         </tr>
                         <tr>
                             <td>
                                 <label for="Latitud">Latitud</label>
                             </td>
-                            <td style="display: flex">
-                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="{{old('latitud')}}">
-                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud1" value="{{old('latitud1')}}">
-                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud2" value="{{old('latitud2')}}">
+                            <td style="display: flex"id="Lat">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="">
+
                             </td>                    
                         </tr>
+                        <script src="{{ asset('js/gmsutm.js') }}"></script>  
                         <tr>
                             <td>
                                 <label for="Altitud">Altitud</label>
