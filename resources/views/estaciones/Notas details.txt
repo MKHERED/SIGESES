@@ -163,3 +163,119 @@
 
 
 </main>
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
+    
+    if (gms.checked) {
+        if (utm.checked) {
+            utm.click();
+            var longitud = document.getElementById("Longitud1");
+            var latitud = document.getElementById("Latitud1");
+            longitud.remove();
+            latitud.remove();
+            var longitud = document.getElementById("Longitud2");
+            var latitud = document.getElementById("Latitud2");
+            longitud.remove();
+            latitud.remove();
+            
+            
+        }
+    }
+
+
+    if (gms.checked) {
+        longitud.insertAdjacentHTML("afterend", '<input type="number" class="form-control" style="width: 100px" id="Longitud1" name="longitud1" value="">');
+        longitud.insertAdjacentHTML("afterend", '<input type="number" class="form-control" style="width: 100px" id="Longitud2" name="longitud" value="">');
+
+        latitud.insertAdjacentHTML("afterend", '<input type="number" class="form-control" style="width: 100px" id="Latitud1" name="latitud1" value="">');
+        latitud.insertAdjacentHTML("afterend", '<input type="number" class="form-control" style="width: 100px" id="Latitud2" name="latitud2" value="">');
+    }
+
+
+
+
+
+    if (gms.checked == false) {
+        var longitud = document.getElementById("Longitud1");
+        var latitud = document.getElementById("Latitud1");
+        longitud.remove();
+        latitud.remove();
+        var longitud = document.getElementById("Longitud2");
+        var latitud = document.getElementById("Latitud2");
+        longitud.remove();
+        latitud.remove();
+
+    }
+
+
+
+
+
+
+    if ((gms.checked) && (utm.checked == false)) {
+
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="">');
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Longitud1" name="longitud1" value="">');
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Longitud2" name="longitud2" value="">');
+
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Latitud1" name="latitud1" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Latitud2" name="latitud2" value="">');
+    } else {
+        
+        var longitud = document.getElementById("Longitud");
+        var latitud = document.getElementById("Latitud");
+        longitud.remove();
+        latitud.remove();
+        var longitud = document.getElementById("Longitud1");
+        var latitud = document.getElementById("Latitud1");
+        longitud.remove();
+        latitud.remove();
+        var longitud = document.getElementById("Longitud2");
+        var latitud = document.getElementById("Latitud2");
+        longitud.remove();
+        latitud.remove();        
+        
+    }
+    
+    if((utm.checked) && (gms.checked == false)) {
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="">');
+        
+    } else {
+        var longitud = document.getElementById("Longitud");
+        var latitud = document.getElementById("Latitud");
+        longitud.remove();
+        latitud.remove();
+    }
+
+
+
+
+                                <input type="number" class="form-control" style="width: 300px" id="Longitud" name="longitud" value="">
+                                <input type="number" class="form-control" style="width: 300px" id="Latitud" name="latitud" value="">
+
+
+
+
+
+
+-----------------------------------------------------ççç
+
+
+
+ $details = request()->except(['_token', '_method']);
+
+        $estacion = Estaciones::findOrFail($id);
+        
+
+        $details->siglas = $estacion['siglas'];
+        $details->estacion = $estacion['nombre'];
+
+        Details::where('estacion', '=' ,$details['nombre'])->update($details);
