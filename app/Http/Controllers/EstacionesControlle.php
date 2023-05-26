@@ -131,6 +131,7 @@ class EstacionesControlle extends Controller
     public function show($id)
     {
         //
+        return view('estaciones.show', compact('id'));
     }
 
     /**
