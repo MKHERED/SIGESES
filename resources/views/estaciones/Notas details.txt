@@ -279,3 +279,11 @@
         $details->estacion = $estacion['nombre'];
 
         Details::where('estacion', '=' ,$details['nombre'])->update($details);
+
+
+
+---------------------------------
+
+                    DB::table->insert('antenagps', [$details['id'], $details['estacion'], $details['siglas'], $details['antena_gps'], $details['antena_gps_esp'], $details['instalacion_satelital'], $details['instalacion_satelital']]);
+
+[$details['id'], $details['estacion'], $details['siglas'], $details['antena_gps'], $details['antena_gps_esp'], $details['instalacion_satelital'], $details['instalacion_satelital']]

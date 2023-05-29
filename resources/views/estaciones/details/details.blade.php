@@ -18,6 +18,11 @@
   <!------------------------------------------------------------------------------------------------ Registros de los detalles de la estacion -->  
     <main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
         <h5 class="m-2" style="text-decoration: underline; text-decoration-color:orange;" >Ingrese los siguientes datos de la Estación</h5>
+        <div class="box border text-primary text-center text-bold dark">    
+            @if (Session::has('mensaje'))
+                {{ Session::get('mensaje')}}
+            @endif
+        </div>
         <div class="form-center text-start">
             <form id="form" method='POST' class="form" action="{{route('details.index')}}" enctype="multipart/form-data">
                 @csrf
@@ -30,7 +35,7 @@
                                 <label for="inst">Instalación</label>
                             </td>
                             <td class="col-6">
-                                <input class="form-control" style=" width: 300px" type="date" name="inst" id="inst" value="">
+                                <input class="form-control" style=" width: 300px" type="date" name="inst" id="inst">
                             </td>
                         </tr>
                     </table>    
@@ -46,7 +51,7 @@
                                     <label for="antena_gps">Antena GPS</label>
                                 </td>
                                 <td>
-                                    <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial">
                                     <input class="form-control" type="text" name="antena_gps_esp" id="antena_gps_esp" placeholder="Especificaciones">
                                 </td>
                             </tr>
