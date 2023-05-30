@@ -20,21 +20,12 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
         @foreach ($estaciones as $estacion)
-        <script>
-            var link = @json($estacion->id)
-            
-            
-            function redirect() {
-                window.location.href = "estaciones/"+link
-            }
-        </script>
-        
-        <div class="col btn btn-light" onclick="redirect()">
+        <!-- Un truco que ni yo se como funciona XD pero funciona, es con relacion a \/ las comillas dan error al programar, pero esta bien -->
+        <div class="col btn btn-light" role="link" onclick='window.location="{{route('estaciones.show', $estacion->id)}}"'>
           <div class="card shadow-sm small">
             <img class="bd-placeholder-img card-img-top" src="{{ asset('storage').'/'.$estacion->imagen_n}}" width="100%" height="225" alt="Foto de {{ $estacion->nombre }}">
             <div class="card-body small">
               <p class="card-text h5">{{ $estacion->nombre }}</p>
-              <a href="{{route('estaciones.show', $estacion->id)}}">sepee</a>
                 <div class="p-2 card-body bg-light">
                     <h6 class="text-center">Ubicación</h6>
                     <p class="card-text p-1">{{ $estacion->ubicacion }}</p>

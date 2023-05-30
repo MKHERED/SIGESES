@@ -1018,3 +1018,26 @@ Agregar 3 inputs para latitud y longitud
         // ]);
 
         //return redirect()->route('estaciones.index');
+
+
+
+
+
+        ----------------------------------------------------
+
+
+        src="{{ asset('storage').'/'.$esttext-bg-darkacion['imagen_n']}}"
+
+
+
+
+            <div class="row">
+      <div class="col-md-10 row">
+        <div class="col-md-4">
+          <label class="form-label" for="Nombre">Nombre</label>
+          <input class="form-control" type="text" name="Nombre" value="{{$estacion->nombre}}" disabled>
+
+        </div>
+        <!-- ----------------------------------division -->
+        <div class="col-md-4">
+        </div>
