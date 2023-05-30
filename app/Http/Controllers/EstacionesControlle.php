@@ -130,8 +130,12 @@ class EstacionesControlle extends Controller
      */
     public function show($id)
     {
-        //
-        return view('estaciones.show', compact('id'));
+        $estacion = Estaciones::findOrFail($id);
+        // crear un array completo de todos los datos
+        return view('estaciones.show',compact('estacion')); 
+        //response()->json($estacion);
+        //redirect()->route('estaciones.show', $estacion);
+        //view('estaciones.show', $estacion);
     }
 
     /**
