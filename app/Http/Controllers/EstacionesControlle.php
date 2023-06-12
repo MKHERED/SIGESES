@@ -23,6 +23,16 @@ class EstacionesControlle extends Controller
 
         foreach (Estaciones::all() as $estacion) {
             $estaciones[] = $estacion;
+            $estadosList = ["Seleccione un Estado", "Amazonas", "Anzoátegui",
+            "Apure", "Aragua", "Barinas", "Bolívar", "Carabobo",
+            "Cojedes", "Delta Amacuro", "Dependencias Federales",
+            "Distrito Federal", "Falcón", "Guárico", "Lara", "Mérida",
+            "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre",
+            "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"];
+            $regionList = ["Occidente", "Centro", "Oriente" ];
+            
+            $estacion->estado = $estadosList[$estacion['estado']];
+            $estacion->region = $regionList[$estacion['region']];
         }
         if ($estaciones==[]) {
             $estaciones = [];
@@ -80,7 +90,8 @@ class EstacionesControlle extends Controller
         $estaciones->operativa = $request->operativa;
         $estaciones->imagen_n = "sin contenido";
         $estaciones->img_dir = "sin contenido";
-
+        
+        //return response()->json($estaciones);
         //guardado de la imagen
         if ($request->hasFile('imagen_n')) {
             $estaciones->imagen_n=$request->file('imagen_n')->store('uploads/'.$estaciones["nombre"].'/', 'public');
@@ -89,35 +100,31 @@ class EstacionesControlle extends Controller
             return response()->json($estaciones);
         }
 
-        //return response()->json($estaciones); 
-        
-        if ($request->doc == null){
+        // rediccion dependiendo de las respuesta ¿subir archivo o no?
+
+        $doc = $request->doc;
+
+        if ($doc == null ) {
+            // Si subir es igual a null
+
             $estaciones->save();
-            
+
             $estacion = Estaciones::findOrFail($estaciones['id']);
-            
-            $id  = $estacion['id'];
-            $id = "/".$id;
-            //compact('id')
-            return redirect()->route("details.index", $id)->with(["mensaje" => "Creada con exito",]);
+            $id = "/".$estacion['id'];
+            //$data = [$id, $doc];
 
-        } elseif ($request->doc == "on") {
-            
-            $estaciones->save();  
-            
+            return redirect()->route("details.index", $id)->with(["mensaje"=>"La estación ".$estacion['nombre']." creada con exito"]);
+        } elseif ($doc == "on") {
+            // Si se va a subir archivo
+
+            $estaciones->save();
+
             $estacion = Estaciones::findOrFail($estaciones['id']);
-            
-            $id  = $estacion['id'];
+            $id = "/".$estacion['id'];
+            $data = [$id, $doc];
 
-            //se crear la carpeta a partir del nombre  compact('estaciones')
-            return redirect()->route("update",compact('id'))->with(["mensaje" => "Creada con exito",]);
-
-            //se guardan los documentos
-
-            //se redirige a la paginaprincipal
-            
-        } else {
-            return redirect()->route("estaciones.index")->with(["mensaje" => "No se guardo la estación",]);
+            return redirect()->route("details.index", $data)->with(["mensaje"=>"La estación ".$estacion['nombre']." creada con exito"]);
+            // --------------------------------------------------
         }
 
     }
@@ -131,8 +138,26 @@ class EstacionesControlle extends Controller
     public function show($id)
     {
         $estacion = Estaciones::findOrFail($id);
+        $detail = Details::findOrFail($id);
+        if ($detail == null) {
+            $detail = 'Sin resultados';
+        }
+
+        $estadosList = ["Seleccione un Estado", "Amazonas", "Anzoátegui",
+        "Apure", "Aragua", "Barinas", "Bolívar", "Carabobo",
+        "Cojedes", "Delta Amacuro", "Dependencias Federales",
+        "Distrito Federal", "Falcón", "Guárico", "Lara", "Mérida",
+        "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre",
+        "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"];
+        $regionList = ["Occidente", "Centro", "Oriente" ];
+        $operativaList = ["No", "Si" ];
+
+        $estacion->estado = $estadosList[$estacion['estado']];
+        $estacion->region = $regionList[$estacion['region']];
+        $estacion->operativa = $operativaList[$estacion['operativa']];
+
         // crear un array completo de todos los datos
-        return view('estaciones.show',compact('estacion')); 
+        return view('estaciones.show',compact('estacion', 'detail')); 
         //response()->json($estacion);
         //redirect()->route('estaciones.show', $estacion);
         //view('estaciones.show', $estacion);

@@ -106,9 +106,9 @@
                                 <label for="Estado">Estado</label>
                             </td>
                             <td>
-                                <select type="list" class="form-control" id="Estado"   name="estado" value="{{old('estado')}}">
+                                <select type="list" class="form-control" id="Estado" name="estado" value="{{old('estado')}}" onclick="estadoslist()">
                                     <script src="{{asset('js/estadoslist.js') }}">
-                                        
+                                       
                                     </script>
                                    
                                 </select>
@@ -142,7 +142,7 @@
                                 <label for="Imagen">Imagen</label>
                             </td>
                             <td>
-                                <input type="file" class="form-control" id="Imagen" name="imagen_n" onchange="return muestraImg();">
+                                <input type="file" class="form-control" id="imagen0" name="imagen_n" onchange="muestraImg('muestrasImg', 'imagen0', '0');">
                             </td>
                               
                         </tr>
@@ -151,25 +151,11 @@
                                 <label for="Vista">Vista Previa</label>
                             </td>
                             <td>
-                                <div class="border" style="width:350px; height:225px " id="muestrasImg">
+                                <div class="border p-0" style="width:350px; height:225px " id="muestrasImg">
 
 
                                 </div>
-                                <script>
-                                    function muestraImg() {
-                                    var contenedor = document.getElementById("muestrasImg");
-                                    var archivos = document.getElementById("Imagen").files;
-                                    for (i = 0; i < archivos.length; i++) {
-                                        imgTag = document.createElement("img");
-                                        imgTag.height = 225;//ESTAS LINEAS NO SON "NECESARIAS" 
-                                        imgTag.width = 350; //ÚNICAMENTE HACEN QUE LAS IMÁGENES SE VEAN 
-                                        imgTag.id = i;      // ORDENADAS CON UN TAMAÑO ESTÁNDAR
-                                        imgTag.src = URL.createObjectURL(archivos[i]);
-                                        contenedor.appendChild(imgTag);
-                                    }
-                                    }
-                                </script>
-
+                                <script src="{{asset('js/gestion.js') }}"></script>
                             </td>
                         </tr>
                     </table>

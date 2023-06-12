@@ -19,17 +19,30 @@ class DetailsController extends Controller
      */
     public function index(Request $request)
     {
+         
         $id = $_SERVER['REQUEST_URI'];
         
-        $id1 = str_replace("details?", "", $id);
-        $id = str_replace("//", "", $id1);
+         $id1 = str_replace("details?", "", $id);
+         $id = str_replace("//", "", $id1);
         
-        if ($id.str_contains(" * ", "/")) {
-            $id = str_replace("/", "", $id);
-        }
-        
+         if ($id.str_contains(" * ", "/")) {
+             $id2 = str_replace("/", "", $id);
+         }
+         $id = str_replace("&on", "", $id2);
 
-        return view('estaciones.details.details', compact('id'));
+         if (str_replace($id, "", $id2) == "") {
+            $doc = "No";
+         } else {
+            $respusta = str_replace($id."&", "", $id2);
+            if ($respusta == "on") {
+                $doc = "Si";
+            }
+         }
+
+        
+         //
+
+        return view('estaciones.details.details')->with(["id"=>$id, "doc"=>$doc]);
         
         //$data = $id . " // " . $id1; 
         //return response()->json($data);
@@ -68,36 +81,48 @@ class DetailsController extends Controller
         }
 
         $details->antena_gps = $request->antena_gps;
+        $details->antena_gps_fab = $request->antena_gps_fab;
         $details->antena_gps_esp = $request->antena_gps_esp;
 
         $details->antena_parabolica = $request->antena_parabolica;
+        $details->antena_parabolica_fab = $request->antena_parabolica_fab;
         $details->antena_parabolica_esp = $request->antena_parabolica_esp;
         
         $details->bateria = $request->bateria;
+        $details->bateria_fab = $request->bateria_fab;
         $details->bateria_esp = $request->bateria_esp;
 
         $details->controlador_carga = $request->controlador_carga;
+        $details->controlador_carga_fab = $request->controlador_carga_fab;
         $details->controlador_carga_esp = $request->controlador_carga_esp;
         
         $details->digitalizador = $request->digitalizador;
+        $details->digitalizador_fab = $request->digitalizador_fab;
         $details->digitalizador_esp = $request->digitalizador_esp;
 
         $details->modem_satelital = $request->modem_satelital;
+        $details->modem_satelital_fab = $request->modem_satelital_fab;
         $details->modem_satelital_esp = $request->modem_satelital_esp;
 
         $details->panel_solar = $request->panel_solar;
+        $details->panel_solar_fab = $request->panel_solar_fab;
         $details->panel_solar_esp = $request->panel_solar_esp;
 
         $details->regulador_carga = $request->regulador_carga;
+        $details->regulador_carga_fab = $request->regulador_carga_fab;
         $details->regulador_carga_esp = $request->regulador_carga_esp;
 
         $details->sismometro = $request->sismometro;
+        $details->sismometro_fab = $request->sismometro_fab;
         $details->sismometro_esp = $request->sismometro_esp;
 
         $details->trompeta_satelital = $request->trompeta_satelital;
+        $details->trompeta_satelital_fab = $request->trompeta_satelital_fab;
         $details->trompeta_satelital_esp = $request->trompeta_satelital_esp;
 
         $details->instalacion_satelital = $request->inst;
+
+        $doc = $request->doc;
         
         $validador = $this->regist($details);
 
@@ -108,7 +133,11 @@ class DetailsController extends Controller
             return redirect()->route("details.index", $id)->with($validador['msj']);
             
         
-        }else {
+        } elseif ($doc == "Si") {
+            $id = $request->id;
+
+            return redirect()->route("update",compact('id'))->with(["mensaje" => "Creada con exito",]);
+        } else {
             $details->save(); 
             return redirect()->route("estaciones.index")->with($validador['msj']);
         }
@@ -200,6 +229,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'antena_gps'=>$details['antena_gps'],
+                'antena_gps_fab'=>$details['antena_gps_fab'],
                 'antena_gps_esp'=>$details['antena_gps_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -217,6 +247,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'antena_parabolica'=>$details['antena_parabolica'],
+                'antena_parabolica_fab'=>$details['antena_parabolica_fab'],
                 'antena_parabolica_esp'=>$details['antena_parabolica_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -235,6 +266,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'bateria'=>$details['bateria'],
+                'bateria_fab'=>$details['bateria_fab'],
                 'bateria_esp'=>$details['bateria_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -253,6 +285,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'controlador_carga'=>$details['controlador_carga'],
+                'controlador_carga_fab'=>$details['controlador_carga_fab'],
                 'controlador_carga_esp'=>$details['controlador_carga_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -271,6 +304,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'digitalizador'=>$details['digitalizador'],
+                'digitalizador_fab'=>$details['digitalizador_fab'],
                 'digitalizador_esp'=>$details['digitalizador_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -289,6 +323,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'modem_satelital'=>$details['modem_satelital'],
+                'modem_satelital_fab'=>$details['modem_satelital_fab'],
                 'modem_satelital_esp'=>$details['modem_satelital_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -307,6 +342,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'panel_solar'=>$details['panel_solar'],
+                'panel_solar_fab'=>$details['panel_solar_fab'],
                 'panel_solar_esp'=>$details['panel_solar_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -325,6 +361,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'regulador_carga'=>$details['regulador_carga'],
+                'regulador_carga_fab'=>$details['regulador_carga_fab'],
                 'regulador_carga_esp'=>$details['regulador_carga_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -343,6 +380,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'sismometro'=>$details['sismometro'],
+                'sismometro_fab'=>$details['sismometro_fab'],
                 'sismometro_esp'=>$details['sismometro_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
@@ -363,6 +401,7 @@ class DetailsController extends Controller
                 'estacion'=> $details['estacion'],
                 'siglas'=>$details['siglas'],
                 'trompeta_satelital'=>$details['trompeta_satelital'],
+                'trompeta_satelital_fab'=>$details['trompeta_satelital_fab'],
                 'trompeta_satelital_esp'=>$details['trompeta_satelital_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],

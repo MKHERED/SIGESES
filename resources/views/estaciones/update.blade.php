@@ -1,51 +1,62 @@
 @extends('layouts.app')
 @section('content')
+
 <head>
     <link rel="stylesheet" href="{{asset('css/dropzone.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/styles.css')}}">  
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
 </head>
+
 <body class="update">
-    <div class="box border text-primary text-center text-bold bg-dark">    
-            @if (Session::has('mensaje'))
-                {{ Session::get('mensaje')}}
-            @endif
+    <div class="box border text-primary text-center text-bold bg-dark">
+        @if (Session::has('mensaje'))
+        {{ Session::get('mensaje')}}
+        @endif
+    </div>               
+    <div class="p-1 bg-orange card-header text-center">             
+        <h4 class="p-0 m-0 text-light">Zona para subir los domumentos</h4>
     </div>
-    <section class="p-5 bg-light update">
+    <section class="update container">
+
         <div class="row">
-            <div class=""col-md-12>
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h3>Zona para subir los domumentos</h3>
-                    
-                    </div>
-                    
-                    <div class="card-body update">
-                        <form method="post" action="{{route( 'update.store')}}" enctype="multipart/form-data" class="dropzone my-awesome-dropzone update-d" id="image-upload">
+            <div class="col-md-12">
+                <div class="card-body ">
+
+
+                    <div class="container update p-2 m-2">
+                        <form method="post" action="{{route( 'update.store')}}" enctype="multipart/form-data" class=" card-body update-d" id="image-upload">
                             @csrf
-                            <input class="btn btn-success m-1 extension" type='submit' value='Guardar'>
-                            
-                            
-                            <input type="number" class="form-control" style="width: 100px" id="" name="id" hidden value="{{ $id }}">
-                            <div class="dz-default dz-message">
-                                <span>Arrastre los archivos aqui</span>
+                            <div class="row">
+                                <div id="inputs" class="col-sm-4">
+                                    <!-- <input type="file" class="form-control" style="width: max-content" id="imagen1" name="files1" onchange="muestraImg("muestrasimg1"" "imagen1");"=""> -->
+                                    <input type="file" class="form-control" style="width: max-content" id="imagen0" name="files0" onchange="muestraImg('muestrasImg', 'imagen0', '0');">
+                                </div>
+                                <div class="col-sm-1 p-0">
+
+                                </div>
+                                <div id="inputs1" class="col-sm-4">
+
+                                </div>
+                                <div class="col-sm-3">
+
+                                    <input class="btn small btn-success m-1 p-1 extension" style="width: fit-content !important;" type='submit' value='Guardar'>
+                                    <button class="btn small btn-dark m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="OtherCamp()">Añadir Campo</button>
+
+                                </div>
                             </div>
+                            <div id="divImagenes" class="col-sm-12 row mb-3 pb-3 mt-2">
+                                <div class="border p-0" style="width:350px; height:225px " id="muestrasImg"></div>
+                            </div>
+                            
+                            <script src="{{asset('js/gestion.js') }}"></script>
+                            <input type="number" class="form-control" style="width: 100px" id="" name="id" hidden value="{{ $id }}">
+
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-    <!-- Descargar archivo para jquery.... -->
-    <script src="{{asset('js/dropzone.min.js')}}"></script>
-    <script>
-        Dropzone.options.myawesomeDropzone = {
-            headers:{
-                'x-csrf-TOKEN' : "{{csrf_token()}}"
-            },
-        };
-    </script>
 </body>
 
 

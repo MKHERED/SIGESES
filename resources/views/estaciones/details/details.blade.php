@@ -31,12 +31,18 @@
                     <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
                     <table class="table">
                         <tr class="row">
-                            <td class="col-6">
-                                <label for="inst">Instalación</label>
+                            <td class="col-4">
+                                <label class="form-label" for="inst">Instalación</label>
                             </td>
-                            <td class="col-6">
-                                <input class="form-control" style=" width: 300px" type="date" name="inst" id="inst">
+                            <td class="col-4">
+                                <input class="form-control" style=" width: 150px" type="date" name="inst" id="inst">
                             </td>
+                            <td class="col-4">
+                                <label for="doc" class="form-label">Se subiran documentos: {{$doc}}</label>
+                                <input class="form-control" type="text" style=" width: 50px" name="doc" id="doc" value="{{ $doc }}" hidden>  
+                            </td>
+                                                                
+
                         </tr>
                     </table>    
                 
@@ -52,95 +58,128 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial">
+                                    <input class="form-control" type="text" name="antena_gps_fab" id="antena_gps_fab" placeholder="Fabricante">
                                     <input class="form-control" type="text" name="antena_gps_esp" id="antena_gps_esp" placeholder="Especificaciones">
+                                    
                                 </td>
                             </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
                             <tr>
                                 <td>
                                 <label for="antena_parabolica">Antena Parabolica</label>
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="antena_parabolica" id="antena_parabolica" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="antena_parabolica_fab" id="antena_parabolica_fab" placeholder="Fabricante">
                                     <input class="form-control" type="text" name="antena_parabolica_esp" id="antena_parabolica_esp" placeholder="Especificaciones">
                                 </td> 
                             </tr>
-                            <tr>
-                                <td>
-                                <label for="bateria">Bateria</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="bateria_esp" id="bateria_esp" placeholder="Especificaciones">
-                                </td> 
-                            </tr>
-                            <tr>
-                                <td>
-                                <label for="controlador_carga">Controlador de carga</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="controlador_carga_esp" id="controlador_carga_esp" placeholder="Especificaciones">
-                                </td> 
-                            </tr>
+                                <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
                             <tr>
                                 <td>
                                 <label for="digitalizador">Digitalizador</label>
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="digitalizador" id="digitalizador" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="digitalizador_fab" id="digitalizador_fab" placeholder="Fabricante">
                                     <input class="form-control" type="text" name="digitalizador_esp" id="digitalizador_esp" placeholder="Especificaciones">
+
                                 </td> 
                             </tr>
-                        </table>
-                    </div>  
-                
-                    <div class="col-6">
-                        <table class="table">
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
                             <tr>
                                 <td>
                                 <label for="modem_satelital">Modem Satelital</label>
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="modem_satelital" id="modem_satelital" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="modem_satelital_fab" id="modem_satelital_fab" placeholder="Fabricante">
                                     <input class="form-control" type="text" name="modem_satelital_esp" id="modem_satelital_esp" placeholder="Especificaciones">
+
                                 </td> 
                             </tr>
-                            <tr>
-                                <td>
-                                <label for="panel_solar">Panel Solar</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="panel_solar_esp" id="panel_solar_esp" placeholder="Especificaciones">
-                                </td> 
-                            </tr>
-                            <tr>
-                                <td>
-                                <label for="regulador_carga">Regulador de Carga</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="regulador_carga_esp" id="regulador_carga_esp" placeholder="Especificaciones">
-                                </td> 
-                            </tr> 
-                            <tr>
-                                <td>
-                                <label for="sismometro">Sismometro</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="sismometro_esp" id="sismometro_esp" placeholder="Especificaciones">
-                                </td> 
-                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
                             <tr>
                                 <td>
                                 <label for="trompeta_satelital">Trompeta Satelital</label>
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="trompeta_satelital" id="trompeta_satelital" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="trompeta_satelital_fab" id="trompeta_satelital_fab" placeholder="Fabricante">
                                     <input class="form-control" type="text" name="trompeta_satelital_esp" id="trompeta_satelital_esp" placeholder="Especificaciones">
+
                                 </td> 
                             </tr>
+
+
+
+                        </table>
+                    </div>  
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                    <div class="col-6">
+                        <table class="table">
+                        <tr>
+                                <td>
+                                <label for="bateria">Bateria</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="bateria_fab" id="bateria_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="bateria_esp" id="bateria_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="regulador_carga">Regulador de Carga</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="regulador_carga_fab" id="regulador_carga_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="regulador_carga_esp" id="regulador_carga_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr> 
+                             <!-- ---------------------------------------------------------------------------------------------------------------------------- -->  
+                            <tr>
+                                <td>
+                                <label for="controlador_carga">Controlador de carga</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="controlador_carga_fab" id="controlador_carga_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="controlador_carga_esp" id="controlador_carga_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="panel_solar">Panel Solar</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="panel_solar_fab" id="panel_solar_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="panel_solar_esp" id="panel_solar_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="sismometro">Sismometro</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="sismometro_fab" id="sismometro_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="sismometro_esp" id="sismometro_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+
                         </table>    
                     </div>
             <div class="row m-0 text-center align-items-center justify-content-center">

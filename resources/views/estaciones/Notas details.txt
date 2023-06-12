@@ -287,3 +287,187 @@
                     DB::table->insert('antenagps', [$details['id'], $details['estacion'], $details['siglas'], $details['antena_gps'], $details['antena_gps_esp'], $details['instalacion_satelital'], $details['instalacion_satelital']]);
 
 [$details['id'], $details['estacion'], $details['siglas'], $details['antena_gps'], $details['antena_gps_esp'], $details['instalacion_satelital'], $details['instalacion_satelital']]
+
+-----------------------
+ $('meta[name="csrf-tokem"]').attr('content')
+ {{csrf_token()}}
+
+             headers: {
+                'x-csrf-TOKEN': '{{csrf_token()}}',
+                maxFilesize: 16,
+                acceptedFiles: ".jpeg, .jpg, .png",
+            },
+
+            ------------------------------------------------------
+
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 4, // MB
+            accept: function(file, done) {
+                if (file.name == "justinbieber.jpg") {
+                    done("Naha, you don't.");
+                } else {
+                    done();
+                }
+            }
+
+            ----------------------------------------------------------
+
+                        maxFilesize: 16,
+            acceptedFiles: ".jpeg, .jpg, .png",
+
+            headers: {
+                'x-csrf-TOKEN': '{{csrf_token()}}',
+            },
+
+.--------------------------------- Antes despues de Editar
+
+        // $id = $request->id;
+        
+        //   $request->validate([
+        //        'file' => 'required',
+        //   ]);
+
+        $image = $request->file('file');
+        $imageName = $image->getClientOriginalName();
+        
+        
+        return response()->echo($request);
+
+        //return response()->json($request->validate(['file'=>'required']));
+        //  $estaciones = Estaciones::findOrFail($id);
+        //  if ($estaciones) {
+        //       $request->file('file')->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
+             
+        //      }
+        
+        //crear un link a la base de datos
+        //crear una notificacion de exito al subir
+
+
+
+            maxFilesize: 12,
+            renameFile: function(file) {
+                var dt = new Date();
+                var time = dt.getTime();
+            return time+file.name;
+            },
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            addRemoveLinks: true,
+            timeout: 5000,
+            
+            success: function(file, response)
+            {
+                console.log(response);
+            },
+            error: function(file, response)
+            {
+                return false;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // $this->validate($request, [
+        //     'photo' => 'required|mimes:jpg,png|max:12288'
+        // ]);
+         $request->validate(['file' => 'required',
+                             'file' => 'max:12288',
+                             'file' => 'mimes:png,jpg',
+                            ]);
+        
+        $photo = $request->file('file');
+        
+        // $id = $request->id;
+        
+        // $request->validate(['file' => 'required',
+        //                     'file' => 'max:12288',
+        //                      'file' => 'mimes:png,jpg']);
+        
+        // $v = $request->file('file');
+
+         return response()->json($photo);
+
+        //  $request->validate([
+        //       'file' => 'required'
+        //  ]);
+
+        // $estaciones = Estaciones::findOrFail($id);
+        // if ($estaciones) {
+        //      $request->file('file')->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
+             
+        //     }
+        
+        //crear un link a la base de datos
+        //crear una notificacion de exito al subir
+        //return redirect()->route('estaciones.index');
