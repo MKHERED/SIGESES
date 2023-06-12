@@ -21,33 +21,43 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- A Registrar -------------
             $table->string("antena_gps");
+            $table->string("antena_gps_fab");
             $table->string("antena_gps_esp");
             //------------------------------
             $table->string("antena_parabolica");
+            $table->string("antena_parabolica_fab");
             $table->string("antena_parabolica_esp");
             //------------------------------
             $table->string("bateria");
+            $table->string("bateria_fab");
             $table->string("bateria_esp");
             //------------------------------
             $table->string("controlador_carga");
+            $table->string("controlador_carga_fab");
             $table->string("controlador_carga_esp");
             //------------------------------
             $table->string("digitalizador");
+            $table->string("digitalizador_fab");
             $table->string("digitalizador_esp");
             //------------------------------
             $table->string("modem_satelital");
+            $table->string("modem_satelital_fab");
             $table->string("modem_satelital_esp");
             //------------------------------
             $table->string("panel_solar");
+            $table->string("panel_solar_fab");
             $table->string("panel_solar_esp");
             //------------------------------
             $table->string("regulador_carga");
+            $table->string("regulador_carga_fab");
             $table->string("regulador_carga_esp");
             //------------------------------
             $table->string("sismometro");
+            $table->string("sismometro_fab");
             $table->string("sismometro_esp");
             //------------------------------
             $table->string("trompeta_satelital");
+            $table->string("trompeta_satelital_fab");
             $table->string("trompeta_satelital_esp");
             //------------------------------
             $table->string("instalacion_satelital");
@@ -63,6 +73,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("antena_gps");
+            $table->string("antena_gps_fab");
             $table->string("antena_gps_esp");
             //-----------------------------------------------------------------------------------
 
@@ -76,6 +87,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("antena_parabolica");
+            $table->string("antena_parabolica_fab");
             $table->string("antena_parabolica_esp");
             //-----------------------------------------------------------------------------------
             
@@ -89,6 +101,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("bateria");
+            $table->string("bateria_fab");
             $table->string("bateria_esp");
             //-----------------------------------------------------------------------------------
 
@@ -102,6 +115,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("controlador_carga");
+            $table->string("controlador_carga_fab");
             $table->string("controlador_carga_esp");
             //-----------------------------------------------------------------------------------
 
@@ -115,6 +129,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("digitalizador");
+            $table->string("digitalizador_fab");
             $table->string("digitalizador_esp");
             //-----------------------------------------------------------------------------------
 
@@ -128,6 +143,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("modem_satelital");
+            $table->string("modem_satelital_fab");
             $table->string("modem_satelital_esp");
             //-----------------------------------------------------------------------------------
 
@@ -141,6 +157,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("panel_solar");
+            $table->string("panel_solar_fab");
             $table->string("panel_solar_esp");
             //-----------------------------------------------------------------------------------
 
@@ -154,6 +171,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("regulador_carga");
+            $table->string("regulador_carga_fab");
             $table->string("regulador_carga_esp");
             //-----------------------------------------------------------------------------------
 
@@ -167,6 +185,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("sismometro");
+            $table->string("sismometro_fab");
             $table->string("sismometro_esp");
             //-----------------------------------------------------------------------------------
 
@@ -180,6 +199,7 @@ return new class extends Migration
             $table->string("siglas");
             //------------------------------------------------- Componente ----------------------
             $table->string("trompeta_satelital");
+            $table->string("trompeta_satelital_fab");
             $table->string("trompeta_satelital_esp");
             //-----------------------------------------------------------------------------------
 

@@ -2,6 +2,8 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{asset('css/album.css') }}">
+<script src="{{asset('js/estadoslist.js') }}"></script>
+
 
 
 <div id="Box" class="">
@@ -22,7 +24,7 @@
         @foreach ($estaciones as $estacion)
         <!-- Un truco que ni yo se como funciona XD pero funciona, es con relacion a \/ las comillas dan error al programar, pero esta bien -->
         <div class="col btn btn-light" role="link" onclick='window.location="{{route('estaciones.show', $estacion->id)}}"'>
-          <div class="card shadow-sm small">
+        <div class="card shadow-sm small">
             <img class="bd-placeholder-img card-img-top" src="{{ asset('storage').'/'.$estacion->imagen_n}}" width="100%" height="225" alt="Foto de {{ $estacion->nombre }}">
             <div class="card-body small">
               <p class="card-text h5">{{ $estacion->nombre }}</p>
@@ -36,7 +38,7 @@
                 <p class="p-1 m-1"><b>Operativa: </b>{{ $estacion->operativa}}</p>                
               </div> 
               <div class="m-1 btn-group">
-                <p class="p-1 m-1"><b>Ubicación Estadal: </b>{{ $estacion->estado }}</p>
+                <p class="p-1 m-1"><b>Ubicación Estadal: </b> {{ $estacion->estado }}</p>
               </div>
               <div class="p-1 m-1 btn-group">   
                 &nbsp;

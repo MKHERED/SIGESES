@@ -42,21 +42,27 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $id = $request->id;
+        $list = [];
+        // $request->validate(['file' => 'required',
+        //                     'file' => 'max:12288',
+        //                     'file' => 'mimes:png,jpg']);
         
-        $request->validate([
-             'file' => 'required'
-        ]);
-
-        $estaciones = Estaciones::findOrFail($id);
-        if ($estaciones) {
-             $request->file('file')->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
-             
-            }
+        // foreach ($request->file('file') as $file) {
+        //      $list[] = $file;
+        //  }
+        //     $request->validate([
+        //         'file' => 'required'
+        //    ]);
+    
+            
+        if ($request->hasFile("files")) {
+            $list[] = 'si';
+        } else {
+            $list[] = 'no';
+        }
+        $list[] = $request->all();
         
-        //crear un link a la base de datos
-        //crear una notificacion de exito al subir
-        return redirect()->route('estaciones.index');
+        return response()->json($list);
     }
         
         
