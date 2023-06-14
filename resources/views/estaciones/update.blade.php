@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div id="divImagenes" class="col-sm-12 row mb-3 pb-3 mt-2">
-                                <div class="border p-0" style="width:350px; height:225px " id="muestrasImg"></div>
+                                <div class="border p-0 m-1" style="width:350px; height:225px " id="muestrasImg"></div>
                             </div>
                             
                             <script src="{{asset('js/gestion.js') }}"></script>

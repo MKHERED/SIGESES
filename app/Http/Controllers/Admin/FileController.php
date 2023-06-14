@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Estaciones;
 use App\Http\Controllers\Controller;
+use App\Models\Link_doc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,27 +43,36 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $list = [];
-        // $request->validate(['file' => 'required',
-        //                     'file' => 'max:12288',
-        //                     'file' => 'mimes:png,jpg']);
+        $id = $request->id;
+        $estaciones = Estaciones::findOrFail($id);
+
+        $lista[] = explode(' ', $request->list);             //$request->list;
         
-        // foreach ($request->file('file') as $file) {
-        //      $list[] = $file;
-        //  }
-        //     $request->validate([
-        //         'file' => 'required'
-        //    ]);
-    
-            
-        if ($request->hasFile("files")) {
-            $list[] = 'si';
-        } else {
-            $list[] = 'no';
+        foreach ($lista[0] as $value) {
+            if ($estaciones && $request->hasFile($value)) {
+
+                
+                
+                $direccion = $request->file($value)->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
+                
+                $documento = new Link_doc;
+                $documento->id_estacion = $estaciones["id"];
+                $documento->nombre_estacion = $estaciones["nombre"];
+                $documento->direccion = $direccion;
+                $documento->save();
+
+                $data[] = "ok";
+              } else {
+                $data[] = "no";
+              }
+
+             $data[] = $value;
         }
-        $list[] = $request->all();
+
+       
         
-        return response()->json($list);
+        return redirect()->route("estaciones.index")->with(["mensaje" => "Se subieron exitosamente los documentos",]); //response()->json($estacion);//
+        
     }
         
         

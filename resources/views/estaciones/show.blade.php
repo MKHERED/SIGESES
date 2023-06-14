@@ -253,7 +253,9 @@
         <!-- ----------------------------------------------------------Separacion -->    
       
       <div class="col-md-6">
-        aqui poner imagenes  
+        @foreach ($link_docs as $link_doc)
+          <img class = "mt-1 mb-1 rounded" src="{{asset('storage').'/'.$link_doc->direccion}}" alt="{{$link_doc->created_at}}" width="100%" height="300px">
+        @endforeach 
       </div>
 
 

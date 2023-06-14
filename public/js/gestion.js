@@ -87,12 +87,12 @@ function OtherCamp() {
     if ((num % 2) == 0) {
         //objeto 1
         inputs1.insertAdjacentHTML("beforeend", '<input type="file" class="form-control" style="width: max-content" id="imagen'+num+'" name="files'+num+'" onchange="muestraImg(\'muestrasImg'+num+'\', \'imagen'+num+'\', \''+num+'\');">')
-        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
+        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
 
     } else {
         //objeto 2
         inputs.insertAdjacentHTML("beforeend", '<input type="file" class="form-control" style="width: max-content" id="imagen'+num+'" name="files'+num+'" onchange="muestraImg(\'muestrasImg'+num+'\', \'imagen'+num+'\', \''+num+'\');">')
-        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
+        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
 
     }
 

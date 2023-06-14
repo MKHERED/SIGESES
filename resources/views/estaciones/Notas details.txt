@@ -365,7 +365,12 @@
             }
 
 
-
+        if ($request->hasFile('imagen_n')) {
+            $estaciones->imagen_n = $request->file('imagen_n')->store('uploads/' . $estaciones["nombre"] . '/', 'public');
+            $estaciones->img_dir = $estaciones['imagen_n'];
+        } else {
+            return response()->json($estaciones);
+        }
 
 
 
@@ -471,3 +476,30 @@
         //crear un link a la base de datos
         //crear una notificacion de exito al subir
         //return redirect()->route('estaciones.index');
+
+
+
+
+        ------------------------------------------------------------------------------------------------------
+
+                $list = [];
+        // $request->validate(['file' => 'required',
+        //                     'file' => 'max:12288',
+        //                     'file' => 'mimes:png,jpg']);
+        
+        // foreach ($request->file('file') as $file) {
+        //      $list[] = $file;
+        //  }
+        //     $request->validate([
+        //         'file' => 'required'
+        //    ]);
+    
+            
+        if ($request->hasFile("files")) {
+            $list[] = 'si';
+        } else {
+            $list[] = 'no';
+        }
+        $list[] = $request->all();
+        
+        return response()->json($list);
