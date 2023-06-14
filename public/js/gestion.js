@@ -1,9 +1,19 @@
 // aqui pones los botones y cosas que cambien
 function muestraImg(cont, arch, ids) {
+    window.onbeforeunload = function(e) {
+        sessionStorage.setItem('lista', null);
+    }
+        
+    
+    
     var contenedor = document.getElementById(cont);
     var archivos = document.getElementById(arch).files;
     var archivos2 = arch;
     var ids = ids;
+    var guardar = document.getElementById('Guardar');
+    var agregar = document.getElementById('agregar')
+    var listo = document.getElementById('listo')
+
 
     if (document.getElementById(ids)) {
         document.getElementById(ids).remove();
@@ -27,17 +37,14 @@ function muestraImg(cont, arch, ids) {
                 imgTag.width = 350;                                   //ÚNICAMENTE HACEN QUE LAS IMÁGENES SE VEAN 
                 imgTag.id = ids;                                      // ORDENADAS CON UN TAMAÑO ESTÁNDAR
                 imgTag.src = URL.createObjectURL(archivos[0]);
-                                    
+                if (sessionStorage.getItem('lista') == "null") {
+                    sessionStorage.setItem('lista', "files0")
+                    console.log("si y ha sido remplazada por files0")
+                } else {
+                    console.log("no")
+                }
                 contenedor.appendChild(imgTag);
 
-                if (sessionStorage.getItem('lista' == null)) {
-                    sessionStorage.setItem('lista', 'files')
-                } 
-                if (sessionStorage.getItem('lista' == 'true')) {
-                    sessionStorage.setItem('lista', 'files')
-                } else {
-                    console.log('tiene datos');
-                }
                 // estooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooy aqui          
             }
             if(id_veri != ids){
@@ -47,6 +54,19 @@ function muestraImg(cont, arch, ids) {
                 
                 var num = parseInt(sessionStorage.getItem("num")) + 1;
                 sessionStorage.setItem("num", num); 
+            }
+
+            if (guardar) {
+                guardar.remove()
+                agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small text-light bg-orange m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿ Listo ?</button>')
+                console.log("true");
+            
+            } else {
+                if (listo) {
+                    listo.remove()
+                }
+                console.log("falso");
+                agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small text-light bg-orange m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿ Listo ?</button>')
             }
             
         }        
@@ -58,6 +78,8 @@ function OtherCamp() {
     var inputs = document.getElementById('inputs');
     var inputs1 = document.getElementById('inputs1');
     var divImagenes = document.getElementById('divImagenes');
+    var guardar = document.getElementById('Guardar');
+
 
                                 
 
@@ -79,4 +101,31 @@ function OtherCamp() {
         sessionStorage.setItem('lista', ['files'+num]+files )
     }
     console.log(sessionStorage.getItem('lista'))
+
+    if (guardar) {
+        guardar.remove()
+        agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small text-light bg-orange m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿ Listo ?</button>')
+        console.log("true");
+    }
+}
+
+function Enviolist(list) {
+    var idspos = document.getElementById('id')
+    var verif = document.getElementById('list')
+    var button = document.getElementById('agregar')
+    var listo = document.getElementById('listo')
+
+    if (verif) {
+        verif.remove()
+        
+    }
+    listo.remove()
+
+    idspos.insertAdjacentHTML('afterend', '<input type="text" class="form-control" id="list" name="list" hidden value="'+list+'">')
+
+    button.insertAdjacentHTML('beforebegin', '<button id="Guardar" class="btn small btn-success m-1 p-1 extension" style="width: fit-content !important;" type="submit">Guardar</button>')
+
+
+    //alert(idspos)
+    
 }

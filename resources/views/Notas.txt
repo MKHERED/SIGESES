@@ -109,3 +109,24 @@ return muestraImg(document.getElementsByName('muestrasImg'));
                 imgTag.src = URL.createObjectURL(archivos[0]);
                 array = [imgTag]
                 contenedor.appendChild(imgTag);
+
+
+
+                                if (sessionStorage.getItem('lista' == null)) {
+                    sessionStorage.setItem('lista', 'files')
+                } 
+                if (sessionStorage.getItem('lista' == 'true')) {
+                    sessionStorage.setItem('lista', 'files')
+                } else {
+                    console.log('tiene datos');
+                }
+
+
+                sessionStorage.getItem('lista')
+
+                                    <input id="Guardar" class="btn small btn-success m-1 p-1 extension" style="width: fit-content !important;" onclick="Enviolist(sessionStorage.getItem('lista'))" type='submit' value='Guardar'>
+
+
+                guardar.remove()
+                agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small btn-success m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿Listo?</button>')
+                console.log("true");

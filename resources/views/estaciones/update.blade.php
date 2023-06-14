@@ -27,7 +27,7 @@
                             @csrf
                             <div class="row">
                                 <div id="inputs" class="col-sm-4">
-                                    <!-- <input type="file" class="form-control" style="width: max-content" id="imagen1" name="files1" onchange="muestraImg("muestrasimg1"" "imagen1");"=""> -->
+
                                     <input type="file" class="form-control" style="width: max-content" id="imagen0" name="files0" onchange="muestraImg('muestrasImg', 'imagen0', '0');">
                                 </div>
                                 <div class="col-sm-1 p-0">
@@ -36,10 +36,9 @@
                                 <div id="inputs1" class="col-sm-4">
 
                                 </div>
-                                <div class="col-sm-3">
+                                <div  class="col-sm-3">
 
-                                    <input class="btn small btn-success m-1 p-1 extension" style="width: fit-content !important;" type='submit' value='Guardar'>
-                                    <button class="btn small btn-dark m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="OtherCamp()">Añadir Campo</button>
+                                    <button id="agregar" class="btn small btn-dark m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="OtherCamp()">Añadir Campo</button>
 
                                 </div>
                             </div>
@@ -48,7 +47,7 @@
                             </div>
                             
                             <script src="{{asset('js/gestion.js') }}"></script>
-                            <input type="number" class="form-control" style="width: 100px" id="" name="id" hidden value="{{ $id }}">
+                            <input type="number" class="form-control" style="width: 100px" id="id" name="id" hidden value="{{ $id }}">
 
 
                         </form>
