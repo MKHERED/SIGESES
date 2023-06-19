@@ -189,7 +189,7 @@ class DetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $details = request()->except(['_token', '_method', 'inst']);
+        $details = request()->except(['_token', '_method']);
         $estacion = Estaciones::findOrFail($id);
         
         $siglas = $estacion['siglas'];
@@ -224,6 +224,116 @@ class DetailsController extends Controller
         $detail = null;
         $var = null;
         if ((DB::table('antenagps')->where('antena_gps', $details['antena_gps'])->first()) == null ) {
+            $antenagps = true;
+        } else {
+            $db = DB::table('antenagps')->where('antena_gps', $details['antena_gps'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'antena GPS';
+            $antenagps = false;
+        }
+        if ((DB::table('antenaparabolica')->where('antena_parabolica', $details['antena_parabolica'])->first()) == null ) {
+            $antenaparabolica = true;
+        } else {
+            $db = DB::table('antenaparabolica')->where('antena_parabolica', $details['antena_parabolica'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'antena parabolica';
+            $antenaparabolica = false;
+        }
+
+        if ((DB::table('bateria')->where('bateria', $details['bateria'])->first()) == null ) {
+            $bateria = true;     
+        } else {
+            $db = DB::table('bateria')->where('bateria', $details['bateria'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'bateria';
+            $bateria = false;
+
+        }
+
+        if ((DB::table('controladorcarga')->where('controlador_carga', $details['controlador_carga'])->first()) == null ) {
+            $controladorcarga = true;
+        
+        } else {
+            $db = DB::table('controladorcarga')->where('controlador_carga', $details['controlador_carga'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'controlador carga';
+            $controladorcarga = false;
+
+        }
+
+        if ((DB::table('digitalizador')->where('digitalizador', $details['digitalizador'])->first()) == null ) {
+            $digitalizador = true;
+        } else {
+            $db = DB::table('digitalizador')->where('digitalizador', $details['digitalizador'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'digitalizador';
+            $digitalizador = false;
+        }
+
+        if ((DB::table('modemsatelital')->where('modem_satelital', $details['modem_satelital'])->first()) == null ) {
+            $modemsatelital = true;
+        
+        } else {
+            $db = DB::table('modemsatelital')->where('modem_satelital', $details['modem_satelital'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'modem satelital';
+            $modemsatelital = false;
+
+        }
+
+        if ((DB::table('panelsolar')->where('panel_solar', $details['panel_solar'])->first()) == null ) {
+            $panelsolar = true;
+            
+        } else {
+            $db = DB::table('panelsolar')->where('panel_solar', $details['panel_solar'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'panel solar';
+            $panelsolar = true;
+        }
+
+        if ((DB::table('reguladorcarga')->where('regulador_carga', $details['regulador_carga'])->first()) == null ) {
+            $reguladorcarga = true;
+            
+        } else {
+            $db = DB::table('reguladorcarga')->where('regulador_carga', $details['regulador_carga'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'regulador carga';
+            $reguladorcarga = false;
+        }
+
+        if ((DB::table('sismometro')->where('sismometro', $details['sismometro'])->first()) == null ) {
+            $sismometro = true;
+        } else {
+            $db = DB::table('sismometro')->where('sismometro', $details['sismometro'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'sismometro';
+            $sismometro = false;
+        }
+
+        
+
+        if ((DB::table('trompetasatelital')->where('trompeta_satelital', $details['trompeta_satelital'])->first()) == null ) {
+            $trompetasatelital = true;
+        } else {
+            $db = DB::table('trompetasatelital')->where('trompeta_satelital', $details['trompeta_satelital'])->get($columns = ['estacion']);//->first();
+
+            $var = $db;
+            $detail = 'trompeta satelital';
+            $trompetasatelital = false;
+        }
+        // aqui se insertan los componentes si todos pasan, si no no
+        if ($antenagps && $antenaparabolica && $bateria && $controladorcarga && $digitalizador && $modemsatelital && $panelsolar && $reguladorcarga && $sismometro && $trompetasatelital) {
+            // listo aqui se esta registrando... validar si el componente exixte o no
+            // $antenagps = true;
             DB::table('antenagps')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -234,14 +344,8 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-            // listo aqui se esta registrando... validar si el componente exixte o no
-        } else {
-            $db = DB::table('antenagps')->where('antena_gps', $details['antena_gps'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'antena GPS';
-        }
-        if ((DB::table('antenaparabolica')->where('antena_parabolica', $details['antena_parabolica'])->first()) == null ) {
+            
+            // $antenaparabolica = true;
             DB::table('antenaparabolica')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -251,16 +355,8 @@ class DetailsController extends Controller
                 'antena_parabolica_esp'=>$details['antena_parabolica_esp'], 
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
-            ]);  
-            
-        } else {
-            $db = DB::table('antenaparabolica')->where('antena_parabolica', $details['antena_parabolica'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'antena parabolica';
-        }
-
-        if ((DB::table('bateria')->where('bateria', $details['bateria'])->first()) == null ) {
+            ]);
+            //  $bateria = true;
             DB::table('bateria')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -271,15 +367,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]); 
-            
-        } else {
-            $db = DB::table('bateria')->where('bateria', $details['bateria'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'bateria';
-        }
-
-        if ((DB::table('controladorcarga')->where('controlador_carga', $details['controlador_carga'])->first()) == null ) {
+            // $controladorcarga = true;
             DB::table('controladorcarga')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -290,15 +378,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-        
-        } else {
-            $db = DB::table('controladorcarga')->where('controlador_carga', $details['controlador_carga'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'controlador carga';
-        }
-
-        if ((DB::table('digitalizador')->where('digitalizador', $details['digitalizador'])->first()) == null ) {
+            // $digitalizador = true;
             DB::table('digitalizador')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -309,15 +389,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-
-        } else {
-            $db = DB::table('digitalizador')->where('digitalizador', $details['digitalizador'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'digitalizador';
-        }
-
-        if ((DB::table('modemsatelital')->where('modem_satelital', $details['modem_satelital'])->first()) == null ) {
+            // $modemsatelital = true;
             DB::table('modemsatelital')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -328,15 +400,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-        
-        } else {
-            $db = DB::table('modemsatelital')->where('modem_satelital', $details['modem_satelital'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'modem satelital';
-        }
-
-        if ((DB::table('panelsolar')->where('panel_solar', $details['panel_solar'])->first()) == null ) {
+            // $panelsolar = true;
             DB::table('panelsolar')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -347,15 +411,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-            
-        } else {
-            $db = DB::table('panelsolar')->where('panel_solar', $details['panel_solar'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'panel solar';
-        }
-
-        if ((DB::table('reguladorcarga')->where('regulador_carga', $details['regulador_carga'])->first()) == null ) {
+            // $reguladorcarga = true;
             DB::table('reguladorcarga')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -366,15 +422,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-            
-        } else {
-            $db = DB::table('reguladorcarga')->where('regulador_carga', $details['regulador_carga'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'regulador carga';
-        }
-
-        if ((DB::table('sismometro')->where('sismometro', $details['sismometro'])->first()) == null ) {
+            // $sismometro = true;
             DB::table('sismometro')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -385,17 +433,7 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-            
-        } else {
-            $db = DB::table('sismometro')->where('sismometro', $details['sismometro'])->get($columns = ['estacion']);
-
-            $var = $db;
-            $detail = 'sismometro';
-        }
-
-        
-
-        if ((DB::table('trompetasatelital')->where('trompeta_satelital', $details['trompeta_satelital'])->first()) == null ) {
+            // $trompetasatelital = true;
             DB::table('trompetasatelital')->insert([
                 'id'=> $details['id'],
                 'estacion'=> $details['estacion'],
@@ -406,12 +444,6 @@ class DetailsController extends Controller
                 'created_at'=>$details['instalacion_satelital'],
                 'updated_at'=>$details['instalacion_satelital'],
             ]);
-
-        } else {
-            $db = DB::table('trompetasatelital')->where('trompeta_satelital', $details['trompeta_satelital'])->get($columns = ['estacion']);//->first();
-
-            $var = $db;
-            $detail = 'trompeta satelital';
         }
         
         if ($var != null) {

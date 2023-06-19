@@ -35,7 +35,8 @@ function muestraImg(cont, arch, ids) {
                 imgTag = document.createElement("img");
                 imgTag.height = 225;                                  //ESTAS LINEAS NO SON "NECESARIAS" 
                 imgTag.width = 350;                                   //ÚNICAMENTE HACEN QUE LAS IMÁGENES SE VEAN 
-                imgTag.id = ids;                                      // ORDENADAS CON UN TAMAÑO ESTÁNDAR
+                imgTag.id = ids;
+                imgTag.className = "rounded";                                      // ORDENADAS CON UN TAMAÑO ESTÁNDAR
                 imgTag.src = URL.createObjectURL(archivos[0]);
                 if (sessionStorage.getItem('lista') == "null") {
                     sessionStorage.setItem('lista', "files0")
@@ -87,12 +88,12 @@ function OtherCamp() {
     if ((num % 2) == 0) {
         //objeto 1
         inputs1.insertAdjacentHTML("beforeend", '<input type="file" class="form-control" style="width: max-content" id="imagen'+num+'" name="files'+num+'" onchange="muestraImg(\'muestrasImg'+num+'\', \'imagen'+num+'\', \''+num+'\');">')
-        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
+        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
 
     } else {
         //objeto 2
         inputs.insertAdjacentHTML("beforeend", '<input type="file" class="form-control" style="width: max-content" id="imagen'+num+'" name="files'+num+'" onchange="muestraImg(\'muestrasImg'+num+'\', \'imagen'+num+'\', \''+num+'\');">')
-        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
+        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
 
     }
 
@@ -124,8 +125,19 @@ function Enviolist(list) {
     idspos.insertAdjacentHTML('afterend', '<input type="text" class="form-control" id="list" name="list" hidden value="'+list+'">')
 
     button.insertAdjacentHTML('beforebegin', '<button id="Guardar" class="btn small btn-success m-1 p-1 extension" style="width: fit-content !important;" type="submit">Guardar</button>')
-
-
-    //alert(idspos)
     
+}
+
+function ImagenVerif(img, url) {
+    var contenedor = document.getElementById('imagenes');
+
+    if (img > 1) {
+        console.log("si esta "+img);
+    } else {
+        console.log('no esta');
+        contenedor.insertAdjacentHTML('afterbegin', '<a class="btn btn-success text-light m-1" style="width:fit-content;" href="'+url+'"><b>Agregar documentos</b></a>')
+        
+        contenedor.insertAdjacentHTML('afterbegin', '<label class="form-label text-center">No posee ninguna imagen o documento aun   <b>¿Desea subir alguno?</b></label>')
+
+    }
 }

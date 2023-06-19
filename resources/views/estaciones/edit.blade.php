@@ -97,9 +97,9 @@
                                 <label for="Estado">Estado</label>
                             </td>
                             <td>
-                                <select type="list" class="form-control" id="Estado"   name="estado" value="{{$estaciones->estado}}">
+                            <select type="list" class="form-control" id="Estado" name="estado" value="{{old('$estaciones->estado')}}" onclick="estadoslist()">
                                     <script src="{{asset('js/estadoslist.js') }}">
-                                        
+                                       
                                     </script>
                                    
                                 </select>

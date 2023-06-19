@@ -136,6 +136,7 @@ class EstacionesControlle extends Controller
     {
         $estacion = Estaciones::findOrFail($id);
         $detail = Details::findOrFail($id);
+        
         $link_docs = DB::table('link_docs')->where('id_estacion', $id)->get();
 
 
@@ -160,7 +161,14 @@ class EstacionesControlle extends Controller
         
 
         // crear un array completo de todos los datos
-        return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+        if ($link_docs == null) {
+            return view('estaciones.show', compact('estacion', 'detail'));
+            
+        }
+        if ($link_docs) {
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+        }
+        
 
         //response()->json(print_r($link_docs));
         //redirect()->route('estaciones.show', $estacion);
