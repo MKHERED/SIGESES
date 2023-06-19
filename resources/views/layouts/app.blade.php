@@ -51,10 +51,23 @@
                                         <a class="dropdown-item" href="{{ route('estaciones.create') }}">Nueva Estación</a>
                                         <a class="dropdown-item" href="">Actualizar</a>
                                         <a class="dropdown-item" href="">Visitas</a>
-                                        <a class="dropdown-item" href="">Mapa</a>
+                                        <a class="dropdown-item" href="{{ route('home') }}">Mapa</a>
                                     </div>
                             </li>
                             
+                        @endif
+                        @if (Route::is('estaciones.show'))
+                        <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Opciones
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <!-- <a class="dropdown-item" href="{{ route('estaciones.create') }}">Nueva Estación</a> -->
+                                        <a class="dropdown-item" href="{{ route('estaciones.edit', $estacion->id)}}">Editar estación</a>
+                                        <a class="dropdown-item" href="">Visitas</a>
+                                        <a class="dropdown-item" href="{{ route('home') }}">Mapa</a>
+                                    </div>
+                            </li>   
                         @endif
                         @if (Route::is('home'))
                             <li class="nav-item">

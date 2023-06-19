@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
     <script src="{{asset('js/estadoslist.js') }}"></script>
+    <script src="{{asset('js/gestion.js') }}"></script>
     
 </head>
 <body>
@@ -81,7 +82,7 @@
           </div>
 
           <div class="col-sm-5">
-            <label class="form-label" for="Opera">Operativida</label>
+            <label class="form-label" for="Opera">Operativa</label>
             <input type="text" id="Opera" class="form-control" value="{{$estacion->operativa}}" disabled>
           </div>
           <div class="mt-3 row col-ms-12 text-center">
@@ -252,10 +253,17 @@
         
         <!-- ----------------------------------------------------------Separacion -->    
       
-      <div class="col-md-6">
+      <div id="imagenes" class="col-md-6 text-center">
         @foreach ($link_docs as $link_doc)
           <img class = "mt-1 mb-1 rounded" src="{{asset('storage').'/'.$link_doc->direccion}}" alt="{{$link_doc->created_at}}" width="100%" height="300px">
-        @endforeach 
+        @endforeach
+          <script>
+            var img = document.getElementById('imagenes')
+            img = img.childElementCount;
+            url = "{{route('update',$estacion->id)}}"
+            ImagenVerif(img, url);
+          </script>
+          
       </div>
 
 
