@@ -6,17 +6,11 @@
 
 
 
-<div id="Box" class="">
-
+<div class="Box">
     <h6 class="text-center m-1">Estaciones</h6>
-    <div class="box border text-primary text-center text-bold dark">    
-        @if (Session::has('mensaje'))
-            {{ Session::get('mensaje')}}
-        @endif
-    </div>
 </div>
     <main>
-    <div class="album py-5 bg-body-tertiary" >
+    <div class="album py-0 bg-body-tertiary" >
         <div class="container">
            
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -51,14 +45,16 @@
 
               <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-              
+              @if (Auth::user()->tipo_usuario)
                 <form action="{{ route('estaciones.destroy', $estacion->id) }}" method="POST">
                         @csrf
                         {{ method_field('DELETE') }}
                         <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$estacion->nombre}}' )" value="Borrar">
                 </form>
 
-                <a   type="button" class="btn btn-sm btn-outline-secondary text-primary" href="{{ route('estaciones.edit', $estacion->id) }}">Editar</a>
+                <a   type="button" class="btn btn-sm btn-outline-secondary text-primary" href="{{ route('estaciones.edit', $estacion->id) }}">Editar</a>                
+              @endif
+
 
                 </div>
                 <small class="text-body-secondary"><b>Actualizado: </b> {{ $estacion->updated_at}}</small>

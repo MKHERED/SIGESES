@@ -74,6 +74,20 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="tipo_usuario" class="col-md-4 col-form-label text-md-end">{{ __('Tipo Usuario') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="tipo_usuario" type="number" class="form-control @error('tipo_usuario') is-invalid @enderror" name="tipo_usuario" value="{{ old('tipo_usuario') }}" required autocomplete="tipo_usuario" autofocus>
+
+                                @error('tipo_usuario')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

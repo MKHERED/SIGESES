@@ -48,12 +48,20 @@
                                         Opciones
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('estaciones.create') }}">Nueva Estación</a>
+                                        @if (Auth::user()->tipo_usuario)
+                                            <a class="dropdown-item" href="{{ route('estaciones.create') }}">Nueva Estación</a>
+                                            <a class="dropdown-item" href="{{ route('register') }}">Crear Usuario</a>
+                                            
+                                        @endif
                                         <a class="dropdown-item" href="">Actualizar</a>
-                                        <a class="dropdown-item" href="">Visitas</a>
+                                        
                                         <a class="dropdown-item" href="{{ route('home') }}">Mapa</a>
                                     </div>
                             </li>
+                            @if (Auth::user()->tipo_usuario)
+                            <a id="navbarDropdown" class="nav-link" href="{{ route('panel.index') }}" role="button">Panel de administracion</a>                                
+                            @endif
+
                             
                         @endif
                         @if (Route::is('estaciones.show'))
@@ -62,8 +70,10 @@
                                         Opciones
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <!-- <a class="dropdown-item" href="{{ route('estaciones.create') }}">Nueva Estación</a> -->
-                                        <a class="dropdown-item" href="{{ route('estaciones.edit', $estacion->id)}}">Editar estación</a>
+                                        @if (Auth::user()->tipo_usuario)
+                                            <a class="dropdown-item" href="{{ route('estaciones.edit', $estacion->id)}}">Editar estación</a>
+                                        @endif
+                                        
                                         <a class="dropdown-item" href="">Visitas</a>
                                         <a class="dropdown-item" href="{{ route('home') }}">Mapa</a>
                                     </div>
@@ -106,6 +116,13 @@
                 </div>
             </div>
         </nav>
+        <div id="Box" class="">
+            <div class="box border text-primary text-center text-bold dark">    
+                @if (Session::has('mensaje'))
+                    {{ Session::get('mensaje')}}
+                @endif
+            </div>
+        </div>          
         @yield('content')
     </div>
 </body>
