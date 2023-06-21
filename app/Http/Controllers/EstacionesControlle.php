@@ -7,6 +7,7 @@ use App\Models\Estaciones;
 use App\Models\Link_doc;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Monolog\Handler\ElasticaHandler;
@@ -18,6 +19,11 @@ class EstacionesControlle extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $estaciones = [];
@@ -53,6 +59,8 @@ class EstacionesControlle extends Controller
     public function create()
     {
         return view('estaciones.create');
+        
+        
     }
 
     /**
@@ -184,25 +192,25 @@ class EstacionesControlle extends Controller
     public function edit($id)
     {
         //aqui hacer una plantilla igual al registro, donde los campos carguen el contenido anterior para visualizar y el nuevo para reemplazar
-        $estaciones = Estaciones::findOrFail($id);
 
-        $sigla = $estaciones['siglas'];
+        
+        if (Auth::user()->tipo_usuario == 1) {
+            $estaciones = Estaciones::findOrFail($id);
+            $sigla = $estaciones['siglas'];
+            $details = DB::table('details')->where('siglas', $sigla)->first();
 
-        $details = DB::table('details')->where('siglas', $sigla)->first();
-
-        if ($details) {
-            // cambiar componente
-            $validador = 'cambiar';
+            if ($details) {
+                // cambiar componente
+                $validador = 'cambiar';
+            } else {
+                // agregar los componentes
+                $validador = 'agregar';
+            }
+            return view('estaciones.edit', compact('estaciones', 'validador'));
         } else {
-            // agregar los componentes
-            $validador = 'agregar';
+            return redirect()->route('estaciones.index')->with('mensaje', 'Usted no tiene permiso de subir documentos');
         }
-
-
-
-        return view('estaciones.edit', compact('estaciones', 'validador'));
     }
-
     /**
      * Update the specified resource in storage.
      *

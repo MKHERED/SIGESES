@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Link_doc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {
@@ -15,13 +16,24 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
-    {   
+    {       
         $id = $_SERVER['REQUEST_URI'];
         $id1 = str_replace("update", "", $id);
         $id = str_replace("//", "", $id1);
+        
+        if (Auth::user()->tipo_usuario == 1) {
+            return view('estaciones.update', compact("id"));            
+        } else {
+            return redirect()->route('estaciones.show', $id)->with('mensaje', 'Usted no tiene permiso de subir documentos');
+        }
 
-        return view('estaciones.update', compact("id"));
+
 
     }
 
