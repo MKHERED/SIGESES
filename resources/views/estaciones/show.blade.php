@@ -253,10 +253,47 @@
         
         <!-- ----------------------------------------------------------Separacion -->    
       
-      <div id="imagenes" class="col-md-6 text-center">
-        @foreach ($link_docs as $link_doc)
-          <img class = "mt-1 mb-1 rounded" src="{{asset('storage').'/'.$link_doc->direccion}}" alt="{{$link_doc->created_at}}" width="100%" height="300px">
+      <div id="imagenes" class="col-md-6">
+        @foreach ($link_docs->take(6) as $link_doc)
+          <a target="_blank" class="text-center" href="{{asset('storage').'/'.$link_doc->direccion}}">
+          @if(in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('jpg', 'jpeg', 'png', 'gif')))
+            <img class = "mt-1 mb-1 rounded" src="{{asset('storage').'/'.$link_doc->direccion}}" alt="{{$link_doc->created_at}}" width="100%" height="300px">
+          
+            @elseif(in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'bin')))
+            <!-- Los iconos son de https:  www.flaticon.es packs file-formats-9  asi para que no lo reconozca el navegador-->
+            
+            @if (in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('pdf')))
+              <div class="col">
+                <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/pdf.png')}}" alt="{{$link_doc->nombre}}" width="160px" height="160px">
+                <label class="row " for="">{{$link_doc->nombre}}</label>                  
+              </div>
+              
+              
+
+            @elseif (in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('doc', 'dotx','docx')))
+              <div class="col">
+                <img class="row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/docx.png')}}" alt="{{$link_doc->nombre}}" width="30%" height="160px">
+                <label class="row " for="">{{$link_doc->nombre}}</label>                
+              </div>
+
+              
+            
+            @elseif (in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('xls', 'xlsx')))
+              <div class="col">
+                <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/excel.png')}}" alt="{{$link_doc->nombre}}" width="30%" height="160px">
+                <label class="row" for="">{{$link_doc->nombre}}</label>                
+              </div>
+
+              
+            @endif
+          
+          @else
+            <p>Este archivo no es una imagen ni un PDF {{$link_doc->nombre}}</p>            
+           
+          @endif
+          </a>
         @endforeach
+        
           <script>
             var img = document.getElementById('imagenes')
             img = img.childElementCount;

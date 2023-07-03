@@ -43,20 +43,7 @@
                 <p class="m-1 small"><b>Altitud: <br></b>{{ $estacion->altitud }}</p>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-              @if (Auth::user()->tipo_usuario)
-                <form action="{{ route('estaciones.destroy', $estacion->id) }}" method="POST">
-                        @csrf
-                        {{ method_field('DELETE') }}
-                        <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$estacion->nombre}}' )" value="Borrar">
-                </form>
-
-                <a   type="button" class="btn btn-sm btn-outline-secondary text-primary" href="{{ route('estaciones.edit', $estacion->id) }}">Editar</a>                
-              @endif
-
-
-                </div>
+              <div class="d-flex justify-content-end align-items-center">
                 <small class="text-body-secondary"><b>Actualizado: </b> {{ $estacion->updated_at}}</small>
               </div>
             </div>

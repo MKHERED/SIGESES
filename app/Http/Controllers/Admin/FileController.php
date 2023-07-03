@@ -60,6 +60,9 @@ class FileController extends Controller
 
         $lista[] = explode(' ', $request->list);             //$request->list;
         
+
+        //return response()->json($request->file('files0'));
+
         foreach ($lista[0] as $value) {
             if ($estaciones && $request->hasFile($value)) {
 
@@ -67,11 +70,31 @@ class FileController extends Controller
                 
                 $direccion = $request->file($value)->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
                 
+                $file = $request->file($value);
                 $documento = new Link_doc;
                 $documento->id_estacion = $estaciones["id"];
+                $documento->nombre = time().'_'.$file->getClientOriginalExtension();
                 $documento->nombre_estacion = $estaciones["nombre"];
-                $documento->direccion = $direccion;
+                
+                
+                if (strpos($direccion, '.bin')) {
+                    $newPath = str_replace('.bin', '.docx', $direccion);
+                    
+                    $documento->direccion = $newPath;
+                    
+                    if (Storage::exists($direccion)) {
+                        rename($direccion, $newPath);
+                    
+                    }
+
+                } else {
+                    $documento->direccion = $direccion;  
+                }
                 $documento->save();
+
+
+                
+                
 
                 $data[] = "ok";
               } else {
@@ -82,7 +105,7 @@ class FileController extends Controller
         }
 
        
-        
+        //return response()->json(print_r($documento));
         return redirect()->route("estaciones.index")->with(["mensaje" => "Se subieron exitosamente los documentos",]); //response()->json($estacion);//
         
     }
