@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('link_docs', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('id_estacion');
+            $table->string('nombre');
             $table->string('nombre_estacion');
             $table->string('direccion');
             $table->timestamps();

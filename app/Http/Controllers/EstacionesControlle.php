@@ -175,6 +175,7 @@ class EstacionesControlle extends Controller
         }
         if ($link_docs) {
             return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+            
         }
         
 
