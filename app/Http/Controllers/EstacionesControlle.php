@@ -143,14 +143,16 @@ class EstacionesControlle extends Controller
     public function show($id)
     {
         $estacion = Estaciones::findOrFail($id);
-        $detail = Details::findOrFail($id);
+        
+        // $detail = Details::findOrFail($id);
+        $detail = DB::table('details')->where('id', $id)->get();
         
         $link_docs = DB::table('link_docs')->where('id_estacion', $id)->get();
 
 
-        if ($detail == null) {
-            $detail = 'Sin resultados';
-        }
+         if ($detail == '[]') {
+             $detail = 'Sin resultados';
+             }
 
         $estadosList = [
             "Seleccione un Estado", "Amazonas", "Anzoátegui",
@@ -167,16 +169,58 @@ class EstacionesControlle extends Controller
         $estacion->region = $regionList[$estacion['region']];
         $estacion->operativa = $operativaList[$estacion['operativa']];
         
-
+        //
         // crear un array completo de todos los datos
-        if ($link_docs == null) {
-            return view('estaciones.show', compact('estacion', 'detail'));
+        
+        
+        if (($link_docs == "[]") && ($detail=='Sin resultados')) {
+            // details and link == null
+            $detail = new Details();              //Details::findOrFail(1);
             
-        }
-        if ($link_docs) {
+             $list = [
+                     'antena_gps', 'antena_gps_fab','antena_gps_esp','antena_parabolica','antena_parabolica_fab','antena_parabolica_esp','bateria','bateria_fab','bateria_esp','controlador_carga','controlador_carga_fab', 
+                     'controlador_carga_esp','digitalizador','digitalizador_fab','digitalizador_esp','modem_satelital','modem_satelital_fab','modem_satelital_esp','panel_solar','panel_solar_fab','panel_solar_esp',
+                     'regulador_carga','regulador_carga_fab','regulador_carga_esp','sismometro','sismometro_fab','sismometro_esp','trompeta_satelital','trompeta_satelital_fab','trompeta_satelital_esp','instalacion_satelital'
+             ];
+            
+             foreach ($list as $item){
+                 $detail->$item = ' ';
+             }
+            
             return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+         
+        } elseif (($detail=='Sin resultados') && $link_docs) {  
+            //details == null
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+        
+        } elseif ($detail && ($link_docs == "[]")) { 
+            //link == null  
+        
+            //return response()->json(print_r($detail));
+            //aunque parece adsurdo* este pedasito de codigo hace milagro, por algo el blade no agarra datos con where pero si con modelos
+            $detail = Details::findOrFail($id);
+            //---------------------------------
+
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));  
+        } elseif ($detail && $link_docs) {
+             //completo            
             
-        }
+            //aunque parece adsurdo* este pedasito de codigo hace milagro, por algo el blade no agarra datos con where pero si con modelos
+            $detail = Details::findOrFail($id);
+            //---------------------------------
+
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));  
+            
+        } 
+              
+        // if ($link_docs == null) {
+        //     return view('estaciones.show', compact('estacion', 'detail'));
+            
+        // }
+        // if ($link_docs) {
+        //     return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+            
+        // }
         
 
         //response()->json(print_r($link_docs));

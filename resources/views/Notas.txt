@@ -507,3 +507,123 @@ return muestraImg(document.getElementsByName('muestrasImg'));
                 $var = $var + 1;
             }
             //return response()->json(print_r($verif)." ".$link_docs);
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+        <!-- Un truco que ni yo se como funciona XD pero funciona, es con relacion a \/ las comillas dan error al programar, pero esta bien -->
+        <div class="col btn btn-light" role="link" target="_blank" onclick='window.location="{{asset('storage').'/'.$document->direccion}}"'>
+        <!-- -------------------------------------------------------------------------aqui cambiar la direccion -->
+        <div class="card shadow-sm small">
+            <img class="bd-placeholder-img card-img-top" src="{{ asset('storage').'/'.$document->direccion}}" width="100%" height="75%" alt="Foto de {{ $document->nombre_estacion }}">
+            
+            <div class="card-body small">
+              <p class="card-text h5">{{ $document->nombre }}</p>
+
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                
+              @if (Auth::user()->tipo_usuario)
+                <form action="" method="POST">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$document->nombre_estacion}}' )" value="Borrar">
+                </form>              
+              @endif
+
+
+                </div>
+                <small class="text-body-secondary"><b>Actualizado: </b> {{ $document->created_at}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+                <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> -->
+        
+        @foreach ($documentos as $document)
+        <!-- <a target="_blank" class="text-center d-grid" style="justify-items: center; text-decoration: none; color:black;" href="{{asset('storage').'/'.$document->direccion}}"> -->
+        
+        
+          
+          @if(in_array(pathinfo($document->direccion, PATHINFO_EXTENSION), array('jpg', 'jpeg', 'png', 'gif')))
+          <div class="col btn btn-light" role="link" target="_blank" onclick='window.location="{{asset('storage').'/'.$document->direccion}}"'>
+          
+          <div class="card shadow-sm small">  
+          <img class = "bd-placeholder-img card-img-top" src="{{asset('storage').'/'.$document->direccion}}" alt="{{$document->created_at}}" width="100%" height="300px">
+            
+            <div class="card-body small">
+              <p class="card-text h5">{{ $document->nombre }}</p>
+
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                
+              @if (Auth::user()->tipo_usuario)
+                <form action="" method="POST">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$document->nombre_estacion}}' )" value="Borrar">
+                </form>              
+              @endif
+
+
+              </div>
+             <small class="text-body-secondary"><b>Actualizado: </b> {{ $document->created_at}}</small>
+            
+              @elseif(in_array(pathinfo($document->direccion, PATHINFO_EXTENSION), array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'bin')))
+              <!-- Los iconos son de https:  www.flaticon.es packs file-formats-9  asi para que no lo reconozca el navegador-->
+              
+              @if (in_array(pathinfo($document->direccion, PATHINFO_EXTENSION), array('pdf')))
+                
+                  <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/pdf.png')}}" alt="{{$document->nombre}}" width="160px" height="160px">
+                  <label class="" for="">{{$document->nombre}}</label>                  
+                
+                
+                
+
+              @elseif (in_array(pathinfo($document->direccion, PATHINFO_EXTENSION), array('doc', 'dotx','docx')))
+                <div class="col">
+                  <img class="row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/docx.png')}}" alt="{{$document->nombre}}" width="160px" height="160px">
+                  <label class="" for="">{{$document->nombre}}</label>                
+                </div>
+
+                
+              
+              @elseif (in_array(pathinfo($document->direccion, PATHINFO_EXTENSION), array('xls', 'xlsx')))
+                <div class="col">
+                  <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/excel.png')}}" alt="{{$document->nombre}}" width="160px" height="160px">
+                  <label class="" for="">{{$document->nombre}}</label>                
+                </div>
+
+                
+              @endif
+          
+          @else
+            <p>Este archivo no es una imagen ni un PDF {{$document->nombre}}</p>            
+           
+          @endif
+        
+        </div>  
+        </a>
+
+        @endforeach 
+
+    </div>

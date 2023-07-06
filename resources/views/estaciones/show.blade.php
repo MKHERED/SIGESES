@@ -99,6 +99,13 @@
               <p class="form-label"> <b>Descripción</b></p>
             </div>
           </div>
+          @if ($detail->antena_gps == " ")
+            <div class="col-ms-15 text-center">
+              <p class="bg-dark border rounded text-light">Por favor registre los componentes
+                <a href="{{route('details.index', $estacion->id )}}" style="text-decoration: none; color:white; " class="p-1 m-1 btn small btn-success" rel="noopener noreferrer">Ingresar</a>
+              </p>
+            </div>
+          @endif
           
 
           <!-- -------------------------------------------------------------- -->
@@ -255,7 +262,7 @@
       
       <div id="imagenes" class="col-md-6">
         @foreach ($link_docs->take(6) as $link_doc)
-          <a target="_blank" class="text-center" href="{{asset('storage').'/'.$link_doc->direccion}}">
+          <a target="_blank" class="text-center d-grid" style="justify-items: center; text-decoration: none; color:black;" href="{{asset('storage').'/'.$link_doc->direccion}}">
           @if(in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('jpg', 'jpeg', 'png', 'gif')))
             <img class = "mt-1 mb-1 rounded" src="{{asset('storage').'/'.$link_doc->direccion}}" alt="{{$link_doc->created_at}}" width="100%" height="300px">
           
@@ -265,23 +272,23 @@
             @if (in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('pdf')))
               <div class="col">
                 <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/pdf.png')}}" alt="{{$link_doc->nombre}}" width="160px" height="160px">
-                <label class="row " for="">{{$link_doc->nombre}}</label>                  
+                <label class="" for="">{{$link_doc->nombre}}</label>                  
               </div>
               
               
 
             @elseif (in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('doc', 'dotx','docx')))
               <div class="col">
-                <img class="row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/docx.png')}}" alt="{{$link_doc->nombre}}" width="30%" height="160px">
-                <label class="row " for="">{{$link_doc->nombre}}</label>                
+                <img class="row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/docx.png')}}" alt="{{$link_doc->nombre}}" width="160px" height="160px">
+                <label class="" for="">{{$link_doc->nombre}}</label>                
               </div>
 
               
             
             @elseif (in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('xls', 'xlsx')))
               <div class="col">
-                <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/excel.png')}}" alt="{{$link_doc->nombre}}" width="30%" height="160px">
-                <label class="row" for="">{{$link_doc->nombre}}</label>                
+                <img class = "row mt-1 mb-1 rounded" src="{{asset('recursos/iconos files/excel.png')}}" alt="{{$link_doc->nombre}}" width="160px" height="160px">
+                <label class="" for="">{{$link_doc->nombre}}</label>                
               </div>
 
               
