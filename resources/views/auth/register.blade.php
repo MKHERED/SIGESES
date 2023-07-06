@@ -78,7 +78,11 @@
                             <label for="tipo_usuario" class="col-md-4 col-form-label text-md-end">{{ __('Tipo Usuario') }}</label>
 
                             <div class="col-md-6">
-                                <input id="tipo_usuario" type="number" class="form-control @error('tipo_usuario') is-invalid @enderror" name="tipo_usuario" value="{{ old('tipo_usuario') }}" required autocomplete="tipo_usuario" autofocus>
+                                <select id="tipo_usuario" name="tipo_usuario" class="form-control @error('tipo_usuario') is-invalid @enderror" value="{{ old('tipo_usuario') }}" required autocomplete="tipo_usuario" autofocus>
+                                    <option value="1">Administrador</option>
+                                    <option value="0">Usuario</option>
+                                </select>
+                                <!-- <input id="tipo_usuario" type="number" class="form-control @error('tipo_usuario') is-invalid @enderror" name="tipo_usuario" value="{{ old('tipo_usuario') }}" required autocomplete="tipo_usuario" autofocus> -->
 
                                 @error('tipo_usuario')
                                     <span class="invalid-feedback" role="alert">

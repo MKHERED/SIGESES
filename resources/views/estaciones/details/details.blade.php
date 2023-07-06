@@ -18,11 +18,6 @@
   <!------------------------------------------------------------------------------------------------ Registros de los detalles de la estacion -->  
     <main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
         <h5 class="m-2" style="text-decoration: underline; text-decoration-color:orange;" >Ingrese los siguientes datos de la Estación</h5>
-        <div class="box border text-primary text-center text-bold dark">    
-            @if (Session::has('mensaje'))
-                {{ Session::get('mensaje')}}
-            @endif
-        </div>
         <div class="form-center text-start">
             <form id="form" method='POST' class="form" action="{{route('details.index')}}" enctype="multipart/form-data">
                 @csrf
