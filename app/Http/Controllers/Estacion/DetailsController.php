@@ -10,6 +10,8 @@ use Illuminate\Console\View\Components\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isTrue;
+
 class DetailsController extends Controller
 {
     /**
@@ -219,9 +221,126 @@ class DetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        
+        
+        $list3 = [
+            'antena_gps', 'antena_gps_fab','antena_gps_esp','antena_parabolica','antena_parabolica_fab','antena_parabolica_esp','bateria','bateria_fab','bateria_esp','controlador_carga','controlador_carga_fab', 
+            'controlador_carga_esp','digitalizador','digitalizador_fab','digitalizador_esp','modem_satelital','modem_satelital_fab','modem_satelital_esp','panel_solar','panel_solar_fab','panel_solar_esp',
+            'regulador_carga','regulador_carga_fab','regulador_carga_esp','sismometro','sismometro_fab','sismometro_esp','trompeta_satelital','trompeta_satelital_fab','trompeta_satelital_esp','instalacion_satelital'
+        ];
+        
+        $list = [
+            'antenagps','antenaparabolica','bateria','controladorcarga', 
+            'digitalizador','modemsatelital','panelsolar',
+            'reguladorcarga','sismometro','trompetasatelital'
+        ];
+
+        $list2 = [
+            ['antenagps'=>'antena_gps',
+            'antenaparabolica'=>'antena_parabolica',
+            'bateria'=>'bateria',
+            'controladorcarga'=>'controlador_carga', 
+            'digitalizador'=>'digitalizador',
+            'modemsatelital'=>'modem_satelital',
+            'panelsolar'=>'panel_solar',
+            'reguladorcarga'=>'regulador_carga',
+            'sismometro'=>'sismometro',
+            'trompetasatelital'=>'trompeta_satelital'],
+            
+            ['antenagps'=>'antena_gps_fab',
+            'antenaparabolica'=>'antena_parabolica_fab',
+            'bateria'=>'bateria_fab',
+            'controladorcarga'=>'controlador_carga_fab', 
+            'digitalizador'=>'digitalizador_fab',
+            'modemsatelital'=>'modem_satelital_fab',
+            'panelsolar'=>'panel_solar_fab',
+            'reguladorcarga'=>'regulador_carga_fab',
+            'sismometro'=>'sismometro_fab',
+            'trompetasatelital'=>'trompeta_satelital_fab'],
+
+            ['antenagps'=>'antena_gps_esp',
+            'antenaparabolica'=>'antena_parabolica_esp',
+            'bateria'=>'bateria_esp',
+            'controladorcarga'=>'controlador_carga_esp', 
+            'digitalizador'=>'digitalizador_esp',
+            'modemsatelital'=>'modem_satelital_esp',
+            'panelsolar'=>'panel_solar_esp',
+            'reguladorcarga'=>'regulador_carga_esp',
+            'sismometro'=>'sismometro_esp',
+            'trompetasatelital'=>'trompeta_satelital_esp']
+    
+        ];
+        
+        foreach ($list as $tables){
+            $details = DB::table('details')->where('id', $id)->get(); //iterar y hacer 10mil cosas
+            
+            if ($tables == $request->component) {
+                
+            
+                $component = DB::table($tables)->where('id', $id)->get(); // solo borrar
+                //return response()->json(print_r($component));
+                
+                //mysqli_num_rows()
+                if (count($component)>=1) {
+                    DB::table($tables)->where('id','=', $id)->delete(); //aqui se destruye el componente en su tabla correspondiente
+                    //este array contiene las claves para cada details
+                    $iterador = $list2[0][$tables];
+                    $details[0]->$iterador = " ";
+                    // aqui estoy obteniendo el nombre del componente en details
+                    
+                    $iterador = $list2[1][$tables];
+                    $details[0]->$iterador = " ";
+
+                    $iterador = $list2[2][$tables];
+                    $details[0]->$iterador = " ";
+                    // ya aqui se editaron las propiedades de los componentes en details
+                    // ahora solo se debe eliminar el componente
+
+                    
+                    /*para solucionar este error puedo solo convertir 
+                    el array que llega en los componentes nuevamente 
+                    con un forearh*/
+
+                    $nuevo['id'] = $details[0]->id;
+                    $nuevo['estacion'] = $details[0]->estacion;
+                    $nuevo['siglas'] = $details[0]->siglas;
+
+                    for ($i=0; $i < 31; $i++) { 
+                        $iterador = $list3[$i];
+                        $nuevo[$iterador] = $details[0]->$iterador;
+                    }
+
+                    $estacion = $component[0]->estacion;
+                    
+                    //return response()->json($estacion);
+                    
+                    Details::where('estacion', '=', $estacion)->update($nuevo);                      
+                    return redirect()->route("panel.detail")->with(["mensaje" => "Se elimino con exito"]);
+                } else {
+                    return redirect()->route("panel.detail")->with(["mensaje" => "Ya se elimino anteriormente"]);
+                    
+                }
+          
+                
+            }
+
+            
+
+
+              
+        }
+        // consultar el id
+        //$serial = DB::table('details')->where('id', $id)->get('')
+        
+        // primero traerme el tipo de componente listo
+        // el id del mismo en este caso id=3 details es == id=3 estaciones
+        // y luego borrar el componetne dependiendo la tabla, hacer un for para igualar con una lista donde esten grabados todos los nombres de las tablas
+        // y luego borrar el componente de la estacion details
+        // luego hacer una opcion para agregar dicho componente solamente
+
+
     }
 
     public function regist($details)
