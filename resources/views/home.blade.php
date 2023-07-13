@@ -10,7 +10,17 @@
         height: 100%;
         position: absolute;
     }
+    #cover {
+        width: 100%;
+        height: 100%;
+        opacity: 90%;
+    }
 </style>
-<div id="mapa" class=" text-light">
+<div id="mapa" >
+
 </div>
+
+
+
+
 @endsection

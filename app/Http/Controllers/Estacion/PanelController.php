@@ -97,23 +97,26 @@ class PanelController extends Controller
     }
 
     public function detail(Request $request) {
-        if ($request->id) {
+        if ($request->id == 'all') {
             $details = [];
-
-            $details = DB::table('details')->where('id', $request->id)->get();            
-            $options = Details::all();
-            // return response()->json($request);
-
-            return view('admin/panel/detail', compact('details', 'options')); 
-        } else {
-            $details = [];
-
             foreach (Details::all() as $detail){
                 $details[] = $detail;
             }
-            
             $options = Details::all();
-            
+            return view('admin/panel/detail', compact('details', 'options')); 
+        
+        } elseif ($request->id) {
+            $details = [];
+            $details = DB::table('details')->where('id', $request->id)->get();            
+            $options = Details::all();
+            return view('admin/panel/detail', compact('details', 'options')); 
+        
+        } else {
+            $details = [];
+            foreach (Details::all() as $detail){
+                $details[] = $detail;
+            }
+            $options = Details::all();
             return view('admin/panel/detail', compact('details', 'options'));            
         }
         

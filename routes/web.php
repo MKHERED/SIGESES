@@ -37,11 +37,12 @@ Route::get('/update/{id}', 'App\Http\Controllers\Admin\FileController@index')->n
 Route::post('/update-store/', [FileController::class, 'store'])->name('update.store');
 Route::resource('/details', DetailsController::class)->parameters(["details"=>'detail']);
 
+
 Route::get('/admin/panel', [App\Http\Controllers\Estacion\PanelController::class, 'index'])->name('panel.index');
 Route::get('/admin/panel/document', [App\Http\Controllers\Estacion\PanelController::class, 'document'])->name('panel.document');
 Route::get('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelController@documentShow')->name('panel.show');
 Route::get('/admin/panel/detail', [App\Http\Controllers\Estacion\PanelController::class, 'detail'])->name('panel.detail');
-
+Route::post('/details/updateEdit', [DetailsController::class, 'updateEdit'])->name('details.updateEdit');
 
 
 // Route::get('admin/panel', function() {
