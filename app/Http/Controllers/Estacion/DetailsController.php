@@ -197,7 +197,7 @@ class DetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $details = request()->except(['_token', '_method']);
+        $details = request()->except(['_token', '_method', 'inst']);
         $estacion = Estaciones::findOrFail($id);
         
         $siglas = $estacion['siglas'];
@@ -343,6 +343,70 @@ class DetailsController extends Controller
 
     }
 
+    public function updateEdit(Request $request){
+        //  return response()->json($request);
+        $list = [
+            ['Antena gps'=>'antena_gps',
+            'Antena parabolica'=>'antena_parabolica',
+            'Bateria'=>'bateria',
+            'Controlador de carga'=>'controlador_carga', 
+            'Digitalizador'=>'digitalizador',
+            'Modem'=>'modem_satelital',
+            'Panel solar'=>'panel_solar',
+            'Regulador de carga'=>'regulador_carga',
+            'Sismometro'=>'sismometro',
+            'Trompeta'=>'trompeta_satelital'],
+            
+            ['antena_gps'=>'antenagps',
+            'antena_parabolica'=>'antenaparabolica',
+            'bateria'=>'bateria',
+            'controlador_carga'=>'controladorcarga', 
+            'digitalizador'=>'digitalizador',
+            'modem_satelital'=>'modemsatelital',
+            'panel_solar'=>'panelsolar',
+            'regulador_carga'=>'reguladorcarga',
+            'sismometro'=>'sismometro',
+            'trompeta_satelital'=>'trompetasatelital'],
+        ];
+        
+
+        $id = $request->id;
+        $serial  = $request->serial;
+        $detail = $request->detail;
+
+        if ($serial == null) {
+            return redirect()->route("panel.detail")->with(["mensaje" => "No puede enviar un componete vacios"]);
+            
+        }
+
+        $conver = $list[0][$detail];
+        
+        $conver1 = $list[1][$conver];
+
+        $details = DB::table($conver1)->where('id', $id)->get();
+        if (count($details)>=1) {
+            $details[0]->$conver = $serial;
+            //este pedacito convierte stdclass a array... ----------
+            $array = json_decode(json_encode($details[0]), true);
+            //------------------------------------------------------
+            DB::table($conver1)->where('id', '=' ,$id)->update($array);            
+        } else {
+            return redirect()->route("panel.detail")->with(["mensaje" => "Por favor dirijase a editar todos los componentes"]);
+            
+        }
+
+
+        //------------------------------------------------------------
+        $details = DB::table('details')->where('id', '=', $id)->get();
+        $details[0]->$conver = $serial;
+        $array = json_decode(json_encode($details[0]), true);
+        DB::table('details')->where('id', '=' ,$id)->update($array);
+        //------------------------------------------------------------
+
+        return redirect()->route("panel.detail")->with(["mensaje" => "Se actualizo con exito"]);
+    }
+
+    // revisar y optimisar mejor regist ya que es muy largo XD
     public function regist($details)
     {
         $msj = ["mensaje" => "Componente ya registrado",];

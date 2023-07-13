@@ -141,3 +141,33 @@ function ImagenVerif(img, url) {
 
     }
 }
+
+function detail(component, id) {
+    var capa = document.getElementById('modalSheet');
+    var modal = document.getElementById('modalCard')
+    var body = document.getElementById('modal-body')
+    var input = document.getElementById('id-input')
+    var com_input = document.getElementById('component-input')
+
+    var title = document.getElementById('modal-title')
+    
+    if (component && id) {
+        input.setAttribute('value', id)
+        com_input.setAttribute('value', component)
+        title.innerText = 'Desea editar '+component
+        body.innerText = component
+
+        capa.classList.remove('hidden')
+        
+        if (capa.getAttribute('style') == 'visibility:hidden') {
+            capa.removeAttribute('style')
+        }
+
+        modal.classList.remove('hidden')       
+    } else {
+        modal.classList.add('hidden')
+        capa.setAttribute('style', 'visibility:hidden')
+    }
+
+}
+

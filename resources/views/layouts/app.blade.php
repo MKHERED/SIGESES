@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="{{asset('css/signin.css') }}">
     <link rel="website icon" href="{{asset('recursos/icon.png')}}">
 
-     <link rel="stylesheet" href="{{asset('css/cheatsheet.css')}}"> 
+
+    <link rel="stylesheet" href="{{asset('css/cheatsheet.css')}}"> 
 
     <!-- Scripts  -->
     <!-- <script src="{{asset('js/bootstrap.bundle.min.js') }}"></script> -->
@@ -137,8 +138,8 @@
                 </div>
             </div>
         </nav>
-        <div id="Box" class="">
-            <div class="box border text-primary text-center text-bold dark">    
+        <div id="Box" class="bg-dark">
+            <div class="box text-light text-center text-bold dark">    
                 @if (Session::has('mensaje'))
                     {{ Session::get('mensaje')}}
                 @endif

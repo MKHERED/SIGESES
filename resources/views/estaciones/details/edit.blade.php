@@ -48,6 +48,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial" value="{{$details->antena_gps}}">
+                                    <input class="form-control" type="text" name="antena_gps_fab" id="antena_gps_fab" placeholder="Fabricante" value="{{$details->antena_gps_fab}}">
                                     <input class="form-control" type="text" name="antena_gps_esp" id="antena_gps_esp" placeholder="Especificaciones" value="{{$details->antena_gps_esp}}">
                                 </td>
                             </tr>
@@ -57,6 +58,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="antena_parabolica" id="antena_parabolica" placeholder="Serial" value="{{$details->antena_parabolica}}">
+                                    <input class="form-control" type="text" name="antena_parabolica_fab" id="antena_parabolica_fab" placeholder="Fabricante" value="{{$details->antena_parabolica_fab}}">
                                     <input class="form-control" type="text" name="antena_parabolica_esp" id="antena_parabolica_esp" placeholder="Especificaciones" value="{{$details->antena_parabolica_esp}}">
                                 </td> 
                             </tr>
@@ -66,6 +68,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial" value="{{$details->bateria}}">
+                                    <input class="form-control" type="text" name="bateria_fab" id="bateria_fab" placeholder="Fabricante" value="{{$details->bateria_fab}}">
                                     <input class="form-control" type="text" name="bateria_esp" id="bateria_esp" placeholder="Especificaciones" value="{{$details->bateria_esp}}">
                                 </td> 
                             </tr>
@@ -75,6 +78,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial" value="{{$details->controlador_carga}}">
+                                    <input class="form-control" type="text" name="controlador_carga_fab" id="controlador_carga_fab" placeholder="Fabricante" value="{{$details->controlador_carga_fab}}">
                                     <input class="form-control" type="text" name="controlador_carga_esp" id="controlador_carga_esp" placeholder="Especificaciones" value="{{$details->controlador_carga_esp}}">
                                 </td> 
                             </tr>
@@ -84,6 +88,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="digitalizador" id="digitalizador" placeholder="Serial" value="{{$details->digitalizador}}">
+                                    <input class="form-control" type="text" name="digitalizador_fab" id="digitalizador_fab" placeholder="Fabricante" value="{{$details->digitalizador_fab}}">
                                     <input class="form-control" type="text" name="digitalizador_esp" id="digitalizador_esp" placeholder="Especificaciones" value="{{$details->digitalizador_esp}}">
                                 </td> 
                             </tr>
@@ -98,6 +103,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="modem_satelital" id="modem_satelital" placeholder="Serial" value="{{$details->modem_satelital}}">
+                                    <input class="form-control" type="text" name="modem_satelital_fab" id="modem_satelital_fab" placeholder="Fabricante" value="{{$details->modem_satelital_fab}}">
                                     <input class="form-control" type="text" name="modem_satelital_esp" id="modem_satelital_esp" placeholder="Especificaciones" value="{{$details->modem_satelital_esp}}">
                                 </td> 
                             </tr>
@@ -107,6 +113,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial" value="{{$details->panel_solar}}">
+                                    <input class="form-control" type="text" name="panel_solar_fab" id="panel_solar_fab" placeholder="Fabricante" value="{{$details->panel_solar_fab}}">
                                     <input class="form-control" type="text" name="panel_solar_esp" id="panel_solar_esp" placeholder="Especificaciones" value="{{$details->panel_solar_esp}}">
                                 </td> 
                             </tr>
@@ -116,6 +123,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial" value="{{$details->regulador_carga}}">
+                                    <input class="form-control" type="text" name="regulador_carga_fab" id="regulador_carga_fab" placeholder="Fabricante" value="{{$details->regulador_carga_fab}}">
                                     <input class="form-control" type="text" name="regulador_carga_esp" id="regulador_carga_esp" placeholder="Especificaciones" value="{{$details->regulador_carga_esp}}">
                                 </td> 
                             </tr> 
@@ -125,6 +133,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial" value="{{$details->sismometro}}">
+                                    <input class="form-control" type="text" name="sismometro_fab" id="sismometro_fab" placeholder="Fabricante" value="{{$details->sismometro_fab}}">
                                     <input class="form-control" type="text" name="sismometro_esp" id="sismometro_esp" placeholder="Especificaciones" value="{{$details->sismometro_esp}}">
                                 </td> 
                             </tr>
@@ -134,6 +143,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type="text" name="trompeta_satelital" id="trompeta_satelital" placeholder="Serial" value="{{$details->trompeta_satelital}}">
+                                    <input class="form-control" type="text" name="trompeta_satelital_fab" id="trompeta_satelital_fab" placeholder="Fabricante" value="{{$details->trompeta_satelital_fab}}">
                                     <input class="form-control" type="text" name="trompeta_satelital_esp" id="trompeta_satelital_esp" placeholder="Especificaciones" value="{{$details->trompeta_satelital_esp}}">
                                 </td> 
                             </tr>
