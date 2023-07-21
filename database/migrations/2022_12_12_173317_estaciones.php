@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('siglas');
             $table->string('nombre');
+            $table->string('autor');            
             $table->string('ubicacion');
             $table->string('longitud');
             $table->string('latitud');

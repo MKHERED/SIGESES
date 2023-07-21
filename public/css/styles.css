@@ -48,4 +48,7 @@ input:focus, input[type]:focus{
 .extension {
     width: 100% !important;
 }
-
+.table {
+    --bs-table-hover-color: var(--bs-light) !important;
+    --bs-table-hover-bg: var(--bs-light) !important;
+}

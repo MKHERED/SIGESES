@@ -24,6 +24,8 @@
                 <tag id="foreach" >
                 <div class="text-center">
                     <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
+                    <input type="hidden" name="autor" value="{{ Auth::user()->name }}">
+                    
                     <table class="table">
                         <tr class="row">
                             <td class="col-4">

@@ -77,6 +77,7 @@ class EstacionesControlle extends Controller
         $estaciones->id = $request->id;
         $estaciones->siglas = $request->siglas;
         $estaciones->nombre = $request->nombre;
+        $estaciones->autor = $request->autor;
         $estaciones->ubicacion = $request->ubicacion;
 
         if ($request->gms == "on") {

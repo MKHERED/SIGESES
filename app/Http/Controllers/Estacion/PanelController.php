@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Details;
 use Illuminate\Http\Request;
 use App\Models\Estaciones;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class PanelController extends Controller
@@ -97,19 +98,21 @@ class PanelController extends Controller
     }
 
     public function detail(Request $request) {
+        $autores = User::all();
+        
         if ($request->id == 'all') {
             $details = [];
             foreach (Details::all() as $detail){
                 $details[] = $detail;
             }
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options')); 
+            return view('admin/panel/detail', compact('details', 'options', 'autores')); 
         
         } elseif ($request->id) {
             $details = [];
             $details = DB::table('details')->where('id', $request->id)->get();            
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options')); 
+            return view('admin/panel/detail', compact('details', 'options', 'autores')); 
         
         } else {
             $details = [];
@@ -117,7 +120,7 @@ class PanelController extends Controller
                 $details[] = $detail;
             }
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options'));            
+            return view('admin/panel/detail', compact('details', 'options', 'autores'));            
         }
         
         

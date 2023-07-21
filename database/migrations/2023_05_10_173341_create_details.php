@@ -71,6 +71,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("antena_gps");
             $table->string("antena_gps_fab");
@@ -85,6 +87,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("antena_parabolica");
             $table->string("antena_parabolica_fab");
@@ -99,6 +103,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("bateria");
             $table->string("bateria_fab");
@@ -113,6 +119,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("controlador_carga");
             $table->string("controlador_carga_fab");
@@ -127,6 +135,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("digitalizador");
             $table->string("digitalizador_fab");
@@ -141,6 +151,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("modem_satelital");
             $table->string("modem_satelital_fab");
@@ -155,6 +167,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("panel_solar");
             $table->string("panel_solar_fab");
@@ -169,6 +183,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("regulador_carga");
             $table->string("regulador_carga_fab");
@@ -183,6 +199,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("sismometro");
             $table->string("sismometro_fab");
@@ -197,6 +215,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("trompeta_satelital");
             $table->string("trompeta_satelital_fab");
@@ -211,6 +231,8 @@ return new class extends Migration
             //------------------------------------------------- Datos a pertenecer --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string('autor');            
+
             //------------------------------------------------- Componente ----------------------
             $table->string("instalacion_satelital");
             //-----------------------------------------------------------------------------------
