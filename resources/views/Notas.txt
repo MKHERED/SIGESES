@@ -688,7 +688,379 @@ agregar un div del tamñano de la pagina
 
 
 
+{{ Auth::user()->name }}
+
+
+
+
 
 
 
                 <!-- <a   type="button" class="btn btn-sm btn-outline-secondary text-primary" href="{{ route('details.edit', $detail->id) }}">Editar</a>                 -->
+
+
+
+
+
+
+
+
+
+        $msj = ["mensaje" => "Componente ya registrado",];
+        $detail = null;
+        $var = null;
+        if ((DB::table('antenagps')->where('antena_gps', $details['antena_gps'])->first()) == null ) {
+            $antenagps = true;
+        } else {
+            $db = DB::table('antenagps')->where('antena_gps', $details['antena_gps'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'antena GPS';
+            $antenagps = false;
+        }
+        if ((DB::table('antenaparabolica')->where('antena_parabolica', $details['antena_parabolica'])->first()) == null ) {
+            $antenaparabolica = true;
+        } else {
+            $db = DB::table('antenaparabolica')->where('antena_parabolica', $details['antena_parabolica'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'antena parabolica';
+            $antenaparabolica = false;
+        }
+
+        if ((DB::table('bateria')->where('bateria', $details['bateria'])->first()) == null ) {
+            $bateria = true;     
+        } else {
+            $db = DB::table('bateria')->where('bateria', $details['bateria'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'bateria';
+            $bateria = false;
+
+        }
+
+        if ((DB::table('controladorcarga')->where('controlador_carga', $details['controlador_carga'])->first()) == null ) {
+            $controladorcarga = true;
+        
+        } else {
+            $db = DB::table('controladorcarga')->where('controlador_carga', $details['controlador_carga'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'controlador carga';
+            $controladorcarga = false;
+
+        }
+
+        if ((DB::table('digitalizador')->where('digitalizador', $details['digitalizador'])->first()) == null ) {
+            $digitalizador = true;
+        } else {
+            $db = DB::table('digitalizador')->where('digitalizador', $details['digitalizador'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'digitalizador';
+            $digitalizador = false;
+        }
+
+        if ((DB::table('modemsatelital')->where('modem_satelital', $details['modem_satelital'])->first()) == null ) {
+            $modemsatelital = true;
+        
+        } else {
+            $db = DB::table('modemsatelital')->where('modem_satelital', $details['modem_satelital'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'modem satelital';
+            $modemsatelital = false;
+
+        }
+
+        if ((DB::table('panelsolar')->where('panel_solar', $details['panel_solar'])->first()) == null ) {
+            $panelsolar = true;
+            
+        } else {
+            $db = DB::table('panelsolar')->where('panel_solar', $details['panel_solar'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'panel solar';
+            $panelsolar = true;
+        }
+
+        if ((DB::table('reguladorcarga')->where('regulador_carga', $details['regulador_carga'])->first()) == null ) {
+            $reguladorcarga = true;
+            
+        } else {
+            $db = DB::table('reguladorcarga')->where('regulador_carga', $details['regulador_carga'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'regulador carga';
+            $reguladorcarga = false;
+        }
+
+        if ((DB::table('sismometro')->where('sismometro', $details['sismometro'])->first()) == null ) {
+            $sismometro = true;
+        } else {
+            $db = DB::table('sismometro')->where('sismometro', $details['sismometro'])->get($columns = ['estacion']);
+
+            $var = $db;
+            $detail = 'sismometro';
+            $sismometro = false;
+        }
+
+        
+
+        if ((DB::table('trompetasatelital')->where('trompeta_satelital', $details['trompeta_satelital'])->first()) == null ) {
+            $trompetasatelital = true;
+        } else {
+            $db = DB::table('trompetasatelital')->where('trompeta_satelital', $details['trompeta_satelital'])->get($columns = ['estacion']);//->first();
+
+            $var = $db;
+            $detail = 'trompeta satelital';
+            $trompetasatelital = false;
+        }
+        // aqui se insertan los componentes si todos pasan, si no no
+        if ($antenagps && $antenaparabolica && $bateria && $controladorcarga && $digitalizador && $modemsatelital && $panelsolar && $reguladorcarga && $sismometro && $trompetasatelital) {
+            // listo aqui se esta registrando... validar si el componente exixte o no
+            // $antenagps = true;
+            DB::table('antenagps')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'antena_gps'=>$details['antena_gps'],
+                'antena_gps_fab'=>$details['antena_gps_fab'],
+                'antena_gps_esp'=>$details['antena_gps_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            
+            // $antenaparabolica = true;
+            DB::table('antenaparabolica')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'antena_parabolica'=>$details['antena_parabolica'],
+                'antena_parabolica_fab'=>$details['antena_parabolica_fab'],
+                'antena_parabolica_esp'=>$details['antena_parabolica_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            //  $bateria = true;
+            DB::table('bateria')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'bateria'=>$details['bateria'],
+                'bateria_fab'=>$details['bateria_fab'],
+                'bateria_esp'=>$details['bateria_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]); 
+            // $controladorcarga = true;
+            DB::table('controladorcarga')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'controlador_carga'=>$details['controlador_carga'],
+                'controlador_carga_fab'=>$details['controlador_carga_fab'],
+                'controlador_carga_esp'=>$details['controlador_carga_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            // $digitalizador = true;
+            DB::table('digitalizador')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'digitalizador'=>$details['digitalizador'],
+                'digitalizador_fab'=>$details['digitalizador_fab'],
+                'digitalizador_esp'=>$details['digitalizador_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            // $modemsatelital = true;
+            DB::table('modemsatelital')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'modem_satelital'=>$details['modem_satelital'],
+                'modem_satelital_fab'=>$details['modem_satelital_fab'],
+                'modem_satelital_esp'=>$details['modem_satelital_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            // $panelsolar = true;
+            DB::table('panelsolar')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'panel_solar'=>$details['panel_solar'],
+                'panel_solar_fab'=>$details['panel_solar_fab'],
+                'panel_solar_esp'=>$details['panel_solar_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            // $reguladorcarga = true;
+            DB::table('reguladorcarga')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'regulador_carga'=>$details['regulador_carga'],
+                'regulador_carga_fab'=>$details['regulador_carga_fab'],
+                'regulador_carga_esp'=>$details['regulador_carga_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            // $sismometro = true;
+            DB::table('sismometro')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'sismometro'=>$details['sismometro'],
+                'sismometro_fab'=>$details['sismometro_fab'],
+                'sismometro_esp'=>$details['sismometro_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+            // $trompetasatelital = true;
+            DB::table('trompetasatelital')->insert([
+                'id'=> $details['id'],
+                'estacion'=> $details['estacion'],
+                'siglas'=>$details['siglas'],
+                'trompeta_satelital'=>$details['trompeta_satelital'],
+                'trompeta_satelital_fab'=>$details['trompeta_satelital_fab'],
+                'trompeta_satelital_esp'=>$details['trompeta_satelital_esp'], 
+                'created_at'=>$details['instalacion_satelital'],
+                'updated_at'=>$details['instalacion_satelital'],
+            ]);
+        }
+        
+        if ($var != null) {
+            $var1 =implode(", ", $var->pluck('estacion')->toArray());            
+        } else {
+            $var1 = null;
+        }
+
+        // validador y respuesta de las consultas
+        if ($detail == null){
+            $msj = ["mensaje" => "Componentes registrados exitosamente",];
+        } else {
+            $msj = ["mensaje" => "Componente ya registrado ".$detail." en ".$var1,];
+        }
+
+        $validador = [
+            'msj'=>$msj,
+            'detail'=>$detail,
+            'var'=>$var1,
+        ];
+        
+
+                        
+                //$error = 'No puede introducir valores vacios en ';
+                // $iterador = $list3[0][$tables];
+                // $iterador2 = $list3[1][$tables];
+                // $iterador3 = $list3[2][$tables];
+                
+                // $error[] = [$iterador, $iterador2, $iterador3];
+                
+                $iterador = $list3[0][$tables];
+                $error[] = [$iterador, $i, $tables];
+                
+                if ($details[$iterador] == null ) {
+                    //$error = var_dump($iterador).'No puede introducir valores vacios en'.$i;
+                    
+                    break;
+                    $iterador = $list3[1][$tables];
+                }
+                
+                elseif ($details[$iterador]==null) {
+                    $error = var_dump($iterador).'No puede introducir valores vacios en'.$i;
+                    break;
+                    $iterador = $list3[2][$tables];
+                }
+               
+                elseif ($details[$iterador] == null){
+                    $error = var_dump($iterador).'No puede introducir valores vacios en'.$i;
+                    break;
+                }   
+                $i = $i + 1;  
+
+
+
+-----------------------------------------
+
+
+
+
+            //hacer un for para validar los null
+            
+            if ($db == false) {
+                foreach ($list2 as $tables) {
+                    for ($i=0; $i <= 9; $i++) { 
+                        
+                        $detail['id'] = $details->id;
+                        $detail['estacion'] = $details->estacion;
+                        $detail['siglas']= $details->siglas;
+                        $detail['autor']= $details->autor;
+
+                        $iterador = $list3[0][$tables];
+                        $detail[$iterador] =  $details->$iterador;
+
+                        $iterador = $list3[1][$tables];
+                        $detail[$iterador] =  $details->$iterador;
+
+                        $iterador = $list3[2][$tables];
+                        $detail[$iterador] =  $details->$iterador;
+
+                        $detail['created_at']=$details->instalacion_satelital;
+                        $detail['updated_at']=$details->instalacion_satelital;
+
+                        //$array = json_decode(json_encode($detail), true);
+                        
+                        $error = $detail;
+                        
+                        //break;
+
+                        //DB::table($tables)->insert($array);
+                        
+                    }                
+                };
+                
+                return $error;}
+            /*    
+                $msj = ["mensaje" => "Componentes registrados exitosamente",];            
+
+            } elseif ($db != false ) {
+                $validador = [
+                    'msj'=>$msj,
+                    'detail'=>$detail,
+                    'var'=>$db,
+                ];
+            };
+            return $validador;
+            */
+        };
+        //return compact('error', 'validador');
+        
+        /*
+        $detail = null;
+        $var = null;
+        
+        if ($var != null) {
+            $var1 =implode(", ", $var->pluck('estacion')->toArray());            
+        } else {
+            $var1 = null;
+        }
+
+        // validador y respuesta de las consultas
+        if ($detail == null){
+            $msj = ["mensaje" => "Componentes registrados exitosamente",];
+        } else {
+            $msj = ["mensaje" => "Componente ya registrado ".$detail." en ".$var1,];
+        }
+
+        $validador = [
+            'msj'=>$msj,
+            'detail'=>$detail,
+            'var'=>$var1,
+        ];
+
+        return $validador;
+        */

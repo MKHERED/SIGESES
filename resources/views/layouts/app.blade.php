@@ -22,6 +22,17 @@
     
 </head>
 <body class="p-0">
+    <script>
+        var n = 0;
+
+        window.setInterval(function(){
+            n++;
+            console.log(n);
+        },1000);
+
+        window.setInterval("location.reload()", 60000);
+        
+    </script>
     <div id="app">
         <nav class="navbar small navbar-expand-sm navbar-dark bg-dark shadow-sm">
             <div class="container">

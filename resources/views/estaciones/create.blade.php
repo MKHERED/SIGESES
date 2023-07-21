@@ -22,6 +22,7 @@
        
         <form method='POST' class="form small" action="{{route('estaciones.store')}}" enctype="multipart/form-data">
              @csrf
+             <input type="text" name="autor" value="{{ Auth::user()->id }}" hidden>
              <div class="row w-max">
                 <div class="col-6">
                 <table class="table">
