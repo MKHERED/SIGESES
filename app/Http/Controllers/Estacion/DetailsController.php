@@ -132,34 +132,50 @@ class DetailsController extends Controller
         
         
         $validador = $this->regist($details);
-        
         //return response()->json(var_dump($validador));
-        ///*
-       
         
-
-        if (array_key_exists('error', $validador)) {
-            $id ="/".$request->id;
-            
-            return redirect()->route("details.index", $id)->with(["mensaje" => $validador['validador']['msj'].$validador['validador']['detail'] ]);
-            
-        }
-        elseif ($validador['msj'] == ["mensaje" => "Componente ya registrado ".$validador['detail']." en ".$validador['var'],]) {
-            $id ="/".$request->id;
-
-            return redirect()->route("details.index", $id)->with($validador['msj']);
-            
-        
-        } elseif ($doc == "Si") {
+        ///*        
+        if ($doc == 'Si'){
             $id = $request->id;
 
             return redirect()->route("update",compact('id'))->with(["mensaje" => "Creada con exito",]);
-        
-        } else {
-            $details->__unset('autor');  //except(['autor']); //except(['_token', '_method', 'inst']);
-            //$details->save(); 
-            return redirect()->route("estaciones.index")->with($validador['msj']);
         }
+
+        if (array_key_exists('msj', $validador)) {
+            // registrado
+            if ($validador['msj'] == ["mensaje" => "Componentes registrados exitosamente",]) {
+                $details->__unset('autor');  //except(['autor']); //except(['_token', '_method', 'inst']);
+                $details->save(); 
+                return redirect()->route("estaciones.index")->with($validador['msj']);
+            }            
+        }
+        
+        if (array_key_exists('var', $validador)){
+            // Componente ya registrado
+            $id ="/".$request->id;
+            if ($validador['msj'] == ["mensaje" => "Componente ya registrado: "]) {
+                $validador['msj'] = ["mensaje" => "Componente ya registrado: ".$validador['detail']." en ".$validador['var']];                
+            
+            } elseif ($validador['msj'] == ["mensaje" => "Esta estacion ya tiene un componente registrado en: "]) {
+                $validador['msj'] = ["mensaje" => "Esta estacion ya tiene un componente registrado en: ".$validador['detail']];
+            }
+            
+            
+            return redirect()->route("details.index", $id)->with($validador['msj']);
+
+        
+        }
+
+
+        if (array_key_exists('error', $validador)) {
+            // Componente Faltante no pasa
+            
+            $id ="/".$request->id;
+            return redirect()->route("details.index", $id)->with(["mensaje" => $validador['validador']['msj'].$validador['validador']['detail'] ]);
+            
+        }
+
+
         //*/  
         
         
@@ -422,10 +438,11 @@ class DetailsController extends Controller
     // revisar y optimisar mejor regist ya que es muy largo XD
     public function regist($details)
     {
+     
         $msj = ["mensaje" => "Componente ya registrado",];
         $detail = null;
         $var = null;
-        $validador = false;
+        
 
         $list = [
             'antena_gps','antena_parabolica','bateria','controlador_carga', 
@@ -474,18 +491,18 @@ class DetailsController extends Controller
     
         ];
         
-        $error = true;
+        $error = 'a';
         
         foreach ($list2 as $tables) {
             $iterador = $list3[0][$tables];
             $iterador1 = $list3[1][$tables];
             $iterador2 = $list3[2][$tables];
             $msj = 'No puede dejar este campo vacio: ';
-            $validador = false;
+            
 
             if($details[$iterador]==null){
                 //$error[] = [$details[$iterador], $iterador];
-                $error == true;
+                $error = 'b';
                 $validador = [
                     'msj'=>$msj,
                     'detail'=>$iterador
@@ -493,7 +510,7 @@ class DetailsController extends Controller
             } 
             if($details[$iterador1] == null){
                 //$error[] = [$details[$iterador1], $iterador1];
-                $error == true;
+                $error = 'b';
                 $validador = [
                     'msj'=>$msj,
                     'detail'=>$iterador1
@@ -501,7 +518,7 @@ class DetailsController extends Controller
             } 
             if($details[$iterador2] == null) {
                 //$error[] = [$details[$iterador2], $iterador2];
-                $error == true;
+                $error = 'b';
                 $validador = [
                     'msj'=>$msj,
                     'detail'=>$iterador2
@@ -510,36 +527,53 @@ class DetailsController extends Controller
             }
             if($details['instalacion_satelital']==null){
                 //$error[] = $details['instalacion_satelital'];
-                $error == true;
+                $error = 'b';
                 $validador = [
                     'msj'=>$msj,
                     'detail'=>'Fecha'
                 ];
             }
             
+            
         }
 
-        if ($validador != true) {
+        if ($error == 'a') {
             
         
             for ($i=0; $i <= 9; $i++) { 
                 $column = $list[$i];
                 $consult = DB::table($list2[$i])->where($column, $details[$column])->first();
-
-                if ($consult == null) {
+                $consult_id = DB::table($list2[$i])->where('id', '=', $details['id'])->first();
+                if (($consult == null) && ($consult_id == null)) {
                     $db = false;
+                } elseif (($consult_id->id == $details['id']) && ($consult == null)) {
+                    global $db;
+                    $db = $consult_id->estacion;
+                    $detail = $column;
+                    $msj = ["mensaje" => "Esta estacion ya tiene un componente registrado en: "];
+                    break;                   
                 } else {
                     global $db;
-                    $db = $consult->estacion;
+                    $db = $consult_id->estacion;
                     $detail = $column;
+                    $msj = ["mensaje" => "Componente ya registrado: "];
                     break;
                 }
                         
             }
             //Revisar aqui..... hacer un json pra saber porque dece consul == null cuando no deberia
-            $msj = ["mensaje" => "Componentes registrados exitosamente",];            
+            //return compact('db', 'consult', 'consult_id');
+
+                    
             
             if ($db == false) {
+                
+                $msj = ["mensaje" => "Componentes registrados exitosamente",];    
+                $validador = [
+                    'msj'=>$msj,
+                ];
+
+                /*
                 foreach ($list2 as $tables) {
                     $detail = [];
                     foreach($list as $item) { 
@@ -565,17 +599,13 @@ class DetailsController extends Controller
 
                             $array = json_decode(json_encode($detail), true);
                             
-                            //$agenda[] = $detail;
                             DB::table($tables)->insert($array);
                             sleep(1 );
                         } 
-                        //else {
-                            //$agenda[] = 'nada';
-                        //}
                     }
                     
                 }
-                //return $agenda;
+                */ //aqui registrar
             } elseif ($db != false ) {
                 $validador = [
                     'msj'=>$msj,
@@ -584,7 +614,9 @@ class DetailsController extends Controller
                 ];
             };
             return $validador;
+            
         }
+        
         return compact('error', 'validador');
     }
 

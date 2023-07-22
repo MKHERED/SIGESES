@@ -25,12 +25,40 @@
     <script>
         var n = 0;
 
-        window.setInterval(function(){
+        var time = window.setInterval(function(){
             n++;
-            console.log(n);
+            //console.log(n);
+            
+            if (n%10 == 0) {
+                
+                console.log('divisible');
+
+                var message = document.getElementById('Box');
+                l = 0;
+                if (message) {
+                    var box =  setInterval(function(){
+                        l++;
+                        //message.style.left = l + "px";
+                        message.style.opacity = 100 - l + "%";
+
+                        if(message.style.opacity < 0){
+                            clearInterval(box);
+                            message.setAttribute('hidden','') 
+                        
+                        }   
+
+                        },100)
+                                    
+                }
+                 
+                clearInterval(time);
+            }
+
         },1000);
 
-        window.setInterval("location.reload()", 60000);
+        //window.setInterval("location.reload()", 60000);
+
+
         
     </script>
     <div id="app">
@@ -149,13 +177,15 @@
                 </div>
             </div>
         </nav>
-        <div id="Box" class="bg-dark">
+        @if (Session::has('mensaje'))
+        <div id="Box" class="bg-dark p-2 rounded" style="">
             <div class="box text-light text-center text-bold dark">    
-                @if (Session::has('mensaje'))
+               
                     {{ Session::get('mensaje')}}
-                @endif
+                
             </div>
         </div>
+        @endif
         @if (Route::is('panel.index') || Route::is('panel.document') || Route::is('panel.detail') || Route::is('panel.show'))
         <!--  -->
         <div class="row">
