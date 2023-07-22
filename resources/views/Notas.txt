@@ -1064,3 +1064,63 @@ agregar un div del tamñano de la pagina
 
         return $validador;
         */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                if (array_key_exists('error', $validador)) {
+            $id ="/".$request->id;
+            
+            return redirect()->route("details.index", $id)->with(["mensaje" => $validador['validador']['msj'].$validador['validador']['detail'] ]);
+
+
+           
+            
+        } elseif ($validador['msj'] == ["mensaje" => "Componente ya registrado: "]) {
+            $id ="/".$request->id;
+
+            $validador['msj'] = ["mensaje" => "Componente ya registrado: ".$validador['detail']." en ".$validador['var']];
+            return redirect()->route("details.index", $id)->with($validador['msj']);
+            
+        
+        } elseif ($doc == "Si") {
+            $id = $request->id;
+
+            return redirect()->route("update",compact('id'))->with(["mensaje" => "Creada con exito",]);
+        
+        } else {
+            $details->__unset('autor');  //except(['autor']); //except(['_token', '_method', 'inst']);
+            $details->save(); 
+            return redirect()->route("estaciones.index")->with($validador['msj']);
+        }

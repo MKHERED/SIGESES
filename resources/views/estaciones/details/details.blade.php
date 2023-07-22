@@ -32,7 +32,22 @@
                                 <label class="form-label" for="inst">Instalación</label>
                             </td>
                             <td class="col-4">
-                                <input class="form-control" style=" width: 150px" type="date" name="inst" id="inst">
+                                <input class="form-control" style=" width: 150px" type="date" name="inst" id="inst" value="">
+                                <script>
+                                    var obj = document.getElementById('inst');
+                                    var fecha = new Date();
+                                    var dia = fecha.getDate();
+                                    var mes = fecha.getMonth()+1;
+                                    var año = fecha.getFullYear();
+                                    if (mes < 10){
+                                        var valor = año + "-"+ "0"+mes+"-"+dia ;
+                                    } else {
+                                        var valor = año + "-"+mes+"-"+dia ;
+                                    } 
+                                    
+                                    console.log(valor);
+                                    obj.value = valor;
+                                </script>
                             </td>
                             <td class="col-4">
                                 <label for="doc" class="form-label">Se subiran documentos: {{$doc}}</label>
