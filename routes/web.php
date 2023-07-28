@@ -42,7 +42,9 @@ Route::get('/admin/panel', [App\Http\Controllers\Estacion\PanelController::class
 Route::get('/admin/panel/document', [App\Http\Controllers\Estacion\PanelController::class, 'document'])->name('panel.document');
 Route::get('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelController@documentShow')->name('panel.show');
 Route::get('/admin/panel/detail', [App\Http\Controllers\Estacion\PanelController::class, 'detail'])->name('panel.detail');
+
 Route::post('/details/updateEdit', [DetailsController::class, 'updateEdit'])->name('details.updateEdit');
+Route::delete('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelController@documentDelete')->name('panel.delete');
 
 
 // Route::get('admin/panel', function() {

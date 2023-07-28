@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Estaciones;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PanelController extends Controller
 {
@@ -84,16 +85,37 @@ class PanelController extends Controller
         } else {
 
             $nombre = DB::table('estaciones')->where('id', $id)->get();
-            $error = $nombre[0]->nombre;
+            $donde = $nombre[0]->nombre;
+            $error = 'documentos';
             
-            //return response()->json($nombre[0]->nombre);
-
-            return view('layouts.error')->with('mensaje', 'Documentos')->with('error', $error);
+            $message = [
+                'id'=>$id,
+                'donde'=>$donde,
+                'error'=>$error,
+            ];
+            
+            return view('layouts.error')->with('mensaje', $message);
+            //return view('layouts.error')->with('mensaje', 'Documentos')->with('error', $error);
 
         }
         
 
 
+        
+    }
+    public function documentDelete(Request $request, $id){
+        $id_estacion = $id;
+        $nombre = $request->nombre;
+        
+        // consulta con doble parametro
+        $datos = DB::table('link_docs')->where('nombre','=',$nombre, 'and', 'id_estacion', '=', $id_estacion)->first();
+
+        if ($datos != null ) {
+            Storage::disk('public')->delete($datos->direccion);
+            DB::table('link_docs')->delete($datos->id);
+
+            return redirect()->route('estaciones.index')->with('mensaje', 'Se elimino exitosamente');
+        }
         
     }
 
