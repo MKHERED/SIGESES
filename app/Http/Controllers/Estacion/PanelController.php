@@ -98,29 +98,51 @@ class PanelController extends Controller
     }
 
     public function detail(Request $request) {
-        $autores = User::all();
+        $list2 = [
+            'antenagps','antenaparabolica','bateria','controladorcarga', 
+            'digitalizador','modemsatelital','panelsolar',
+            'reguladorcarga','sismometro','trompetasatelital'
+        ];
         
+        $autores = User::all();
+
         if ($request->id == 'all') {
             $details = [];
             foreach (Details::all() as $detail){
                 $details[] = $detail;
+
+                foreach ($list2 as $tables) {
+                    $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
+                    $autor_detail[] = [$autor ,$tables];
+                }
+            
             }
+            //return response()->json($autor_detail);
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options', 'autores')); 
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail')); 
         
         } elseif ($request->id) {
             $details = [];
             $details = DB::table('details')->where('id', $request->id)->get();            
+            foreach ($list2 as $tables) {
+                $autor = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('autor');
+                $autor_detail[] = [$autor ,$tables];
+            }
+            
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options', 'autores')); 
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail')); 
         
         } else {
             $details = [];
             foreach (Details::all() as $detail){
                 $details[] = $detail;
+                foreach ($list2 as $tables) {
+                    $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
+                    $autor_detail[] = [$autor ,$tables];
+                }
             }
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options', 'autores'));            
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail'));            
         }
         
         

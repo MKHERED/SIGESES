@@ -141,7 +141,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor aun por hacer</td>
+            <td>{{ $autor_detail[0][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
                 <div class="">
@@ -169,7 +169,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[1][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -197,7 +197,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[2][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -226,7 +226,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>            
+            <td>{{ $autor_detail[3][0]->autor }}</td>            
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -254,7 +254,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[4][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -282,7 +282,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[5][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -310,7 +310,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[6][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -337,7 +337,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[7][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -364,7 +364,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[8][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
@@ -391,7 +391,7 @@
                 </div>
                 </div>
             </td>
-            <td>Autor</td>
+            <td>{{ $autor_detail[9][0]->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">

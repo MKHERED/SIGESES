@@ -402,6 +402,7 @@ class DetailsController extends Controller
         $id = $request->id;
         $serial  = $request->serial;
         $detail = $request->detail;
+        $autor_new = DB::table('users')->where('id','=', $request->autor)->first('name');
 
         if ($serial == null) {
             return redirect()->route("panel.detail")->with(["mensaje" => "No puede enviar un componete vacios"]);
@@ -413,12 +414,16 @@ class DetailsController extends Controller
         $conver1 = $list[1][$conver];
 
         $details = DB::table($conver1)->where('id', $id)->get();
+        
         if (count($details)>=1) {
             $details[0]->$conver = $serial;
+            $details[0]->autor = $autor_new->name;
             //este pedacito convierte stdclass a array... ----------
             $array = json_decode(json_encode($details[0]), true);
             //------------------------------------------------------
-            DB::table($conver1)->where('id', '=' ,$id)->update($array);            
+            DB::table($conver1)->where('id', '=' ,$id)->update($array);
+            
+            
         } else {
             return redirect()->route("panel.detail")->with(["mensaje" => "Por favor dirijase a editar todos los componentes"]);
             
@@ -573,7 +578,7 @@ class DetailsController extends Controller
                     'msj'=>$msj,
                 ];
 
-                /*
+                
                 foreach ($list2 as $tables) {
                     $detail = [];
                     foreach($list as $item) { 
@@ -605,7 +610,7 @@ class DetailsController extends Controller
                     }
                     
                 }
-                */ //aqui registrar
+                 //aqui registrar
             } elseif ($db != false ) {
                 $validador = [
                     'msj'=>$msj,
