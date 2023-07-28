@@ -373,7 +373,7 @@ class DetailsController extends Controller
     }
 
     public function updateEdit(Request $request){
-        //  return response()->json($request);
+        //   return response()->json($request);
         $list = [
             ['Antena gps'=>'antena_gps',
             'Antena parabolica'=>'antena_parabolica',
@@ -402,26 +402,40 @@ class DetailsController extends Controller
         $id = $request->id;
         $serial  = $request->serial;
         $detail = $request->detail;
+
         $autor_new = DB::table('users')->where('id','=', $request->autor)->first('name');
 
-        if ($serial == null) {
+        if ($serial == null || $request->fabricante || $request->especifi) {
             return redirect()->route("panel.detail")->with(["mensaje" => "No puede enviar un componete vacios"]);
             
         }
 
         $conver = $list[0][$detail];
+        $fabricante = $conver."_fab";
+        $especifi = $conver."_esp";
         
         $conver1 = $list[1][$conver];
 
         $details = DB::table($conver1)->where('id', $id)->get();
         
+        
         if (count($details)>=1) {
             $details[0]->$conver = $serial;
             $details[0]->autor = $autor_new->name;
+            $details[0]->$fabricante = $request->fabricante;
+            $details[0]->$especifi = $request->especifi;
             //este pedacito convierte stdclass a array... ----------
             $array = json_decode(json_encode($details[0]), true);
             //------------------------------------------------------
             DB::table($conver1)->where('id', '=' ,$id)->update($array);
+            $details = DB::table('details')->where('id','=', $id, "and", 'estacion', '=', $details[0]->estacion)->get();
+            $details[0]->$conver = $serial;
+            $details[0]->$fabricante = $request->fabricante;
+            $details[0]->$especifi = $request->especifi;
+            $array = json_decode(json_encode($details[0]), true);
+            
+            DB::table('details')->where('id','=', $id, "and", 'estacion', '=', $details[0]->estacion)->update($array);
+            
             
             
         } else {

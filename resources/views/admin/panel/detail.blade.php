@@ -30,14 +30,20 @@
             <div class="form-floating mt-0 m-3 mb-3">
                 <input name="serial" type="text" class="form-control rounded-3" id="floatingInput" placeholder="abcde...">
                 <label for="floatingInput">Nuevo Serial</label>
-                
-
                 <!-- agregar los nombre para que pasen por el request -->
                 <input name="id" id="id-input" type="number" value="" hidden>
                 <input name="detail" id="component-input" type="text" value="" hidden>
                 
-
             </div> 
+            <div class="form-floating mt-0 m-3 mb-3">
+                <input name="fabricante" type="text" class="form-control rounded-3" id="floatingInput2" placeholder="abcde...">
+                <label for="floatingInput2">Nuevo Fabricante</label>
+            </div>
+
+            <div class="form-floating mt-0 m-3 mb-3">
+                <input name="especifi" type="text" class="form-control rounded-3" id="floatingInput3" placeholder="abcde...">
+                <label for="floatingInput3">Nuevo Especificaciones</label>
+            </div>
             
             <div class="form-floating mt-0 m-3 mb-3">                
                 
