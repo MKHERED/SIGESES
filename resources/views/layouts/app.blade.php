@@ -22,43 +22,41 @@
     
 </head>
 <body class="p-0">
+    
     <script>
         var n = 0;
-
         var time = window.setInterval(function(){
             n++;
-            //console.log(n);
+            console.log(n);
             
-            if (n%10 == 0) {
-                
-                console.log('divisible');
+            var message = document.getElementById('Box');
+            
+            if (message && (n==5)){
+                m = 0;
+                time2 = window.setInterval(function(){  
+                    m++;
+                    message.style.marginTop = 0 - m + "px";
+                    message.style.opacity = 100 - m + "%";
 
-                var message = document.getElementById('Box');
-                l = 0;
-                if (message) {
-                    var box =  setInterval(function(){
-                        l++;
-                        //message.style.left = l + "px";
-                        message.style.opacity = 100 - l + "%";
-
-                        if(message.style.opacity < 0){
-                            clearInterval(box);
-                            message.setAttribute('hidden','') 
-                        
-                        }   
-
-                        },100)
-                                    
-                }
-                 
-                clearInterval(time);
+                    console.log(m);
+                    if(m == 100){
+                        //console.log('finalizado 2')
+                        clearInterval(time2);
+                        clearInterval(time);
+                    }
+                },5)
+            } else {
+                if (n==6) {
+                    //console.log('finalizado')
+                    clearInterval(time);
+                }   
             }
 
-        },1000);
+        },3000)
+    </script>
+    <script>
 
         //window.setInterval("location.reload()", 60000);
-
-
         
     </script>
     <div id="app">
@@ -178,8 +176,8 @@
             </div>
         </nav>
         @if (Session::has('mensaje'))
-        <div id="Box" class="bg-dark p-2 rounded" style="">
-            <div class="box text-light text-center text-bold dark">    
+        <div id="Box" class=" d-grid position-absolute" style="width: -webkit-fill-available; justify-content: center; margin-top: 0px ;">
+            <div class="box bg-dark rounded p-2 text-light text-center text-bold dark">    
                
                     {{ Session::get('mensaje')}}
                 
