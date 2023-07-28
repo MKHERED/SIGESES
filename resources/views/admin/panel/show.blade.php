@@ -22,9 +22,10 @@
                 <div class="btn-group">
                   
                 @if (Auth::user()->tipo_usuario)
-                  <form action="" method="POST">
+                  <form action="{{route('panel.delete', $document->id_estacion) }}" method="POST">
                           @csrf
                           {{ method_field('DELETE') }}
+                          <input type="text" value="{{$document->nombre}}" name='nombre' hidden>
                           <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$document->nombre_estacion}}' )" value="Borrar">
                   </form>              
                 @endif

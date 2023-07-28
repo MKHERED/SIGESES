@@ -21,24 +21,11 @@
               <p class="card-text h5">{{ $estacion->nombre }}</p>
               <div class="m-1 btn-group">
                 <p class="p-1 m-1"><b>Ubicación Estadal: </b> {{ $estacion->estado }}</p>
+              
               </div>
 
-              <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                
-              @if (Auth::user()->tipo_usuario)
-                <form action="{{ route('estaciones.destroy', $estacion->id) }}" method="POST">
-                        @csrf
-                        {{ method_field('DELETE') }}
-                        <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$estacion->nombre}}' )" value="Borrar">
-                </form>
-
-                <a   type="button" class="btn btn-sm btn-outline-secondary text-primary" href="{{ route('estaciones.edit', $estacion->id) }}">Editar</a>                
-              @endif
-
-
-                </div>
-                <small class="text-body-secondary"><b>Actualizado: </b> {{ $estacion->updated_at}}</small>
+              <div class="align-items-center">
+                <small class="btn-group text-body-secondary"><b>Actualizado: </b> {{ $estacion->updated_at}}</small>
               </div>
             </div>
           </div>
