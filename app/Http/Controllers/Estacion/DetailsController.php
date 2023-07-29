@@ -405,7 +405,7 @@ class DetailsController extends Controller
 
         $autor_new = DB::table('users')->where('id','=', $request->autor)->first('name');
 
-        if ($serial == null || $request->fabricante || $request->especifi) {
+        if ($serial == null || $request->fabricante == null || $request->especifi == null) {
             return redirect()->route("panel.detail")->with(["mensaje" => "No puede enviar un componete vacios"]);
             
         }
