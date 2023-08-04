@@ -31,6 +31,7 @@ Route::get('/', function () {
  
 });
 
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/estaciones', EstacionesControlle::class)->parameters(["estaciones"=>"estacion"]);
 Route::get('/update/{id}', 'App\Http\Controllers\Admin\FileController@index')->name('update');

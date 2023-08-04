@@ -12,39 +12,44 @@
      --bs-table-hover-bg:rgba(0,0,0,0) !important;  /*var(--bs-light) !important; */
     }
 </style>
+<script src="{{asset('js/gestion.js') }}"></script>
+
 <div id="modalSheet" class="modal modal-sheet show1 p-1 py-md-5 d-flex cover bg-body-secondary bg-dark hidden">
 </div>
 
 <div id="modalCard" class="modal d-flex hidden" tabindex="-1" role="dialog" >
     <div class="modal-dialog" role="document">
-        <div class="modal-content rounded-4 shadow">
-        <div class="modal-header border-bottom-0">
+        <div class="modal-content rounded-4 shadow" style="display: grid; align-items: end;">
+        <div class="modal-header p-2 border-bottom-0">
             <h1 id="modal-title" class="modal-title m-2 fs-5">{}</h1>
-            <button type="button" class="btn btn-danger" onclick="detail()">Cancelar</button>
+            <!-- <button type="button" class="btn  btn-outline-danger" onclick="detail()">X</button> -->
+            <!-- aqui va el boton de cerrar -->
         </div>
-        <div class="modal-body py-0">
-            <p>El valor de <b id="modal-body" >{}nombre del component</b>  esta por ser editado <br> ¿Quiere continuar?</p>
+        <div class="modal-body  py-0">
+            <p>El valor de <b id="modal-body" >{}</b> esta por ser editado <br></p>
+            <!-- <b id="modal-body" >{}</b> -->
+        
         </div>
         <form class="form" action="{{route('details.updateEdit')}}" method="post">
             @csrf
             <div class="form-floating mt-0 m-3 mb-3">
                 <input name="serial" type="text" class="form-control rounded-3" id="floatingInput" placeholder="abcde...">
-                <label for="floatingInput">Nuevo Serial</label>
+                <label for="floatingInput">Serial</label>
                 <!-- agregar los nombre para que pasen por el request -->
                 <input name="id" id="id-input" type="number" value="" hidden>
                 <input name="detail" id="component-input" type="text" value="" hidden>
                 
             </div> 
             <div class="form-floating mt-0 m-3 mb-3">
-                <input name="fabricante" type="text" class="form-control rounded-3" id="floatingInput2" placeholder="abcde...">
-                <label for="floatingInput2">Nuevo Fabricante</label>
+                <input name="fabricante" type="text" class="form-control rounded-3" id="floatingInput2" placeholder="abcde..." value="">
+                <label for="floatingInput2">Fabricante</label>
             </div>
 
             <div class="form-floating mt-0 m-3 mb-3">
-                <input name="especifi" type="text" class="form-control rounded-3" id="floatingInput3" placeholder="abcde...">
-                <label for="floatingInput3">Nuevo Especificaciones</label>
+                <input name="especifi" type="text" class="form-control rounded-3" id="floatingInput3" placeholder="abcde..." value="">
+                <label for="floatingInput3">Especificaciones</label>
             </div>
-            
+            <!-- agregar la seccion de los comentarios -->
             <div class="form-floating mt-0 m-3 mb-3">                
                 
                 
@@ -56,14 +61,16 @@
                     
                 </select>
                 <label for="floatingSelect">Autor</label>
+            
             </div>       
-            <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                <button type="submit" class="btn btn-lg btn-outline-success">Guardar</button>
-            </div>        
+            
+                
+                <button type="submit" class="btn btn-outline-success m-1 position-relative" style="left: 3%;">Guardar</button>
+                       
         </form>
+        <button type="button" class="btn btn-outline-danger m-1 position-absolute" onclick="detail()" style="left: 30%;">Cerrar</button>
 
-
-
+            
         </div>
     </div>
     </div>
@@ -71,7 +78,7 @@
 
 
 <div class="mt-2 table-responsive">
-    <script src="{{asset('js/gestion.js') }}"></script>
+    
     <form action="{{route('panel.detail')}}" method="get">
     @csrf
     <div class="row text-left justify-content-center">
@@ -151,7 +158,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
                 <div class="">
-                    <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena gps','{{$detail->id}}')">Editar</button>
+                    <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena gps','{{$detail->id}}', '{{$detail->antena_gps}}', '{{$detail->antena_gps_fab}}', '{{$detail->antena_gps_esp}}')">Editar</button>
                 </div>   
             @endif
             </td>
@@ -179,7 +186,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena parabolica','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena parabolica','{{$detail->id}}', '{{$detail->antena_parabolica}}', '{{$detail->antena_parabolica_fab}}', '{{$detail->antena_parabolica_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -207,7 +214,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Bateria','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Bateria','{{$detail->id}}', '{{$detail->bateria}}', '{{$detail->bateria_fab}}', '{{$detail->bateria_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -236,7 +243,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Controlador de carga','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Controlador de carga','{{$detail->id}}', '{{$detail->controlador_carga}}', '{{$detail->controlador_carga_fab}}', '{{$detail->controlador_carga_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -264,7 +271,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Digitalizador','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Digitalizador','{{$detail->id}}', '{{$detail->digitalizador}}', '{{$detail->digitalizador_fab}}', '{{$detail->digitalizador_esp}}')">Editar</button>
             </div>    
             @endif
             </td>
@@ -292,7 +299,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Modem','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Modem','{{$detail->id}}', '{{$detail->modem_satelital}}', '{{$detail->modem_satelital_fab}}', '{{$detail->modem_satelital_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -320,7 +327,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Panel solar','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Panel solar','{{$detail->id}}', '{{$detail->panel_solar}}', '{{$detail->panel_solar_fab}}', '{{$detail->panel_solar_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -347,7 +354,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Regulador de carga','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Regulador de carga','{{$detail->id}}', '{{$detail->regulador_carga}}','{{$detail->regulador_carga_fab}}', '{{$detail->regulador_carga_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -374,7 +381,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Sismometro','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Sismometro','{{$detail->id}}', '{{$detail->sismometro}}', '{{$detail->sismometro_fab}}','{{$detail->sismometro_esp}}')">Editar</button>
             </div>
             @endif
             </td>
@@ -390,7 +397,7 @@
                 </h4>
                 <div id="ant{{$detail->trompeta_satelital}}10" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->trompeta_satelital}}0">
                 <div class="accordion-body p-1 border-0 bg-light">
-                 <p class="m-0 p-0">Serial: <b>{{$detail->digitalizador}}</b></p>
+                 <p class="m-0 p-0">Serial: <b>{{$detail->trompeta_satelital}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->trompeta_satelital_fab}}</b></p>
                  <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
                 </div>
@@ -401,7 +408,7 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Trompeta','{{$detail->id}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Trompeta','{{$detail->id}}', '{{$detail->trompeta_satelital}}', '{{$detail->trompeta_satelital_fab}}', '{{$detail->trompeta_satelital_esp}}')">Editar</button>
             </div>
             @endif
             </td>

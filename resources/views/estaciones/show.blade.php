@@ -33,7 +33,7 @@
       <div class="col-md-5 col-lg-6">
         <div class="row g-3">
           <div class="col-sm-6">
-            <label class="form-label" for="Nombre">Nombre de la estacion</label>
+            <label class="form-label" for="Nombre">Nombre de la estación</label>
             <input type="text" id="Nombre" class="form-control" value="{{$estacion->nombre}}" disabled>
           </div>
           <div class="col-sm-6">
@@ -41,7 +41,7 @@
             <input type="text" id="Siglas" class="form-control" value="{{$estacion->siglas}}" disabled>
           </div>
           <div class="col-sm-12">
-            <label class="form-label" for="Ubicacion">Ubicacion</label>
+            <label class="form-label" for="Ubicacion">Ubicación</label>
             <input type="text" style="height:fit-content;width: 100%;" id="Ubicacion" class="form-control" value="{{$estacion->ubicacion}}" disabled>
           </div>
         </div>
@@ -74,7 +74,7 @@
           </div>       
           
           <div class="col-sm-6">
-            <label class="form-label" for="Region">Region</label>
+            <label class="form-label" for="Region">Región</label>
             <input type="text" id="Region" class="form-control" value="{{$estacion->region}}" disabled>
           </div>   
           <div class="col-ms-12 text-center">
@@ -125,7 +125,7 @@
           </div>
           <!-- -------------------------------------------------------------- -->
           <div class="">
-            <label class="form-label" for="Antena_Parabolica">Antena Parabolica</label>
+            <label class="form-label" for="Antena_Parabolica">Antena Parabólica</label>
           </div>
           
           <div class="col-sm-3">
@@ -260,7 +260,7 @@
         
         <!-- ----------------------------------------------------------Separacion -->    
       
-      <div id="imagenes" class="col-md-6">
+      <div id="imagenes" class="col-md-6 text-center">
         @foreach ($link_docs->take(6) as $link_doc)
           <a target="_blank" class="text-center d-grid" style="justify-items: center; text-decoration: none; color:black;" href="{{asset('storage').'/'.$link_doc->direccion}}">
           @if(in_array(pathinfo($link_doc->direccion, PATHINFO_EXTENSION), array('jpg', 'jpeg', 'png', 'gif')))

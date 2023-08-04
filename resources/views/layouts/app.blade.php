@@ -59,12 +59,28 @@
         //window.setInterval("location.reload()", 60000);
         
     </script>
-    <div id="app">
+    <div id="app"  
+    @if (Route::is('login'))
+         style="height:90%"
+    @endif >
         <nav class="navbar small navbar-expand-sm navbar-dark bg-dark shadow-sm">
+            @if (Route::is('login') | Route::is(''))
+            <div class="container justify-content-center d-block">            
+                    <div class="text-center justify-content-center">
+                        <h2 class="h2 mb-1 fw-normal text-light text" style="text-decoration: underline; text-decoration-color:orange;">Bienvenido al <b style="color:orange;">SIGESES</b></h2>  
+                    </div>
+
+            @else
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}" style="text-decoration: underline; text-decoration-color:orange;" >
-                    {{ config('app.name', 'SIGESES') }}
-                </a>
+                    <a class="navbar-brand" href="{{ url('/home') }}" style="text-decoration: underline; text-decoration-color:orange;" >
+                        {{ config('app.name', 'SIGESES') }}
+                    </a>                    
+            @endif
+                @if (Route::is('estaciones.index'))
+                    <h7 class="navbar-brand text-light"><b style="text-decoration: underline; text-decoration-color:orange;">Estaciones</b></h7>
+                    
+                @endif
+
                 @if (Route::is('panel.index'))
                     <h7 class="navbar-brand text-light"><b style="text-decoration: underline; text-decoration-color:orange;">Estaciones</b></h7>
                           
@@ -85,8 +101,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    
                     <ul class="navbar-nav ms-auto">
 
                     </ul>
@@ -138,9 +156,9 @@
                                     </div>
                             </li>   
                         @endif
-                        @if (Route::is('home'))
+                        @if (Route::is('home') || Route::is('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('estaciones.index') }}">Estaciónes</a>
+                                <a class="nav-link" href="{{ route('estaciones.index') }}">Estaciones</a>
                                 <!---------------------------------------- Poner una lista de todas -------------------------------------------->
                             </li>
                             
@@ -156,7 +174,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     
                                     @if (Route::is('estaciones.create'))
-                                        <a class="dropdown-item" href="{{ route('estaciones.index') }}">Estaciónes</a>
+                                        <a class="dropdown-item" href="{{ route('estaciones.index') }}">Estaciones</a>
                                     @endif
                                     <a class="dropdown-item" href="{{route ('home')}}">Inicio</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

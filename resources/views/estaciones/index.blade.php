@@ -7,7 +7,7 @@
 
 
 <div class="Box">
-    <h6 class="text-center m-1">Estaciones</h6>
+    
 </div>
     <main>
     <div class="album py-0 bg-body-tertiary" >

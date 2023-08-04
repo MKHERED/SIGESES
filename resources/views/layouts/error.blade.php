@@ -4,8 +4,8 @@
 
 <div class="text-center">
     <script src="{{asset('js/gestion.js') }}"></script>
-    <h4 class="mt-3">Lo Siento pero no tiene {{$mensaje['error']}}</h4>
-    <div id="imagenes">
+    <h4 class="mt-3">Lo siento pero no tiene {{$mensaje['error']}}</h4>
+    <div id="imagenes" class="text-center">
 
 
     <script>
