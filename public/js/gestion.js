@@ -137,25 +137,33 @@ function ImagenVerif(img, url) {
         console.log('no esta');
         contenedor.insertAdjacentHTML('afterbegin', '<a class="btn btn-success text-light m-1" style="width:fit-content;" href="'+url+'"><b>Agregar documentos</b></a>')
         
-        contenedor.insertAdjacentHTML('afterbegin', '<label class="form-label text-center">No posee ninguna imagen o documento aun   <b>¿Desea subir alguno?</b></label>')
+        contenedor.insertAdjacentHTML('afterbegin', '<label class="form-label text-center">No posee ninguna imagen o documento aun   <b>¿Desea subir alguno?</b> </label>')
 
     }
 }
 
-function detail(component, id) {
+function detail(component, id, serial, fab, esp) {
     var capa = document.getElementById('modalSheet');
-    var modal = document.getElementById('modalCard')
-    var body = document.getElementById('modal-body')
-    var input = document.getElementById('id-input')
-    var com_input = document.getElementById('component-input')
+    var modal = document.getElementById('modalCard');
+    var body = document.getElementById('modal-body');
+    var input = document.getElementById('id-input');
+    var com_input = document.getElementById('component-input');
 
-    var title = document.getElementById('modal-title')
+    var input_ser = document.getElementById('floatingInput');
+    var input_Fab = document.getElementById('floatingInput2')
+    var input_Esp = document.getElementById('floatingInput3')
+
+    var title = document.getElementById('modal-title');
     
     if (component && id) {
-        input.setAttribute('value', id)
-        com_input.setAttribute('value', component)
-        title.innerText = 'Desea editar '+component
-        body.innerText = component
+        input.setAttribute('value', id);
+        com_input.setAttribute('value', component);
+        title.innerText = component;
+        body.innerText = component;
+        
+        input_ser.value = serial;
+        input_Fab.value = fab;
+        input_Esp.value = esp;
 
         capa.classList.remove('hidden')
         
@@ -170,4 +178,52 @@ function detail(component, id) {
     }
 
 }
+function mapaItem() {
+    //este es el Contructor de los item
+    var nombres = [
+        "IAAV", "IBAV", "VIGV", "CURV",
+        "IMOV", "ITEV", "SOCV", "SANV",
+        "MONV", "JACV", "SDV", "ELOV",
+        "ORCV", "DABV", "QARV", "MAPV",
+        "MCQV", "CAPV", "SIQV", "TURV",
+        "BAUV", "RAYV", "BENV", "TACV",
+        "CARV", "PONV", "BIRV", "CUPV",
+        "MERV", "CACV", "PRGV", "PCRV",
+        "CRUV", "GUNV", "GUIV", "QRIV",
+        "GURV", "RIOV", "LUGV"
+    ];
 
+    var altura = [      
+        "top: 20px;", "top: 249px;", "top: 425px;", "top: 350px;",
+        "top: 218px;", "top: 274px;", "top: 450px;", "top: 379px;",
+        "top: 240px;", "top: 290px;", "top: 419px;", "top: 527px;",
+        "top: 249px;", "top: 302px;", "top: 342px; ", "top: 358px;",
+        "top: 350px;", "top: 475px;", "top: 314px;", "top: 325px;",
+        "top: 412px;", "top: 617px;", "top: 354px; ", "top: 346px;",
+        "top: 322px;", "top: 322px;", "top: 322px;", "top: 347px;",
+        "top: 394px;", "top: 495px;", "top: 424px;", "top: 343px;",
+        "top: 314px;", "top: 314px;", "top: 314px;", "top: 403px;",
+        "top: 482px;", "top: 465px;", "top: 594px;"
+    ];
+
+    var izquierda = [
+        "left: 65%;", "left: 58%;", "left: 15%;", "left: 24%;",
+        "left: 19%;", "left: 67%;", "left: 19%;", "left: 27%;",
+        "left: 25%;", "left: 32%;", "left: 20%;", "left: 27%;",
+        "left: 48%;", "left: 20%;", "left: 21%;", "left: 34%;",
+        "left: 8%;", "left: 10%;", "left: 25%;", "left: 37%;",
+        "left: 36%;", "left: 38%; ", "left: 39%;", "left: 42%;",
+        "left: 42%;", "left: 44%;", "left: 47%;", "left: 50%;",
+        "left: 47%;", "left: 49%;", "left: 57%;", "left: 58%;",
+        "left: 67%;", "left: 67%; ", "left: 72%;", "left: 65%;",
+        "left: 67%;", "left: 75%;", "left: 77%;"
+    ];
+
+    var mapa = document.getElementById('mapa');
+
+    for (i = 0; i < nombres.length; i++){
+        mapa.insertAdjacentHTML('afterbegin', '<div id="'+nombres[i]+'" class="bg-dark text-dark small position-absolute" role="status" style="'+altura[i]+izquierda[i]+'--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;"> a <span class="visually-hidden">.</span></div>');
+        console.log(nombres[i]);
+    }
+    
+}

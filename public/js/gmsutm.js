@@ -10,8 +10,8 @@ function gmsutm() {
     longitu.remove();
     latitu.remove();  
     
-    longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 300px" id="Longitud" name="longitud" value="">');
-    latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 300px" id="Latitud" name="latitud" value="">');
+    longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" placeholder="Longitud de la estación" style="width: 300px" id="Longitud" name="longitud" value="">');
+    latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" placeholder="Latitud de la estación" style="width: 300px" id="Latitud" name="latitud" value="">');
     if (gms.checked) {
         var longitu = document.getElementById("Longitud");
         var latitu = document.getElementById("Latitud");
@@ -39,8 +39,8 @@ function gmsutm() {
         longitu.remove();
         latitu.remove();  
 
-        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 300px" id="Longitud" name="longitud" value="">');
-        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" style="width: 300px" id="Latitud" name="latitud" value="">');
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" placeholder="Longitud de la estación" style="width: 300px" id="Longitud" name="longitud" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" placeholder="Latitud de la estación" style="width: 300px" id="Latitud" name="latitud" value="">');
     }
 
 

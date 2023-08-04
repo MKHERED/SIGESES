@@ -37,6 +37,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        
     }
     public function redirectPath(){
         // if(Auth::user()->tipo_usuario){
@@ -50,4 +51,5 @@ class LoginController extends Controller
     {
         return 'username';
     }
+    
 }

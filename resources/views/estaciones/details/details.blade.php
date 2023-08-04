@@ -50,7 +50,7 @@
                                 </script>
                             </td>
                             <td class="col-4">
-                                <label for="doc" class="form-label">Se subiran documentos: {{$doc}}</label>
+                                <label for="doc" class="form-label">Se subirán documentos: {{$doc}}</label>
                                 <input class="form-control" type="text" style=" width: 50px" name="doc" id="doc" value="{{ $doc }}" hidden>  
                             </td>
                                                                 
