@@ -22,13 +22,10 @@
         <div class="modal-content rounded-4 shadow" style="display: grid; align-items: end;">
         <div class="modal-header p-2 border-bottom-0">
             <h1 id="modal-title" class="modal-title m-2 fs-5">{}</h1>
-            <!-- <button type="button" class="btn  btn-outline-danger" onclick="detail()">X</button> -->
             <!-- aqui va el boton de cerrar -->
         </div>
         <div class="modal-body  py-0">
             <p>El valor de <b id="modal-body" >{}</b> esta por ser editado <br></p>
-            <!-- <b id="modal-body" >{}</b> -->
-        
         </div>
         <form class="form" action="{{route('details.updateEdit')}}" method="post">
             @csrf
@@ -38,7 +35,29 @@
                 <!-- agregar los nombre para que pasen por el request -->
                 <input name="id" id="id-input" type="number" value="" hidden>
                 <input name="detail" id="component-input" type="text" value="" hidden>
-                
+                <input name="inst" type="date" id="inst" value="" hidden>
+                <script>
+                    var obj = document.getElementById('inst');
+                    var fecha = new Date();
+                    var dia = fecha.getDate();
+                    var mes = fecha.getMonth()+1;
+                    var año = fecha.getFullYear();
+                    if (mes < 10){
+                        if(dia < 10){
+                            var valor = año + "-"+ "0"+mes+"-"+"0"+dia ;
+
+                        } else {
+                            var valor = año + "-"+ "0"+mes+"-"+dia ;
+                        }
+                        
+                    } else {
+                        var valor = año + "-"+mes+"-"+dia ;
+                    } 
+                    
+                    console.log(valor);
+                    obj.value = valor;
+                </script>
+
             </div> 
             <div class="form-floating mt-0 m-3 mb-3">
                 <input name="fabricante" type="text" class="form-control rounded-3" id="floatingInput2" placeholder="abcde..." value="">
@@ -115,7 +134,7 @@
             <th>
                 Autor
             </th>
-            <th class="text-center col-1">
+            <th class="text-center col-2">
                 Opciones
             </th>
         </tr>
@@ -147,7 +166,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->antena_gps}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->antena_gps_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[0][0]->updated_at }}</b></p> <!-- {{$detail->instalacion_satelital}} -->
                  
                  
                 </div>
@@ -159,6 +178,14 @@
             @if (Auth::user()->tipo_usuario)
                 <div class="">
                     <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena gps','{{$detail->id}}', '{{$detail->antena_gps}}', '{{$detail->antena_gps_fab}}', '{{$detail->antena_gps_esp}}')">Editar</button>
+                    <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='antenagps' hidden>
+                    
+                    </form>
+                    
                 </div>   
             @endif
             </td>
@@ -176,7 +203,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->antena_parabolica}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->antena_parabolica_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[1][0]->updated_at }}</b></p>
 
                 </div>
                 </div>
@@ -187,6 +214,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena parabolica','{{$detail->id}}', '{{$detail->antena_parabolica}}', '{{$detail->antena_parabolica_fab}}', '{{$detail->antena_parabolica_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='antenaparabolica' hidden>
+                    
+                </form>
             </div>
             @endif
             </td>
@@ -204,7 +238,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->bateria}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->bateria_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[2][0]->updated_at }}</b></p>
 
                 </div>
                 </div>
@@ -215,6 +249,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Bateria','{{$detail->id}}', '{{$detail->bateria}}', '{{$detail->bateria_fab}}', '{{$detail->bateria_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='bateria' hidden>
+                    
+                </form>
             </div>
             @endif
             </td>
@@ -233,8 +274,7 @@
                  
                  <p class="m-0 p-0">Serial: <b>{{$detail->controlador_carga}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->controlador_carga_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
-                 <!-- terminar aun falta por acomodar -->
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[3][0]->updated_at }}</b></p>
                 </div>
                 </div>
                 </div>
@@ -244,6 +284,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Controlador de carga','{{$detail->id}}', '{{$detail->controlador_carga}}', '{{$detail->controlador_carga_fab}}', '{{$detail->controlador_carga_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='controladorcarga' hidden>
+                    
+                    </form>
             </div>
             @endif
             </td>
@@ -261,7 +308,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->digitalizador}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->digitalizador_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[4][0]->updated_at }}</b></p>
                 
                 </div>
                 </div>
@@ -272,6 +319,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Digitalizador','{{$detail->id}}', '{{$detail->digitalizador}}', '{{$detail->digitalizador_fab}}', '{{$detail->digitalizador_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='digitalizador' hidden>
+                    
+                    </form>
             </div>    
             @endif
             </td>
@@ -290,7 +344,7 @@
                  
                  <p class="m-0 p-0">Serial: <b>{{$detail->modem_satelital}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->modem_satelital_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[5][0]->updated_at }}</b></p>
                 </div>
                 </div>
                 </div>
@@ -300,6 +354,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Modem','{{$detail->id}}', '{{$detail->modem_satelital}}', '{{$detail->modem_satelital_fab}}', '{{$detail->modem_satelital_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='modemsatelital' hidden>
+                    
+                    </form>
             </div>
             @endif
             </td>
@@ -318,7 +379,7 @@
                 
                  <p class="m-0 p-0">Serial: <b>{{$detail->panel_solar}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->panel_solar_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[6][0]->updated_at }}</b></p>
                 </div>
                 </div>
                 </div>
@@ -328,6 +389,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Panel solar','{{$detail->id}}', '{{$detail->panel_solar}}', '{{$detail->panel_solar_fab}}', '{{$detail->panel_solar_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='panelsolar' hidden>
+                    
+                    </form>
             </div>
             @endif
             </td>
@@ -345,7 +413,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->regulador_carga}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->regulador_carga_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[7][0]->updated_at }}</b></p>
                 </div>
                 </div>
                 </div>
@@ -355,6 +423,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Regulador de carga','{{$detail->id}}', '{{$detail->regulador_carga}}','{{$detail->regulador_carga_fab}}', '{{$detail->regulador_carga_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='reguladorcarga' hidden>
+                    
+                    </form>
             </div>
             @endif
             </td>
@@ -372,7 +447,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->sismometro}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->sismometro_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[8][0]->updated_at }}</b></p>
                 </div>
                 </div>
                 </div>
@@ -382,6 +457,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Sismometro','{{$detail->id}}', '{{$detail->sismometro}}', '{{$detail->sismometro_fab}}','{{$detail->sismometro_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='sismometro' hidden>
+                    
+                    </form>
             </div>
             @endif
             </td>
@@ -399,7 +481,7 @@
                 <div class="accordion-body p-1 border-0 bg-light">
                  <p class="m-0 p-0">Serial: <b>{{$detail->trompeta_satelital}}</b></p>
                  <p class="m-0 p-0">Fabricante: <b>{{$detail->trompeta_satelital_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->instalacion_satelital}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[9][0]->updated_at }}</b></p>
                 </div>
                 </div>
                 </div>
@@ -409,6 +491,13 @@
             @if (Auth::user()->tipo_usuario)
             <div class="">
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Trompeta','{{$detail->id}}', '{{$detail->trompeta_satelital}}', '{{$detail->trompeta_satelital_fab}}', '{{$detail->trompeta_satelital_esp}}')">Editar</button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='trompetasatelital' hidden>
+                    
+                    </form>
             </div>
             @endif
             </td>

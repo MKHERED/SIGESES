@@ -135,24 +135,31 @@ class PanelController extends Controller
 
                 foreach ($list2 as $tables) {
                     $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
-                    $autor_detail[] = [$autor ,$tables];
+                    $updated = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('updated_at');
+
+                    $autor_detail[] = [$autor, $tables];
+                    $updated_detail[] = [$updated, $tables];
                 }
             
             }
-            //return response()->json($autor_detail);
+            //return response()->json($updated_detail[0][0]->updated_at);
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail')); 
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 
         
         } elseif ($request->id) {
             $details = [];
             $details = DB::table('details')->where('id', $request->id)->get();            
             foreach ($list2 as $tables) {
                 $autor = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('autor');
+                $updated = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('updated_at');
+                
                 $autor_detail[] = [$autor ,$tables];
+                $updated_detail[] = [$updated, $tables];
+
             }
             
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail')); 
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 
         
         } else {
             $details = [];
@@ -160,11 +167,15 @@ class PanelController extends Controller
                 $details[] = $detail;
                 foreach ($list2 as $tables) {
                     $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
-                    $autor_detail[] = [$autor ,$tables];
+                    $updated = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('updated_at');
+                    
+                    $autor_detail[] = [$autor ,$updated];
+                    $updated_detail[] = [$updated, $tables];
+
                 }
             }
             $options = Details::all();
-            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail'));            
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail'));            
         }
         
         

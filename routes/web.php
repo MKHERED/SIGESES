@@ -45,6 +45,7 @@ Route::get('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelCon
 Route::get('/admin/panel/detail', [App\Http\Controllers\Estacion\PanelController::class, 'detail'])->name('panel.detail');
 
 Route::post('/details/updateEdit', [DetailsController::class, 'updateEdit'])->name('details.updateEdit');
+Route::post('/details/borrarData', [DetailsController::class, 'borrarData'])->name('details.borrarData');
 Route::delete('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelController@documentDelete')->name('panel.delete');
 
 
