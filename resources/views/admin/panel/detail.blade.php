@@ -19,7 +19,7 @@
 
 <div id="modalCard" class="modal d-flex hidden" tabindex="-1" role="dialog" >
     <div class="modal-dialog" role="document">
-        <div class="modal-content rounded-4 shadow" style="display: grid; align-items: end;">
+        <div class="modal-content rounded-4 shadow pb-3" style="display: grid; align-items: end;">
         <div class="modal-header p-2 border-bottom-0">
             <h1 id="modal-title" class="modal-title m-2 fs-5">{}</h1>
             <!-- aqui va el boton de cerrar -->
@@ -87,7 +87,7 @@
                 <button type="submit" class="btn btn-outline-success m-1 position-relative" style="left: 3%;">Guardar</button>
                        
         </form>
-        <button type="button" class="btn btn-outline-danger m-1 position-absolute" onclick="detail()" style="left: 30%;">Cerrar</button>
+        <button type="button" class="btn btn-outline-danger m-1 position-absolute" onclick="detail()" style="left: 30%; bottom: 3.5%;">Cerrar</button>
 
             
         </div>
@@ -177,7 +177,14 @@
             <td>
             @if (Auth::user()->tipo_usuario)
                 <div class="">
-                    <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena gps','{{$detail->id}}', '{{$detail->antena_gps}}', '{{$detail->antena_gps_fab}}', '{{$detail->antena_gps_esp}}')">Editar</button>
+                    <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena gps','{{$detail->id}}', '{{$detail->antena_gps}}', '{{$detail->antena_gps_fab}}', '{{$detail->antena_gps_esp}}')">
+                    @if ( $detail->antena_gps == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                    </button>
+                    
                     <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -213,7 +220,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena parabolica','{{$detail->id}}', '{{$detail->antena_parabolica}}', '{{$detail->antena_parabolica_fab}}', '{{$detail->antena_parabolica_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena parabolica','{{$detail->id}}', '{{$detail->antena_parabolica}}', '{{$detail->antena_parabolica_fab}}', '{{$detail->antena_parabolica_esp}}')">
+                @if ( $detail->antena_parabolica == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -248,7 +261,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Bateria','{{$detail->id}}', '{{$detail->bateria}}', '{{$detail->bateria_fab}}', '{{$detail->bateria_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Bateria','{{$detail->id}}', '{{$detail->bateria}}', '{{$detail->bateria_fab}}', '{{$detail->bateria_esp}}')">
+                @if ( $detail->bateria == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -283,7 +302,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Controlador de carga','{{$detail->id}}', '{{$detail->controlador_carga}}', '{{$detail->controlador_carga_fab}}', '{{$detail->controlador_carga_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Controlador de carga','{{$detail->id}}', '{{$detail->controlador_carga}}', '{{$detail->controlador_carga_fab}}', '{{$detail->controlador_carga_esp}}')">
+                @if ( $detail->controlador_carga == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -318,7 +343,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Digitalizador','{{$detail->id}}', '{{$detail->digitalizador}}', '{{$detail->digitalizador_fab}}', '{{$detail->digitalizador_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Digitalizador','{{$detail->id}}', '{{$detail->digitalizador}}', '{{$detail->digitalizador_fab}}', '{{$detail->digitalizador_esp}}')">
+                @if ( $detail->digitalizador == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -353,7 +384,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Modem','{{$detail->id}}', '{{$detail->modem_satelital}}', '{{$detail->modem_satelital_fab}}', '{{$detail->modem_satelital_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Modem','{{$detail->id}}', '{{$detail->modem_satelital}}', '{{$detail->modem_satelital_fab}}', '{{$detail->modem_satelital_esp}}')">
+                @if ( $detail->modem_satelital == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -388,7 +425,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Panel solar','{{$detail->id}}', '{{$detail->panel_solar}}', '{{$detail->panel_solar_fab}}', '{{$detail->panel_solar_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Panel solar','{{$detail->id}}', '{{$detail->panel_solar}}', '{{$detail->panel_solar_fab}}', '{{$detail->panel_solar_esp}}')">
+                @if ( $detail->panel_solar == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -422,7 +465,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Regulador de carga','{{$detail->id}}', '{{$detail->regulador_carga}}','{{$detail->regulador_carga_fab}}', '{{$detail->regulador_carga_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Regulador de carga','{{$detail->id}}', '{{$detail->regulador_carga}}','{{$detail->regulador_carga_fab}}', '{{$detail->regulador_carga_esp}}')">
+                @if ( $detail->regulador_carga == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -456,7 +505,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Sismometro','{{$detail->id}}', '{{$detail->sismometro}}', '{{$detail->sismometro_fab}}','{{$detail->sismometro_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Sismometro','{{$detail->id}}', '{{$detail->sismometro}}', '{{$detail->sismometro_fab}}','{{$detail->sismometro_esp}}')">
+                @if ( $detail->sismometro == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
@@ -490,7 +545,13 @@
             <td>
             @if (Auth::user()->tipo_usuario)
             <div class="">
-                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Trompeta','{{$detail->id}}', '{{$detail->trompeta_satelital}}', '{{$detail->trompeta_satelital_fab}}', '{{$detail->trompeta_satelital_esp}}')">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Trompeta','{{$detail->id}}', '{{$detail->trompeta_satelital}}', '{{$detail->trompeta_satelital_fab}}', '{{$detail->trompeta_satelital_esp}}')">
+                @if ( $detail->trompeta_satelital == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
                 <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>

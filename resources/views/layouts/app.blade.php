@@ -192,9 +192,10 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> 
+        <!-- -webkit-fill-available -->
         @if (Session::has('mensaje'))
-        <div id="Box" class=" d-grid position-absolute" style="width: -webkit-fill-available; justify-content: center; margin-top: 0px ;">
+        <div id="Box" class=" d-grid position-absolute" style="width: 100%; justify-content: center; margin-top: 0px ;">
             <div class="box bg-dark rounded p-2 text-light text-center text-bold dark">    
                
                     {{ Session::get('mensaje')}}
