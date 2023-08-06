@@ -250,6 +250,7 @@ class DetailsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        // guarar para cuando se necesite eliminar una tabla
         /* no se esta utilizando
         
         $list3 = [
@@ -372,6 +373,86 @@ class DetailsController extends Controller
 
     }
 
+    public function borrarData(Request $request){
+        // solo para borrar los datos de una tabla
+        $list3 = [
+            ['antenagps'=>'antena_gps',
+            'antenaparabolica'=>'antena_parabolica',
+            'bateria'=>'bateria',
+            'controladorcarga'=>'controlador_carga', 
+            'digitalizador'=>'digitalizador',
+            'modemsatelital'=>'modem_satelital',
+            'panelsolar'=>'panel_solar',
+            'reguladorcarga'=>'regulador_carga',
+            'sismometro'=>'sismometro',
+            'trompetasatelital'=>'trompeta_satelital'],
+            
+            ['antenagps'=>'antena_gps_fab',
+            'antenaparabolica'=>'antena_parabolica_fab',
+            'bateria'=>'bateria_fab',
+            'controladorcarga'=>'controlador_carga_fab', 
+            'digitalizador'=>'digitalizador_fab',
+            'modemsatelital'=>'modem_satelital_fab',
+            'panelsolar'=>'panel_solar_fab',
+            'reguladorcarga'=>'regulador_carga_fab',
+            'sismometro'=>'sismometro_fab',
+            'trompetasatelital'=>'trompeta_satelital_fab'],
+
+            ['antenagps'=>'antena_gps_esp',
+            'antenaparabolica'=>'antena_parabolica_esp',
+            'bateria'=>'bateria_esp',
+            'controladorcarga'=>'controlador_carga_esp', 
+            'digitalizador'=>'digitalizador_esp',
+            'modemsatelital'=>'modem_satelital_esp',
+            'panelsolar'=>'panel_solar_esp',
+            'reguladorcarga'=>'regulador_carga_esp',
+            'sismometro'=>'sismometro_esp',
+            'trompetasatelital'=>'trompeta_satelital_esp']
+    
+        ];
+
+        $id = $request->id;
+        $detail = $request->detail;
+        // borrar datos de las tablas privadas
+        
+        if ($list3[0][$detail] && $id) {
+            $iterador = $list3[0][$detail];
+            $iterador1 = $list3[1][$detail];
+            $iterador2 = $list3[2][$detail];
+
+            $array = DB::table($detail)->where('id', '=', $id)->first();
+
+            $array->autor = '';
+            $array->$iterador = '';
+            $array->$iterador1 = '';
+            $array->$iterador2 = '';
+            $array->created_at= null; // aqui pensar como poner la fecha en un formato nulo
+            $array->updated_at= null;
+
+            //return response()->json($array);
+            $array = json_decode(json_encode($array), true);
+            DB::table($detail)->where('id', '=', $id)->update($array);
+            ;
+            // borrar datos de la tabla principal
+        
+            $details = DB::table('details')->where('id', '=', $id)->first();
+
+            $details->$iterador = '';
+            $details->$iterador1 = '';
+            $details->$iterador2 = '';
+            $details = json_decode(json_encode($details), true);
+
+            //
+
+            $details = DB::table('details')->where('id', '=', $id)->update($details);
+            return redirect()->route('panel.detail');
+
+        }
+
+        
+
+
+    }
     public function updateEdit(Request $request){
         //   return response()->json($request);
         $list = [
@@ -402,6 +483,7 @@ class DetailsController extends Controller
         $id = $request->id;
         $serial  = $request->serial;
         $detail = $request->detail;
+        $update = $request->inst;
 
         $autor_new = DB::table('users')->where('id','=', $request->autor)->first('name');
 
@@ -424,6 +506,7 @@ class DetailsController extends Controller
             $details[0]->autor = $autor_new->name;
             $details[0]->$fabricante = $request->fabricante;
             $details[0]->$especifi = $request->especifi;
+            $details[0]->updated_at = $update;
             //este pedacito convierte stdclass a array... ----------
             $array = json_decode(json_encode($details[0]), true);
             //------------------------------------------------------
