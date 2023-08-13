@@ -4,6 +4,7 @@
 <style>
     .show1 {
         opacity: 50%;
+        background: rgba(0,0,0,0);
     }
     .hidden {
         visibility: hidden;
@@ -20,12 +21,13 @@
 <div id="modalCard" class="modal d-flex hidden" tabindex="-1" role="dialog" >
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow pb-3" style="display: grid; align-items: end;">
-        <div class="modal-header p-2 border-bottom-0">
-            <h1 id="modal-title" class="modal-title m-2 fs-5">{}</h1>
+        <div class="modal-header pb-0 p-2 border-bottom-0">
+            <h1 id="modal-title" class="modal-title m-2 fs-5" style="text-decoration: underline; text-decoration-color:orange;">{}</h1>
             <!-- aqui va el boton de cerrar -->
         </div>
         <div class="modal-body  py-0">
-            <p>El valor de <b id="modal-body" >{}</b> esta por ser editado <br></p>
+            <p id="modal-body" class="mb-1 mt-0"></p>
+            <!-- <p>El valor de <b id="modal-body" >{}</b> esta por ser editado <br></p> -->
         </div>
         <form class="form" action="{{route('details.updateEdit')}}" method="post">
             @csrf
@@ -87,7 +89,7 @@
                 <button type="submit" class="btn btn-outline-success m-1 position-relative" style="left: 3%;">Guardar</button>
                        
         </form>
-        <button type="button" class="btn btn-outline-danger m-1 position-absolute" onclick="detail()" style="left: 30%; bottom: 3.5%;">Cerrar</button>
+        <button type="button" class="btn btn-outline-danger m-1 position-absolute" onclick="detail()" style="left: 31%; bottom: 3.6%;">Cerrar</button>
 
             
         </div>
@@ -125,7 +127,7 @@
     </div>
      </form>
 
-<table class="table table-hover bg-light rounded">
+<table class="table table-hover bg-light rounded m-2">
     <thead>
         <tr>
             <th>

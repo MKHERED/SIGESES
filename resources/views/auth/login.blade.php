@@ -19,8 +19,8 @@
                     flex-wrap: wrap;
                 "
     @endif >
-    <div class="card-header h3">Inicio de Sesión</div>
-    <p class="small">Sistema de Gestión de Estaciones Sismologicas</p>
+    <div class="card-header h3 mb-3">Inicio de Sesión</div>
+   
     <div class="card-body">
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -54,6 +54,6 @@
 
 </div>
 <div class="text-center">
-    <p class="mt-5 mb-3 text-muted">Intranet 2022</p>
+    <p class="mt-4 mb-3 text-muted">Intranet 2022</p>
 </div>
 @endsection

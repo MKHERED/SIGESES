@@ -66,8 +66,9 @@
         <nav class="navbar small navbar-expand-sm navbar-dark bg-dark shadow-sm">
             @if (Route::is('login') | Route::is(''))
             <div class="container justify-content-center d-block">            
-                    <div class="text-center justify-content-center">
-                        <h2 class="h2 mb-1 fw-normal text-light text" style="text-decoration: underline; text-decoration-color:orange;">Bienvenido al <b style="color:orange;">SIGESES</b></h2>  
+                    <div class="text-center justify-content-center mb-0 pb-0">
+                        <h2 class="h2  fw-normal text-light text" style="text-decoration: underline; text-decoration-color:orange;">Bienvenido al <b style="color:orange;">SIGESES</b></h2>  
+                        <p class="small text-light pb-0 mb-0">Sistema de Gestión de Estaciones Sismologicas</p>
                     </div>
 
             @else
@@ -203,9 +204,9 @@
             </div>
         </div>
         @endif
-        @if (Route::is('panel.index') || Route::is('panel.document') || Route::is('panel.detail') || Route::is('panel.show'))
+        @if (Route::is('panel.index') || Route::is('panel.document') || Route::is('panel.detail') || Route::is('panel.show') || Route::is('panel.user'))
         <!--  -->
-        <div class="row">
+        <div class="row gx-0">
             <aside class="aside bd-code-snippet col-2">
                 <ul class="list-group">
                     @if (Route::is('panel.index'))
@@ -241,6 +242,15 @@
                         </li>                         
                     @endif
 
+                    @if (Route::is('panel.user'))
+                        <li class="list-group-item bg-warning" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Usuarios</a>
+                        </li>                        
+                    @else
+                        <li class="list-group-item" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
+                        </li>                         
+                    @endif
 
                 </ul>
             </aside>    

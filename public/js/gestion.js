@@ -159,8 +159,15 @@ function detail(component, id, serial, fab, esp) {
         input.setAttribute('value', id);
         com_input.setAttribute('value', component);
         title.innerText = component;
-        body.innerText = component;
+        //body.innerText = component;
         
+        if ((serial == '') && (fab == '')) {
+             body.innerText = 'Agregar parametros'
+        } else {
+            body.innerText = 'Editar parametros'
+        }
+       
+
         input_ser.value = serial;
         input_Fab.value = fab;
         input_Esp.value = esp;
@@ -178,6 +185,39 @@ function detail(component, id, serial, fab, esp) {
     }
 
 }
+
+function users(id, name, user, email, cedula, tipo_user) {
+   
+
+    var body = document.getElementById('modalCard');
+    var id_inp = document.getElementById('id-input');
+    var name_inp = document.getElementById('nombre');
+    var user_inp = document.getElementById('user');
+    
+    var email_inp = document.getElementById('correo');    
+    var cedula_inp = document.getElementById('cedula');
+    
+    var tipo_opt = document.getElementById('tipo');
+
+
+
+    if ((id!='') && (name!='') && (user!='') && (email!='') && (cedula!='') && (tipo_user!='') ) {
+        body.style.visibility = 'visible';    
+        id_inp.value = id;
+        name_inp.value = name;
+        user_inp.value = user;
+        email_inp.value = email;
+        cedula_inp.value = cedula;
+        tipo_opt.value = tipo_user;
+        
+        
+        console.log(id, name, user, email, cedula, tipo_user)
+    } else {
+        body.style.visibility = 'hidden';
+    }
+
+}
+
 function mapaItem() {
     //este es el Contructor de los item
     var nombres = [

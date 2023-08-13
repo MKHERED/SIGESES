@@ -43,6 +43,7 @@ Route::get('/admin/panel', [App\Http\Controllers\Estacion\PanelController::class
 Route::get('/admin/panel/document', [App\Http\Controllers\Estacion\PanelController::class, 'document'])->name('panel.document');
 Route::get('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelController@documentShow')->name('panel.show');
 Route::get('/admin/panel/detail', [App\Http\Controllers\Estacion\PanelController::class, 'detail'])->name('panel.detail');
+Route::get('/admin/panel/user', [App\Http\Controllers\Estacion\PanelController::class, 'user'])->name('panel.user');
 
 Route::post('/details/updateEdit', [DetailsController::class, 'updateEdit'])->name('details.updateEdit');
 Route::post('/details/borrarData', [DetailsController::class, 'borrarData'])->name('details.borrarData');
