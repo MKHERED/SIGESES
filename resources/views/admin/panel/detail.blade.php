@@ -129,11 +129,11 @@
 
 <table class="table table-hover bg-light rounded m-2">
     <thead>
-        <tr>
-            <th>
+        <tr class="">
+            <th class="">
                 Nombre
             </th>
-            <th>
+            <th class="">
                 Autor
             </th>
             <th class="text-center col-2">

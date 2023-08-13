@@ -126,11 +126,12 @@
                 <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="users('{{ $var['id'] }}', '{{ $var['name'] }}', '{{ $var['username'] }}', '{{ $var['email'] }}', '{{ $var['cedula'] }}', '{{ $var['tipo_usuario']}}')">
                     Editar
                 </button>
-                <form action="" method="POST" class="btn p-0 m-0">
+                <form action="{{route('panel.user.delete', $var['id'] )}}" method="POST" class="btn p-0 m-0">
                         @csrf
+                        {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
-                        <input type="number" name="id" value='' hidden>
-                        <input type="text" name="" value='' hidden>
+                        <!-- <input type="number" name="id" value='' hidden> -->
+                        <!-- <input type="text" name="" value='' hidden> -->
                     
                 </form>
             </div>
