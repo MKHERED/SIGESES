@@ -267,4 +267,11 @@ class PanelController extends Controller
   
     }
 
+    public function userDelete($id){
+        
+        User::destroy($id);
+        
+        return redirect()->route('panel.user');
+    }
+
 }
