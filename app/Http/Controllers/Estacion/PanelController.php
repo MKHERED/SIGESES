@@ -6,7 +6,10 @@ use App\Models\Details;
 use Illuminate\Http\Request;
 use App\Models\Estaciones;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class PanelController extends Controller
@@ -163,6 +166,8 @@ class PanelController extends Controller
         
         } else {
             $details = [];
+            $autor_detail = [];
+            $updated_detail = [];
             foreach (Details::all() as $detail){
                 $details[] = $detail;
                 foreach ($list2 as $tables) {
@@ -180,6 +185,86 @@ class PanelController extends Controller
         
         
 
+    }
+
+    public function user(Request $request){
+        
+        //return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 
+
+        if ($request->nombre && $request->id) {
+            
+            if ($request->password != null) {
+                $id = $request->id;
+                $User = DB::table('users')->where('id','=', $id)->first(['name', 'username', 'cedula', 'email', 'password', 'tipo_usuario']);
+    
+                $User->name = $request->nombre;
+                $User->username = $request->user;
+                $User->cedula = $request->cedula;
+                $User->email = $request->correo;
+                
+                $cont = Hash::make($request->password);
+                
+                $User->password = $cont;
+                $User->tipo_usuario = $request->tipo;
+    
+                $array = json_decode(json_encode($User), true);
+    
+                DB::table('users')->where('id','=', $id)->update($array);
+
+            } else {
+                $id = $request->id;
+                $User = DB::table('users')->where('id','=', $id)->first(['name', 'username', 'cedula', 'email', 'tipo_usuario']);
+    
+                $User->name = $request->nombre;
+                $User->username = $request->user;
+                $User->cedula = $request->cedula;
+                $User->email = $request->correo;
+                $User->tipo_usuario = $request->tipo;
+    
+                $array = json_decode(json_encode($User), true);
+    
+                DB::table('users')->where('id','=', $id)->update($array);
+                
+                //return response()->json($User);
+            }
+
+            $request->except('id', 'nombre', 'user', 'cedula', 'correo', 'tipo');
+    
+            //-------------------- de vuelta a la vista
+            
+            $var = User::get();
+            
+            $array = json_decode(json_encode($var), true);
+            
+                for ($i=0; $i <= ( count($array)-1 ) ; $i++) { 
+                    $is_root = array_search('Root', $array[$i]);
+                    if($is_root){
+                        unset($array[$i]);
+                        break;  
+                    }
+                }
+            
+            return view('admin/panel/usuarios', compact('array')); 
+            
+
+        } else {
+            $var = User::get();
+            
+            $array = json_decode(json_encode($var), true);
+            
+                for ($i=0; $i <= ( count($array)-1 ) ; $i++) { 
+                    $is_root = array_search('Root', $array[$i]);
+                    if($is_root){
+                        unset($array[$i]);
+                        break;  
+                    }
+                }
+            
+            return view('admin/panel/usuarios', compact('array')); 
+        }
+        //return response()->json($request);
+        
+  
     }
 
 }

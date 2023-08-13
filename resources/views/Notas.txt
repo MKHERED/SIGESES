@@ -1191,3 +1191,8 @@ agregar un div del tamñano de la pagina
 
 ---------------------------------------------------------------------------------------------------------------------------------------
     <div class="spinner-grow text-warning small" role="status" style="--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;"> <span class="visually-hidden">.</span></div>
+
+
+
+
+'password' => Hash::make($data['password']),
