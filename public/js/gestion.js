@@ -218,7 +218,7 @@ function users(id, name, user, email, cedula, tipo_user) {
 
 }
 
-function mapaItem() {
+function mapaItem(estaciones) {
     //este es el Contructor de los item
     var nombres = [
         "IAAV", "IBAV", "VIGV", "CURV",
@@ -229,41 +229,45 @@ function mapaItem() {
         "BAUV", "RAYV", "BENV", "TACV",
         "CARV", "PONV", "BIRV", "CUPV",
         "MERV", "CACV", "PRGV", "PCRV",
-        "CRUV", "GUNV", "GUIV", "QRIV",
-        "GURV", "RIOV", "LUGV"
+        "CRUV", "GUNV", "GUIV", "ORIV",
+        "GURV", "RIOV", "LUGV", "TERV"
     ];
 
     var altura = [      
-        "top: 20px;", "top: 249px;", "top: 425px;", "top: 350px;",
-        "top: 218px;", "top: 274px;", "top: 450px;", "top: 379px;",
-        "top: 240px;", "top: 290px;", "top: 419px;", "top: 527px;",
-        "top: 249px;", "top: 302px;", "top: 342px; ", "top: 358px;",
-        "top: 350px;", "top: 475px;", "top: 314px;", "top: 325px;",
-        "top: 412px;", "top: 617px;", "top: 354px; ", "top: 346px;",
-        "top: 322px;", "top: 322px;", "top: 322px;", "top: 347px;",
-        "top: 394px;", "top: 495px;", "top: 424px;", "top: 343px;",
-        "top: 314px;", "top: 314px;", "top: 314px;", "top: 403px;",
-        "top: 482px;", "top: 465px;", "top: 594px;"
+        "bottom: 96%;", "bottom: 86.2%;", "bottom: 47.5%;", "bottom: 59%;",
+        "bottom: 92.5%;", "bottom: 80.2%;", "bottom: 42.2%;", "bottom: 54.3%;",
+        "bottom: 87%;", "bottom: 76.9%;", "bottom: 49.8%;", "bottom: 25%;",
+        "bottom: 86.2%;", "bottom: 74.5%;", "bottom: 61.7%; ", "bottom: 60.2%;",
+        "bottom: 66%;", "bottom: 36%;", "bottom: 69.4%;", "bottom: 69.3%;",
+        "bottom: 52%;", "bottom: 8.7%;", "bottom: 62.4%; ", "bottom: 64.2%;",
+        "bottom: 70%;", "bottom: 71%;", "bottom: 71.1%;", "bottom: 65.9%;",
+        "bottom: 56%;", "bottom:33.9% ;", "bottom: 49%;", "bottom: 65.4%;",
+        "bottom: 72%;", "bottom: 66.4%;", "bottom: 72.3%;", "bottom: 52.3%;",
+        "bottom: 35.9%;", "bottom: 40.4%;", "bottom: 13.8%;", "bottom: 58%;"
     ];
 
     var izquierda = [
-        "left: 65%;", "left: 58%;", "left: 15%;", "left: 24%;",
-        "left: 19%;", "left: 67%;", "left: 19%;", "left: 27%;",
-        "left: 25%;", "left: 32%;", "left: 20%;", "left: 27%;",
-        "left: 48%;", "left: 20%;", "left: 21%;", "left: 34%;",
-        "left: 8%;", "left: 10%;", "left: 25%;", "left: 37%;",
-        "left: 36%;", "left: 38%; ", "left: 39%;", "left: 42%;",
-        "left: 42%;", "left: 44%;", "left: 47%;", "left: 50%;",
-        "left: 47%;", "left: 49%;", "left: 57%;", "left: 58%;",
-        "left: 67%;", "left: 67%; ", "left: 72%;", "left: 65%;",
-        "left: 67%;", "left: 75%;", "left: 77%;"
+        "left: 65%;", "left: 67.5%;", "left: 15%;", "left: 24%;",
+        "left: 19%;", "left: 78%;", "left: 19%;", "left: 27%;",
+        "left: 25%;", "left: 36%;", "left: 20%;", "left: 32%;",
+        "left: 55.7%;", "left: 20%;", "left: 21%;", "left: 37.7%;",
+        "left: 6%;", "left: 9%;", "left: 25%;", "left: 42%;",
+        "left: 41%;", "left: 44%; ", "left: 44%;", "left: 48%;",
+        "left: 46%;", "left: 49%;", "left: 54%;", "left: 58%;",
+        "left: 53%;", "left: 57.2%;", "left: 66.3%;", "left: 66.4%;",
+        "left: 77%;", "left: 80.5%; ", "left: 84%;", "left: 76%;",
+        "left: 78.8%;", "left: 87.5%;", "left: 90.9%;", "left: 30.3%;"
     ];
 
     var mapa = document.getElementById('mapa');
 
     for (i = 0; i < nombres.length; i++){
-        mapa.insertAdjacentHTML('afterbegin', '<div id="'+nombres[i]+'" class="bg-dark text-dark small position-absolute" role="status" style="'+altura[i]+izquierda[i]+'--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;"> a <span class="visually-hidden">.</span></div>');
-        console.log(nombres[i]);
+        if (estaciones['siglas'] == nombres[i]) {
+            // '+'"'+estaciones['nombre']+'"'+','+'"'+estaciones['siglas']+'"'+','+'"'+estaciones['ubicacion']+'"'+','+'"'+altura[i]+'"'+','+'"'+izquierda[i]+'
+            mapa.insertAdjacentHTML('afterbegin', '<div id="'+nombres[i]+'" class="triangulo  small position-absolute" role="status" style="'+altura[i]+izquierda[i]+'--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;">  <span onclick='''etiqueta('+'"   '+estaciones['nombre']+'   "'+','+'"'+"mk"+'"'+','+'"'+"guatire"+'"'+','+'"'+"ayer"+'"'+','+'"'+"1"+'"'+','+'"'+"2"+'"'+')''' class="text">'+nombres[i]+'</span></div>');
+            //console.log(estaciones);            
+        }
+
     }
     
 }

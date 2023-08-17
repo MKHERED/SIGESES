@@ -56,7 +56,7 @@
     </script>
     <script>
 
-        //window.setInterval("location.reload()", 60000);
+        //window.setInterval("location.reload()", 30000);
         
     </script>
     <div id="app"  
