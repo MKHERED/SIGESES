@@ -164,7 +164,7 @@ class EstacionesControlle extends Controller
             "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"
         ];
         $regionList = ["Occidente", "Centro", "Oriente"];
-        $operativaList = ["No", "Si"];
+        $operativaList = ["No operativa", "Desintalada", "Vandalizada", "Infraestructura", "Operativa"];
 
         $estacion->estado = $estadosList[$estacion['estado']];
         $estacion->region = $regionList[$estacion['region']];

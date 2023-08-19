@@ -263,8 +263,14 @@ function mapaItem(estaciones) {
 
     for (i = 0; i < nombres.length; i++){
         if (estaciones['siglas'] == nombres[i]) {
-            // '+'"'+estaciones['nombre']+'"'+','+'"'+estaciones['siglas']+'"'+','+'"'+estaciones['ubicacion']+'"'+','+'"'+altura[i]+'"'+','+'"'+izquierda[i]+'
-            mapa.insertAdjacentHTML('afterbegin', '<div id="'+nombres[i]+'" class="triangulo  small position-absolute" role="status" style="'+altura[i]+izquierda[i]+'--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;">  <span onclick='''etiqueta('+'"   '+estaciones['nombre']+'   "'+','+'"'+"mk"+'"'+','+'"'+"guatire"+'"'+','+'"'+"ayer"+'"'+','+'"'+"1"+'"'+','+'"'+"2"+'"'+')''' class="text">'+nombres[i]+'</span></div>');
+            y = altura[i].replace('bottom: ', '');
+            y = y.replace('%;', '');
+            x = izquierda[i].replace('left: ', '');
+            x = x.replace(';', '');
+
+            //'<div id="'+nombres[i]+'" class="triangulo  small position-absolute" role="status" style="'+altura[i]+izquierda[i]+'--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;">  <span class="text">'+nombres[i]+'</span></div>');
+            // '+'"'+estaciones['nombre']+'"'+','+'"'+estaciones['siglas']+'"'+','+'"'+estaciones['ubicacion']+'"'+','+'"'+altura[i]+'"'+','+'"'+izquierda[i]+'     onclick='''etiqueta('+'"   '+estaciones['nombre']+'   "'+','+'"'+"mk"+'"'+','+'"'+"guatire"+'"'+','+'"'+"ayer"+'"'+','+'"'+"1"+'"'+','+'"'+"2"+'"'+')'''
+            mapa.insertAdjacentHTML('afterbegin', "<div id="+nombres[i]+" class='triangulo small position-absolute' role='status' style='"+altura[i]+izquierda[i]+"'> <span class='text' onclick='etiqueta(\" "+estaciones['nombre']+" \",  \" "+estaciones['siglas']+" \", \" "+estaciones['ubicacion']+" \", \" "+estaciones['estado']+" \", \" "+estaciones['operativa']+" \", \" "+estaciones['updated_at']+" \", \" "+y+" \", \""+x+"\")'> "+nombres[i]+" </span> </div");
             //console.log(estaciones);            
         }
 
