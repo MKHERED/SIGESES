@@ -133,8 +133,11 @@
                             </td>
                             <td>
                                 <select type="list" class="form-control" id="Operativa"   name="operativa" value="{{old('operativa')}}">
-                                    <option value="0">Si</option>
-                                    <option value="1">No</option>
+                                    <option value="0">No operativa</option>
+                                    <option value="1">Desintalada</option>
+                                    <option value="2">Vandalizada</option>
+                                    <option value="3">Infraestructura</option>
+                                    <option value="4">Operativa</option>
                                 </select>
                             </td>
                         </tr>

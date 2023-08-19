@@ -26,7 +26,7 @@
              @csrf
              {{ method_field('PATCH')}}
              <div class="row w-max">
-                <div class="col-6">
+                <div class="col-5">
                 <table class="table">
                         <tr>
                             <td>
@@ -89,7 +89,7 @@
                     </table>
                 </div>
             
-                <div class="col-6">
+                <div class="col-5">
                     <table class="table">
 
                         <tr>
@@ -123,8 +123,11 @@
                             </td>
                             <td>
                                 <select type="list" class="form-control" id="operativa"   name="operativa" value="{{$estaciones->operativa}}">
-                                    <option value="0">Si</option>
-                                    <option value="1">No</option>
+                                    <option value="0">No operativa</option>
+                                    <option value="1">Desintalada</option>
+                                    <option value="2">Vandalizada</option>
+                                    <option value="3">Infraestructura</option>
+                                    <option value="4">Operativa</option>
                                 </select>
                             </td>
                         </tr>
