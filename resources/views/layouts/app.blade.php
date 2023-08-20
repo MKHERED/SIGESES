@@ -241,16 +241,18 @@
                                 <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
                         </li>                         
                     @endif
-
-                    @if (Route::is('panel.user'))
-                        <li class="list-group-item bg-warning" >
-                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Usuarios</a>
-                        </li>                        
-                    @else
-                        <li class="list-group-item" >
-                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
-                        </li>                         
+                    @if (Auth::user()->username == 'root')
+                        @if (Route::is('panel.user'))
+                            <li class="list-group-item bg-warning" >
+                                    <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Usuarios</a>
+                            </li>                        
+                        @else
+                            <li class="list-group-item" >
+                                    <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
+                            </li>                         
+                        @endif                        
                     @endif
+
 
                 </ul>
             </aside>    

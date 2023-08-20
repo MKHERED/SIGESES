@@ -11,13 +11,6 @@
         height: 100%;
         position: absolute;
     }
-    
-    /* @media(min-width: 1200px) {
-        #mapa {
-            width: 1400px;
-            height: 100%;
-        }
-    } */
 
     .trans {
         background: rgba(255, 255, 255, 0.99);
@@ -39,16 +32,19 @@
     }
 </style>
 <script>
-    //nombre, visita, ubicacion
-
-
     function etiqueta(nombre, siglas, ubicacion, estado, operativa, visita, y, x){
         var modal = document.getElementById('modalCard');
+        var mapa = document.getElementById('mapa');
         
         switch (modal.style.visibility) {
+            case 'visible':
+
+                modal.style.visibility = 'hidden';
+                console.log('aqui')            
+                break;
+
             case 'hidden':
                 var estacion = document.getElementById(siglas); 
-                // var modal = document.getElementById('modalCard');
                 var mTitle = document.getElementById('modal-title');
                 var mSiglas = document.getElementById('siglas');
                 var mUbic = document.getElementById('ubicacion');
@@ -63,7 +59,7 @@
                     mSiglas.innerText = siglas;
                     mUbic.innerText = ubicacion;
                     mEst.innerText = estado;
-                    //pendiente no va a ser bool
+
                     operativa = parseInt(operativa)
                     
                     console.log(operativa)
@@ -90,7 +86,6 @@
                              break;
                      }
 
-                    //mOper.innerText = operativa;
                     visita = new String(visita);
                     
                     fecha = [];
@@ -104,33 +99,22 @@
                     y = new String(y)
                     modal.style.bottom =  y + '%';
                     modal.style.left = x;
-
-                    console.log('vista')
+                    // console.log('vista')
                 }
-                break;
-
-            case 'visible':
-                modal.style.visibility = 'hidden';
-                console.log('aqui')            
+                
+                console.log('hiden')
                 break;
                 
         }        
 
-        
+  
 
-        //if (siglas != 'false' && modal.style.visibility == 'hidden') {
- 
-            //}             
-
-    
     }
 
-
-
-//  onclick="etiqueta('','false','','','','','','')"
 </script>
-<div id="mapa">
-    <div id="modalCard" class=" position-absolute" role="dialog" style="visibility: hidden; left:0%; bottom:0%; width: 17%;">
+
+<div id="mapa" class="mapa" >
+    <div id="modalCard" class="position-absolute" role="dialog" style="visibility: hidden; left:0%; bottom:0%; width: 17%;">
         
         <div class="modal-dialog  rounded-4 m-1 trans position-relative" >
             <div class="modal-content rounded-4 shadow">
@@ -167,6 +151,7 @@
     </script>
     
 </div>
+
 
 
 
