@@ -45,7 +45,7 @@
 
               <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-              @if (Auth::user()->tipo_usuario)
+              @if (Auth::user()->username == 'root' )
                 <form action="{{ route('estaciones.destroy', $estacion->id) }}" method="POST">
                         @csrf
                         {{ method_field('DELETE') }}
