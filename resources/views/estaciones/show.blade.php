@@ -99,7 +99,7 @@
               <p class="form-label"> <b>Descripción</b></p>
             </div>
           </div>
-          @if ($detail->antena_gps == " ")
+          @if (($detail->antena_gps == " ") && (Auth::user()->tipo_usuario))
             <div class="col-ms-15 text-center">
               <p class="bg-dark border rounded text-light">Por favor registre los componentes
                 <a href="{{route('details.index', $estacion->id )}}" style="text-decoration: none; color:white; " class="p-1 m-1 btn small btn-success" rel="noopener noreferrer">Ingresar</a>

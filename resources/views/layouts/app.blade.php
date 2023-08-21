@@ -125,7 +125,10 @@
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         @if (Auth::user()->tipo_usuario)
                                             <a class="dropdown-item" href="{{ route('estaciones.create') }}">Nueva Estación</a>
-                                            <a class="dropdown-item" href="{{ route('register') }}">Crear Usuario</a>
+                                            @if (Auth::user()->username == 'root')
+                                                <a class="dropdown-item" href="{{ route('register') }}">Crear Usuario</a>
+                                            @endif
+                                            
                                             
                                         @endif
                                         <a class="dropdown-item" href="">Actualizar</a>
