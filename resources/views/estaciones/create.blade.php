@@ -99,7 +99,7 @@
                     </table>
                 </div>
             
-                <div class="col-6">
+                <div class="col-6" >
                     <table class="table">
 
                         <tr>
@@ -129,12 +129,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="Operativa">Operativa</label>
+                                <label for="Operativa">Condición</label>
                             </td>
                             <td>
                                 <select type="list" class="form-control" id="Operativa"   name="operativa" value="{{old('operativa')}}">
                                     <option value="0">No operativa</option>
-                                    <option value="1">Desintalada</option>
+                                    <option value="1">Desinstalada</option>
                                     <option value="2">Vandalizada</option>
                                     <option value="3">Infraestructura</option>
                                     <option value="4">Operativa</option>
@@ -150,7 +150,7 @@
                             </td>
                               
                         </tr>
-                        <tr>
+                        <tr style="border-style: hidden !important;">
                             <td>
                                 <label for="Vista">Vista Previa</label>
                             </td>

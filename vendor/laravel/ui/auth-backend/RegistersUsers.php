@@ -18,7 +18,13 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        $user = Auth::user()->username;
+        if ($user == 'root') {
+            return view('auth.register');
+        } else {
+            return view('auth.login');
+        }
+        
     }
 
     /**

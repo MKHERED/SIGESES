@@ -309,6 +309,18 @@ class EstacionesControlle extends Controller
         Storage::delete('public/uploads/' . $db->nombre);
 
         Estaciones::destroy($id);
+        Details::destroy($id);
+       
+        $list = [
+            'antenagps','antenaparabolica','bateria','controladorcarga', 
+            'digitalizador','modemsatelital','panelsolar',
+            'reguladorcarga','sismometro','trompetasatelital'
+        ];
+        foreach ($list as $table) {
+            DB::table($table)->delete($id);
+        }
+        
+
         return redirect()->route("estaciones.index")->with(["mensaje" => "Estación Eliminada con exito",]);
     }
 
