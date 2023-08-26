@@ -2,10 +2,12 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 trait RegistersUsers
 {
@@ -18,11 +20,13 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $user = Auth::user()->username;
-        if ($user == 'root') {
+        //$user = Auth::user();
+        $user = User::where('name', '=', 'root', 'and','tipo_usuario', '=', '1')->first();
+        
+        if ($user == []) {
             return view('auth.register');
         } else {
-            return view('auth.login');
+            return redirect()->route('home');
         }
         
     }
