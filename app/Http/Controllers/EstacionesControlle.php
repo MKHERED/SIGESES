@@ -24,10 +24,10 @@ class EstacionesControlle extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
         $estaciones = [];
-
+        
         foreach (Estaciones::all() as $estacion) {
             $estaciones[] = $estacion;
             $estadosList = [
@@ -43,12 +43,14 @@ class EstacionesControlle extends Controller
             $estacion->estado = $estadosList[$estacion['estado']];
             $estacion->region = $regionList[$estacion['region']];
         }
+        
         if ($estaciones == []) {
             $estaciones = [];
             //echo $estaciones;
         }
-
+        
         return view('estaciones.index', compact('estaciones'));
+
     }
 
     /**

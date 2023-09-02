@@ -25,7 +25,7 @@ Route::get('/', function () {
     if (Auth::check()){
         return redirect()->route('home');
     } else {
-        return view('auth.login');        
+        return redirect()->route('login');      
     }
  
 });
@@ -49,8 +49,6 @@ Route::delete('/admin/panel/user/{id}', 'App\Http\Controllers\Estacion\PanelCont
 Route::delete('/admin/panel/document/{id}', 'App\Http\Controllers\Estacion\PanelController@documentDelete')->name('panel.delete');
 
 
-// Route::get('admin/panel', function() {
-//     return view('admin.panel.index');
-// });
+
 
 
