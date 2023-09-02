@@ -20,15 +20,17 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        //$user = Auth::user();
+        $root = Auth::user('root');
+        return response()->json($root);
+        /*
         $user = User::where('name', '=', 'root', 'and','tipo_usuario', '=', '1')->first();
         
-        if ($user == []) {
+        if ($user == [] || $root) {
             return view('auth.register');
         } else {
             return redirect()->route('home');
         }
-        
+        */
     }
 
     /**

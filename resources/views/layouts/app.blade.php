@@ -79,7 +79,6 @@
             @endif
                 @if (Route::is('estaciones.index'))
                     <h7 class="navbar-brand text-light"><b style="text-decoration: underline; text-decoration-color:orange;">Estaciones</b></h7>
-                    
                 @endif
 
                 @if (Route::is('panel.index'))
@@ -107,16 +106,25 @@
                     <!-- Left Side Of Navbar -->
                     
                     <ul class="navbar-nav ms-auto">
+                    @if (Route::is('estaciones.index'))
+                        @if (!$estaciones == [])
+                            <div class="text-center">
+                                <select type="list" class="form-control-sm border-warning bg-dark text-light" id=""   name="" value="">
+                                    @foreach ($estaciones as $estacion)
+                                        <option value="{{$estacion->siglas}}">{{$estacion->nombre}}: {{$estacion->siglas}}</option>
+                                    @endforeach    
+                                    
+                                </select> 
+                            </div>
+                                        
+                        @endif                        
+                    @endif
 
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        @guest
-
-
-                        @else
                         @if (Route::is('estaciones.index') || Route::is('panel.index') || Route::is('panel.detail') || Route::is('panel.document') || Route::is('panel.show') )
                             <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -168,9 +176,10 @@
                             
                         @endif
                         
-
+                            @guest
+                            @else
                             <li class="nav-item dropdown">
-                                
+                           
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
@@ -192,7 +201,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                            @endguest
                     </ul>
                 </div>
             </div>

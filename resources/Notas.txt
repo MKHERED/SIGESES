@@ -1,0 +1,58 @@
+        foreach (Estaciones::all() as $estacion) {
+            $estaciones[] = $estacion;
+            $estadosList = [
+                "Seleccione un Estado", "Amazonas", "Anzoátegui",
+                "Apure", "Aragua", "Barinas", "Bolívar", "Carabobo",
+                "Cojedes", "Delta Amacuro", "Dependencias Federales",
+                "Distrito Federal", "Falcón", "Guárico", "Lara", "Mérida",
+                "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre",
+                "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"
+            ];
+            $regionList = ["Occidente", "Centro", "Oriente"];
+
+            $estacion->estado = $estadosList[$estacion['estado']];
+            $estacion->region = $regionList[$estacion['region']];
+        }
+        
+        if ($estaciones == []) {
+            $estaciones = [];
+            //echo $estaciones;
+        }
+
+
+                
+        $estaciones = [];
+
+        if ($request == [ ]) {
+            
+        } else {
+            //return view('estaciones.index', compact('estaciones'));
+            return response()->json($request);
+        }
+
+
+
+
+
+                $id = $request->id;
+        $estaciones = [];
+        return view('estaciones.index', compact('estaciones'));
+        
+
+        /*
+        if ($id=='all') {
+            # code...
+        } elseif {
+            # code...
+        } else {
+            # code...
+        }
+        */
+
+
+
+                        @guest
+
+
+                        @else
+@endguest
