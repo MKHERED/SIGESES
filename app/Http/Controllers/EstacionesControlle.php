@@ -26,31 +26,53 @@ class EstacionesControlle extends Controller
     
     public function index(Request $request)
     {
+        $buscar = $request->buscador;
+        //return response()->json($request);
         $estaciones = [];
+        $estadosList = [
+            "Seleccione un Estado", "Amazonas", "Anzoátegui",
+            "Apure", "Aragua", "Barinas", "Bolívar", "Carabobo",
+            "Cojedes", "Delta Amacuro", "Dependencias Federales",
+            "Distrito Federal", "Falcón", "Guárico", "Lara", "Mérida",
+            "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre",
+            "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"
+        ];
+        $regionList = ["Occidente", "Centro", "Oriente"];
         
-        foreach (Estaciones::all() as $estacion) {
-            $estaciones[] = $estacion;
-            $estadosList = [
-                "Seleccione un Estado", "Amazonas", "Anzoátegui",
-                "Apure", "Aragua", "Barinas", "Bolívar", "Carabobo",
-                "Cojedes", "Delta Amacuro", "Dependencias Federales",
-                "Distrito Federal", "Falcón", "Guárico", "Lara", "Mérida",
-                "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre",
-                "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"
-            ];
-            $regionList = ["Occidente", "Centro", "Oriente"];
+        if ($buscar != 'all') {
+            $estaciones[] = Estaciones::where('siglas', '=', $buscar)->first();
+            
+            if ($estaciones == [null]) {
+                $estaciones = [];
 
-            $estacion->estado = $estadosList[$estacion['estado']];
-            $estacion->region = $regionList[$estacion['region']];
-        }
-        
-        if ($estaciones == []) {
-            $estaciones = [];
-            //echo $estaciones;
-        }
-        
-        return view('estaciones.index', compact('estaciones'));
+                foreach (Estaciones::all() as $estacion) {
+                    $estaciones[] = $estacion;
+                    $estacion->estado = $estadosList[$estacion['estado']];
+                    $estacion->region = $regionList[$estacion['region']];
+                }
 
+            }
+            return view('estaciones.index', compact('estaciones'));
+            
+        } elseif ($buscar == 'all') {
+            
+            foreach (Estaciones::all() as $estacion) {
+                $estaciones[] = $estacion;
+                $estacion->estado = $estadosList[$estacion['estado']];
+                $estacion->region = $regionList[$estacion['region']];
+            }
+            return view('estaciones.index', compact('estaciones'));
+
+        } else {
+
+            foreach (Estaciones::all() as $estacion) {
+                $estaciones[] = $estacion;
+                $estacion->estado = $estadosList[$estacion['estado']];
+                $estacion->region = $regionList[$estacion['region']];
+            }
+            return view('estaciones.index', compact('estaciones'));
+
+        }
     }
 
     /**
