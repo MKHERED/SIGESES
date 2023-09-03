@@ -108,14 +108,19 @@
                     <ul class="navbar-nav ms-auto">
                     @if (Route::is('estaciones.index'))
                         @if (!$estaciones == [])
-                            <div class="text-center">
-                                <select type="list" class="form-control-sm border-warning bg-dark text-light" id=""   name="" value="">
-                                    @foreach ($estaciones as $estacion)
-                                        <option value="{{$estacion->siglas}}">{{$estacion->nombre}}: {{$estacion->siglas}}</option>
-                                    @endforeach    
-                                    
-                                </select> 
-                            </div>
+                            <form action="{{route('estaciones.index')}}" method="get">
+                           
+                                <div class="text-center input-group">
+                                    <select type="list" class="form-control-sm border-warning bg-dark text-light " id="buscador"   name="buscador" value="all">
+                                            <option value="all">Todos</option>
+                                        @foreach ($estaciones as $estacion)
+                                            <option value="{{$estacion->siglas}}">{{$estacion->nombre}}: {{$estacion->siglas}}</option>
+                                        @endforeach
+                                           
+                                    </select>
+                                    <input class="btn btn-dark border-warning btn-sm p-1" style=" width:55px" type='submit' value='Buscar'>
+                                </div>
+                            </form>
                                         
                         @endif                        
                     @endif

@@ -21,16 +21,16 @@ trait RegistersUsers
     public function showRegistrationForm()
     {
         $root = Auth::user('root');
-        return response()->json($root);
-        /*
+        //return response()->json($root);
+        
         $user = User::where('name', '=', 'root', 'and','tipo_usuario', '=', '1')->first();
         
-        if ($user == [] || $root) {
+        if ($root) {
             return view('auth.register');
         } else {
             return redirect()->route('home');
         }
-        */
+        
     }
 
     /**

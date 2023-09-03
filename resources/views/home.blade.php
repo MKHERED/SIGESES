@@ -115,11 +115,22 @@
 
 <div id="mapa" class="mapa" >
     <div id="modalCard" class="position-absolute" role="dialog" style="visibility: hidden; left:0%; bottom:0%; width: 17%;">
-        
+
         <div class="modal-dialog  rounded-4 m-1 trans position-relative" >
             <div class="modal-content rounded-4 shadow">
             <div class="modal-header border-bottom-0 bg-dark">
                 <h1 id="modal-title" class="modal-title text-light small m-2" style="text-decoration: underline 1px orange">{}</h1>
+
+                <button type="button" class="btn-close btn-close-dark btn-sm bg-light p-1 m-1" data-bs-dismiss="modal" aria-label="Close" onclick="quitar()"></button>
+                <script>
+                    function quitar() {
+                        var modal = document.getElementById('modalCard');
+                        modal.style.visibility = 'hidden';
+                    }
+                </script>
+                    
+
+                
             </div>
             <div class="modal-body py-0">
                 <div class="form-floating mt-0 m-3 mb-1 p-0">
