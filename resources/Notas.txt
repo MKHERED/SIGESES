@@ -1,0 +1,20 @@
+        //return response()->json($request->imagen_n);
+        if ($request->imagen_n == '') {
+            $request['imagen_n'] = 'hola';
+            return response()->json($request);
+        } else {
+            $request['imagen_n'] = 'contiene';
+            $request['valor'] = 'aqui';
+            return response()->json($request);
+        }
+
+
+
+
+
+            if ($estacion[$item] != '') {
+                $array[$item] = true;
+            } else {
+                $estacion[$item] = $consulta[$item];
+                $array[] = true;
+            }
