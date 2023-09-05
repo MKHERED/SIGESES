@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Exists;
 use Monolog\Handler\ElasticaHandler;
 
 class EstacionesControlle extends Controller
@@ -290,30 +291,50 @@ class EstacionesControlle extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $estacion = request()->except(['_token', '_method']);
+        // $array = [];
+        
+        $consulta = Estaciones::where('id', '=', $id)->first();
 
-        // Ordenar aqui y poner la URL donde se guarda la imagen
-        $imagen_n = $request->imagen_n;
-        $estacion['img_dir'] = $imagen_n;
-        //------------------------------------------------------
+        	
+        $objetos = ["nombre", "siglas", "ubicacion", "longitud", "latitud", "altitud", "region", "operativa", "imagen_n"];
+        foreach ($objetos as $item) {
+            if (array_key_exists($item, $estacion)) {
+                if ($estacion[$item] != '') {
+                    //$array[$item] = true;
+                    
+                    // Ordenar aqui y poner la URL donde se guarda la imagen
+                    $imagen_n = $request->imagen_n;
+                    $estacion['img_dir'] = $imagen_n;
+                    //------------------------------------------------------
 
-        //guardado de la imagen
-        if ($request->hasFile('imagen_n')) {
-            $db = Estaciones::findOrFail($id);
-            Storage::delete('public/' . $db->img_dir);
+                    //guardado de la imagen
+                    if ($request->hasFile('imagen_n')) {
+                        $db = Estaciones::findOrFail($id);
+                        Storage::delete('public/' . $db->img_dir);
 
-            $estacion['imagen_n'] = $request->file('imagen_n')->store('uploads/' . $estacion["nombre"] . '/', 'public');
-            $estacion['img_dir'] = $estacion['imagen_n'];
+                        $estacion['imagen_n'] = $request->file('imagen_n')->store('uploads/' . $estacion["nombre"] . '/', 'public');
+
+                    }               
+                } else {
+                    $estacion[$item] = $consulta[$item];
+
+                }
+
+            } else {
+                $estacion[$item] = $consulta[$item];
+
+                //$array[$item] = false;
+
+            }
         }
-
-
-
-
-
+        $estacion['img_dir'] = $estacion['imagen_n'];       
+       
+        
+        //return response()->json($estacion);
         Estaciones::where('id', '=', $id)->update($estacion);
-
-
-
+       
         return redirect()->route("estaciones.index")->with(["mensaje" => "Estación actualizada",]); //response()->json($estacion);//
 
 
