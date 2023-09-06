@@ -263,8 +263,8 @@ class EstacionesControlle extends Controller
     public function edit($id)
     {
         //aqui hacer una plantilla igual al registro, donde los campos carguen el contenido anterior para visualizar y el nuevo para reemplazar
-
         
+
         if (Auth::user()->tipo_usuario == 1) {
             $estaciones = Estaciones::findOrFail($id);
             $sigla = $estaciones['siglas'];
@@ -291,13 +291,31 @@ class EstacionesControlle extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        return response()->json($request);
         $estacion = request()->except(['_token', '_method']);
         // $array = [];
         
         $consulta = Estaciones::where('id', '=', $id)->first();
 
-        	
+        //hacer sentencia para controlar cuando vengan mas de dos longitudes y latitudes...
+        if ($request->gms == 'on') {
+            $longitud = $request->longitud."º ".$request->longitud1.'" '.$request->longitud2."'";
+            $latitud = $request->latitud."º ".$request->latitud1.'" '.$request->latitud2."'";
+            $estacion['longitud'] = $longitud;
+            $estacion['latitud'] = $latitud;
+
+            $objetos = ['gms', 'longitud1', 'longitud2', 'latitud1', 'latitud2'];
+            
+            foreach ($objetos as $item) {
+                unset($estacion[$item]);
+            }
+
+            
+        }
+        //return response()->json($estacion);
+        
+
+
         $objetos = ["nombre", "siglas", "ubicacion", "longitud", "latitud", "altitud", "region", "operativa", "imagen_n"];
         foreach ($objetos as $item) {
             if (array_key_exists($item, $estacion)) {

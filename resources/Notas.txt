@@ -18,3 +18,44 @@
                 $estacion[$item] = $consulta[$item];
                 $array[] = true;
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <tr>
+                            <td>
+                                <label for="Longitud">Longitud</label>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" id="Longitud" placeholder="" name="longitud" value="{{$estaciones->longitud}}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Latitud">Latitud</label>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" id="Latitud" placeholder="" name="latitud" value="{{$estaciones->latitud}}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Altitud">Altitud</label>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" id="Altitud" placeholder="" name="altitud" value="{{$estaciones->altitud}}">
+                            </td>                    
+                        </tr>

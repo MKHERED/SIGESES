@@ -139,13 +139,22 @@ class PanelController extends Controller
                 foreach ($list2 as $tables) {
                     $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
                     $updated = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('updated_at');
-
+                    if ($updated == '') {
+                        $updated['updated_at'] = date('Y-m-d');
+                    }
+                    if ($autor == '') {
+                        $autor['autor'] = 'sin autor';
+                        
+                    }
+                    
                     $autor_detail[] = [$autor, $tables];
                     $updated_detail[] = [$updated, $tables];
                 }
             
             }
-            return response()->json($updated_detail[0][0]->updated_at);
+            //return response()->json($updated_detail[0][0]->updated_at);
+            $updated_detail = json_decode(json_encode($updated_detail));
+            $autor_detail = json_decode(json_encode($autor_detail));
             $options = Details::all();
             return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 
         
@@ -155,12 +164,20 @@ class PanelController extends Controller
             foreach ($list2 as $tables) {
                 $autor = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('autor');
                 $updated = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('updated_at');
-                
+                if ($updated == '') {
+                    $updated['updated_at'] = date('Y-m-d');
+                }
+                if ($autor == '') {
+                    $autor['autor'] = 'sin autor';
+                    
+                }
                 $autor_detail[] = [$autor ,$tables];
                 $updated_detail[] = [$updated, $tables];
 
             }
-            return response()->json($updated_detail[0][0]->updated_at);
+            //return response()->json($updated_detail[0][0]->updated_at);
+            $updated_detail = json_decode(json_encode($updated_detail));
+            $autor_detail = json_decode(json_encode($autor_detail));
             
             $options = Details::all();
             return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 

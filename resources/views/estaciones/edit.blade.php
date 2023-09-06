@@ -18,7 +18,7 @@
         <a class="inicio nueva btn btn-sm border text-light" href="{{ route('estaciones.index') }}">Cancelar</a>
 
     </nav>
-<main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
+<main class="text-center presentacion-main bg-light border-hidden container" style="border: hidden;">
     <h3 class="h3 m-4">Actualice los siguientes datos</h3>
     <div class="form-center text-start">
        
@@ -53,27 +53,40 @@
                             </td>                    
                         </tr>
                         <tr>
+                           
+                           <td>
+                               <label for="dec">¿Que tipo de coordenada es?</label>
+                           </td>
+                           <td class="text-center">
+                               <label for="dec">GMS: &nbsp;</label><input type="checkbox" name="gms" id="gms" onclick="gmsutm()">
+                           
+                           </td>
+  
+                       </tr>
+                       <tr>
                             <td>
                                 <label for="Longitud">Longitud</label>
                             </td>
-                            <td>
-                                <input type="number" class="form-control" id="Longitud" placeholder="" name="longitud" value="{{$estaciones->longitud}}">
-                            </td>                    
+                            <td style="display: flex" id="Long"> 
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="">                               
+                            </td>                                             
                         </tr>
                         <tr>
                             <td>
                                 <label for="Latitud">Latitud</label>
                             </td>
-                            <td>
-                                <input type="number" class="form-control" id="Latitud" placeholder="" name="latitud" value="{{$estaciones->latitud}}">
+                            <td style="display: flex"id="Lat">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="">
+
                             </td>                    
                         </tr>
+                        <script src="{{ asset('js/gmsutm.js') }}"></script>  
                         <tr>
                             <td>
                                 <label for="Altitud">Altitud</label>
                             </td>
                             <td>
-                                <input type="number" class="form-control" id="Altitud" placeholder="" name="altitud" value="{{$estaciones->altitud}}">
+                                <input type="number" class="form-control" id="Altitud" placeholder="Altitud de la estación" name="altitud" value="{{old('altitud')}}">
                             </td>                    
                         </tr>
                         <!---
@@ -110,7 +123,7 @@
                                 <label for="Region">Región</label>
                             </td>
                             <td>
-                                <select type="list" class="form-control" id="Region"   name="region" value="{{$estaciones->region}}">
+                                <select type="list" class="form-control" id="Region"  name="region" value="{{$estaciones->region}}">
                                     <option value="0">Occidente</option>
                                     <option value="1">Centro</option>
                                     <option value="2">Oriente</option>
@@ -136,7 +149,7 @@
                                 <label for="Imagen">Imagen</label>
                             </td>
                             <td>
-                                <input type="file" class="form-control" id="Imagen" name="imagen_n" value="{{$estaciones->imagen_n}}">
+                                <input type="file" class="form-control" id="Imagen"  name="imagen_n" value="{{$estaciones->imagen_n}}">
                                 <p class="form-control text box btn-ms disable">
                                     {{$estaciones->img_dir}}
                                 </p>
