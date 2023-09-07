@@ -9,29 +9,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registro de Estación</title>
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
-    
+    <link rel="stylesheet" href="{{asset('css/styles.css') }}">
 </head>
 <body >
   <!------------------------------------------------------------------------------------------------ Registro -->  
-<main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
+  <nav class="navbar navbar-dark bg-orange text-light navbar-visitas">
+        <h4 class="">Edición</h4> 
+        <a class="inicio nueva btn btn-sm border text-light" href="{{ route('estaciones.index') }}">Cancelar</a>
+
+    </nav>
+<main class="text-center presentacion-main bg-light border-hidden container" style="border: hidden;">
     <h3 class="h3 m-4">Actualice los siguientes datos</h3>
-    <div class="form-center ">
+    <div class="form-center text-start">
        
-        <form method='POST' class="form small" action="{{route('estaciones.update', $estaciones->id)}}" enctype="multipart/form-data">
+        <form method='POST' class="form" action="{{ url('/estaciones/'.$estaciones->id) }}"  enctype="multipart/form-data">
              @csrf
              {{ method_field('PATCH')}}
-             <div class="row container">
-                <div class="col-6  text-start">
+             <div class="row w-max">
+                <div class="col-5">
                 <table class="table">
                         <tr>
                             <td>
                                 <label for="Estacion">Estación</label>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="Estacion" placeholder="Nombre de la estación" name="nombre" value="{{$estaciones->nombre }}" >
+                                <input type="text" class="form-control" id="Estacion" placeholder="" name="nombre" value="{{$estaciones->nombre }}" >
                             </td>
                         </tr>
                         <tr>
@@ -39,7 +41,7 @@
                                 <label for="Abreviatura">Siglas</label>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="Abreviatura" placeholder="Abreviatura de la estación" name="siglas" value="{{ $estaciones->siglas }}">
+                                <input type="text" class="form-control" id="Abreviatura" placeholder="" name="siglas" value="{{ $estaciones->siglas }}">
                             </td>                    
                         </tr>
                         <tr>
@@ -47,21 +49,21 @@
                                 <label for="Ubicacion">Ubicación</label>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="Ubicacion" placeholder="Ubicacion de la estación" name="ubicacion" value="{{ $estaciones->ubicacion }}">
+                                <input type="text" class="form-control" id="Ubicacion" placeholder="" name="ubicacion" value="{{ $estaciones->ubicacion }}">
                             </td>                    
                         </tr>
                         <tr>
                            
-                            <td>
-                                <label for="dec">¿Que tipo de coordenada es?</label>
-                            </td>
-                            <td class="text-center">
-                                <label for="dec">GMS: &nbsp;</label><input type="checkbox" name="gms" id="gms" onclick="gmsutm()">
-                            
-                            </td>
-   
-                        </tr>
-                        <tr>
+                           <td>
+                               <label for="dec">¿Que tipo de coordenada es?</label>
+                           </td>
+                           <td class="text-center">
+                               <label for="dec">GMS: &nbsp;</label><input type="checkbox" name="gms" id="gms" onclick="gmsutm()">
+                           
+                           </td>
+  
+                       </tr>
+                       <tr>
                             <td>
                                 <label for="Longitud">Longitud</label>
                             </td>
@@ -78,29 +80,29 @@
 
                             </td>                    
                         </tr>
-                        <script src="{{ asset('js/gmsutm.js') }}"></script>
-                        <script>
-                            const valor1 = @json($estaciones->longitud);
-                            const valor2 = @json($estaciones->latitud);
-                            
-                            var long = document.getElementById('Longitud');
-                            var lati = document.getElementById('Latitud');
-
-                            long.value = valor1;
-                            lati.value = valor2;
-                        </script>
+                        <script src="{{ asset('js/gmsutm.js') }}"></script>  
                         <tr>
                             <td>
                                 <label for="Altitud">Altitud</label>
                             </td>
                             <td>
-                                <input type="number" class="form-control" id="Altitud" placeholder="Altitud de la estación" name="altitud" value="{{ $estaciones->altitud }}">
+                                <input type="number" class="form-control" id="Altitud" placeholder="Altitud de la estación" name="altitud" value="{{old('altitud')}}">
                             </td>                    
                         </tr>
+                        <!---
+                        <tr>
+                            <td>
+                                <label for="Instalacion">Instalación</label>
+                            </td>
+                            <td>
+                                <input type="date" class="form-control" id="Instalacion" name="" value="{{old('create_at')}}">
+                            </td>                    
+                        </tr>
+                        -->
                     </table>
                 </div>
             
-                <div class="col-6" >
+                <div class="col-5">
                     <table class="table">
 
                         <tr>
@@ -108,18 +110,12 @@
                                 <label for="Estado">Estado</label>
                             </td>
                             <td>
-                                <select type="list" class="form-control" id="Estado" name="estado" value="{{$estaciones->estado}}">
+                            <select type="list" class="form-control" id="Estado" name="estado" value="{{old('$estaciones->estado')}}" onclick="estadoslist()">
                                     <script src="{{asset('js/estadoslist.js') }}">
                                        
                                     </script>
                                    
                                 </select>
-                                <script>
-                                    document.onload= estadoslist();
-                                    var select = document.getElementById('Estado');
-                                    const valor = @json($estaciones->estado);
-                                    select.value = valor;
-                                </script>
                             </td>   
                         </tr>
                         <tr>
@@ -127,7 +123,7 @@
                                 <label for="Region">Región</label>
                             </td>
                             <td>
-                                <select type="list" class="form-control" id="Region"   name="region" value="{{$estaciones->region}}">
+                                <select type="list" class="form-control" id="Region"  name="region" value="{{$estaciones->region}}">
                                     <option value="0">Occidente</option>
                                     <option value="1">Centro</option>
                                     <option value="2">Oriente</option>
@@ -136,12 +132,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="Operativa">Condición</label>
+                                <label for="Operativa">Operativa</label>
                             </td>
                             <td>
-                                <select type="list" class="form-control" id="Operativa"   name="operativa" value="{{$estaciones->operativa}}">
+                                <select type="list" class="form-control" id="operativa"   name="operativa" value="{{$estaciones->operativa}}">
                                     <option value="0">No operativa</option>
-                                    <option value="1">Desinstalada</option>
+                                    <option value="1">Desintalada</option>
                                     <option value="2">Vandalizada</option>
                                     <option value="3">Infraestructura</option>
                                     <option value="4">Operativa</option>
@@ -153,28 +149,18 @@
                                 <label for="Imagen">Imagen</label>
                             </td>
                             <td>
-                                <input type="file" class="form-control" id="imagen0" name="imagen_n" onchange="muestraImg('muestrasImg', 'imagen0', '0');">
-                            </td>
-                              
-                        </tr>
-                        <tr style="border-style: hidden !important;">
-                            <td>
-                                <label for="Vista">Vista Previa</label>
-                            </td>
-                            <td>
-                                <div class="border p-0" style="width:350px; height:225px " id="muestrasImg">
-
-
-                                </div>
-                                <script src="{{asset('js/gestion.js') }}"></script>
-                            </td>
+                                <input type="file" class="form-control" id="Imagen"  name="imagen_n" value="{{$estaciones->imagen_n}}">
+                                <p class="form-control text box btn-ms disable">
+                                    {{$estaciones->img_dir}}
+                                </p>
+                            </td>   
                         </tr>
                     </table>
-
-            
+                </div>
             </div>
-            <div id="guardar" class="col">
-                <input type="submit" class='btn btn-success m-1' style="width:fit-content;" value="Guardar">
+            <div id="guardar" class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1" style="width:fit-content;" type='submit' value='Guardar'>
+                 <!-- agregar el boton para agregar los componentes luego de consultar -->
                 <script> 
                     const validador =  @json($validador);
                     var guardar = document.getElementById('guardar');
@@ -184,13 +170,9 @@
                     } 
                     if (validador == "cambiar"){
                         guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.edit',$estaciones->id)}}'>Cambiar Componentes</a>");
-                    }                  
+                    }
+                    void(validador);                    
                 </script>
-
-
-            </div>
-            <div>
-
             </div>
         </form>
     </div>

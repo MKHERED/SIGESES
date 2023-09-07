@@ -291,7 +291,7 @@ class EstacionesControlle extends Controller
      */
     public function update(Request $request, $id)
     {
-        return response()->json($request);
+        //return response()->json($request);
         $estacion = request()->except(['_token', '_method']);
         // $array = [];
         

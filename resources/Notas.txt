@@ -59,3 +59,43 @@
                                 <input type="number" class="form-control" id="Altitud" placeholder="" name="altitud" value="{{$estaciones->altitud}}">
                             </td>                    
                         </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <div id="guardar" class="row container m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1" style="width:fit-content;" type='submit' value='Guardar'>
+                    <!-- agregar el boton para agregar los componentes luego de consultar -->
+                    <script> 
+                        const validador =  @json($validador);
+                        var guardar = document.getElementById('guardar');
+
+                        if (validador == "agregar") {
+                            guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.index', $estaciones->id)}}'>Agregar Componentes</a>");
+                        } 
+                        if (validador == "cambiar"){
+                            guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.edit',$estaciones->id)}}'>Cambiar Componentes</a>");
+                        }
+                        void(validador);                    
+                    </script>
+            </div>
