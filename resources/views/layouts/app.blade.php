@@ -94,8 +94,11 @@
                 <!-- En caso de Error -->
                 @if (Route::is('panel.show') && isset($error) && !is_array($error))
                     <h7 class="navbar-brand text-light ">Documentos de la estación <b style="text-decoration: underline; text-decoration-color:orange;">{{$error}} </b></h7>
-                @endif 
-                
+                @endif
+                @if (Route::is('estaciones.edit'))
+                    <h6 class="navbar-brand text-light p-0 m-0">Edición</h6> 
+                @endif
+
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -124,6 +127,9 @@
                                         
                         @endif                        
                     @endif
+
+                    </ul>
+                    <ul class='navbar-nav ms-auto'>
 
                     </ul>
 
@@ -177,6 +183,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('estaciones.index') }}">Estaciones</a>
                                 <!---------------------------------------- Poner una lista de todas -------------------------------------------->
+                            </li>
+                            
+                        @endif
+                        @if (Route::is('estaciones.edit'))
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="{{ route('estaciones.index') }}"  style="text-decoration: underline; text-decoration-color:red;">Cancelar</a>
                             </li>
                             
                         @endif
