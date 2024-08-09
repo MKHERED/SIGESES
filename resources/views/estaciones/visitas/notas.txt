@@ -1,0 +1,238 @@
+
+<style>
+/*
+.sticky-md-top{top:15%}
+main {
+    height: 100vh !important;
+    /* height: -webkit-fill-available; 
+    /* max-height: 100vh; 
+    /* overflow-x: auto; 
+    /* overflow-y: hidden; 
+    
+}
+.full {
+    height: 100vh !important;
+    max-height: 100vh;
+} */
+
+.global {
+    /* overflow-y: scroll; */
+    height: auto;
+
+}
+.objetos {
+    height: auto;
+}
+
+</style>
+
+<main class="col-12 global">
+    <link rel="stylesheet" href="{{asset('css/visita.css') }}">
+
+    <!-- convertir la barra vertical a navbar -->
+    <div class="row p-0 m-0 justify-center">
+        <div class="col-sm-2 p-0 bg-dark text-light full small text-center">
+        <div class="sticky-md-top col-md-12 col-12 pt-5">
+            <div>
+                <h5>Opciones</h5>
+            </div>    
+        @if (isset($visit))
+            <a class="btn btn-light p-1 mt-2 w-100 " href="{{ route('estaciones.visita', $id) }}">Crear Visita</a>        
+		@else 
+            <div>
+                <button class="btn btn-outline-success mt-2 m-1 rounded-0 " style="width:80%" type="submit" form="createVisita" formenctype="multipart/form-data">Añadir visita</button>       
+
+                <!--p class="bg-secondary text-light p-2 border border-dark" >
+                    Por favor llene los datos a registrar en la siguiente hoja
+                </p-->
+            </div>
+        @endif
+            
+                <div>
+                    <p class="m-0 mt-2 mb-1 w-100"> Visitas </p>
+                    <hr class="m-0" style="color:orange; border-top: 2px solid; opacity:100">
+                    <input class="form-control small p-1 mt-1 mb-1" type="date" placeholder="Buscar fecha">
+                    <hr class="m-0" style="color:orange; border-top: 2px solid; opacity:100">
+                    <p class="m-0 mt-2 w-100" >Recientes</p>                    
+                </div>
+            
+                <div class="">
+                    
+                        <script>
+                            function quita(objeto){
+                                objeto = objeto.slice(0,19)
+                                objeto = objeto.replace('T',' ')
+                                obj = document.getElementById(objeto)
+
+                                objeto = objeto.slice(0,10)
+
+                                obj.value = objeto
+
+                                console.log(objeto)
+
+                            }
+                        </script>
+
+                        @foreach ($visitas as $visita)
+                            <form enctype="multipart/form-data" action="{{route('estaciones.visitas', [$id, $visita->created_at]  )}}" method="POST"  >
+                                @csrf                            
+                                <input class="btn btn-light small btn-sm m-1" type="submit" name="{{$visita->created_at}}" id="{{$visita->created_at}}" value="{{$visita->created_at}}"> 
+                                <input class="btn btn-light small btn-sm m-1" type="text" name="idv" hidden value="{{$visita->id}}">
+                                
+                                 <script>
+                                    var obj = @json($visita->created_at)
+
+                                    quita(obj)
+                                    /* var corte = obj.slice(0,17) */
+
+                                    /*item = document.getElementsByName(obj) 
+                                    valor = item[0].value;
+                                    corte = valor.slice(0,10);
+                                    item[0].value = corte; */
+                                </script> 
+
+                            </form>
+                        @endforeach
+
+
+                    
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-sm-10 full small text-center">
+        @if (!isset($visit))
+            <form id="createVisita" action="{{route('estaciones.vRegist', $id) }}" method="post">
+            @csrf
+            <input class="btn btn-light small btn-sm m-1" type="text" name="autor" hidden value="{{Auth::user()->id}}">
+
+        @endif
+        
+            
+            <div class="">
+                @include('estaciones.visitas.planilla')
+            </div> 
+        </div>
+
+        @if (!isset($visit))
+            </form>
+        @endif
+    </div>
+
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="col-sm-2 p-0 bg-dark text-light full small text-center">
+        <div class="sticky-md-top col-md-12 col-12">
+            <div>
+                <h5 class="border-warning border-bottom">Opciones</h5>
+            </div>    
+        @if (isset($visit))
+            <a class="btn btn-light p-1 mt-2 w-100 " href="{{ route('estaciones.visita', $id) }}">Crear Visita</a>        
+		@else 
+            <div>
+                <button class="btn btn-outline-success mt-2 m-1 rounded-0 " style="width:90%" type="submit" form="createVisita" formenctype="multipart/form-data">Añadir visita</button>       
+
+                <!--p class="bg-secondary text-light p-2 border border-dark" >
+                    Por favor llene los datos a registrar en la siguiente hoja
+                </p-->
+            </div>
+        @endif
+            
+                <div>
+                    <p class="m-0 mt-2 mb-1 w-100 h5 border-warning border-bottom"> Visitas </p>
+                    <!-- <hr class="m-0" style="color:orange; border-top: 2px solid; opacity:100"> -->
+                    <div class="input-group input-group-sm" >
+                        <label class="input-group-text rounded-0" for="">Fecha</label>
+                        <input class="form-control form-control-sm rounded-0" type="date" placeholder="">
+                    </div>
+                    <!-- <hr class="m-0" style="color:orange; border-top: 2px solid; opacity:100"> -->
+                    <p class="m-0 mt-2 w-100 h5 border-warning border-bottom" >Recientes</p>                    
+                </div>
+            
+                <div class="">
+                    
+                        <script>
+                            function quita(objeto){
+                                objeto = objeto.slice(0,19)
+                                objeto = objeto.replace('T',' ')
+                                obj = document.getElementById(objeto)
+
+                                objeto = objeto.slice(0,10)
+
+                                obj.value = objeto
+
+                                console.log(objeto)
+
+                            }
+                        </script>
+
+                        @foreach ($visitas as $visita)
+                            <form enctype="multipart/form-data" action="{{route('estaciones.visitas', [$id, $visita->created_at]  )}}" method="POST"  >
+                                @csrf                            
+                                <input class="btn btn-light small btn-sm m-1" type="submit" name="{{$visita->created_at}}" id="{{$visita->created_at}}" value="{{$visita->created_at}}"> 
+                                <input class="btn btn-light small btn-sm m-1" type="text" name="idv" hidden value="{{$visita->id}}">
+                                
+                                 <script>
+                                    var obj = @json($visita->created_at)
+
+                                    quita(obj)
+                                    /* var corte = obj.slice(0,17) */
+
+                                    /*item = document.getElementsByName(obj) 
+                                    valor = item[0].value;
+                                    corte = valor.slice(0,10);
+                                    item[0].value = corte; */
+                                </script> 
+
+                            </form>
+                        @endforeach
+
+
+                    
+                </div>
+            </div>
+
+
+        </div>

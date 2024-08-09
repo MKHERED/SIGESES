@@ -1,4 +1,4 @@
-// aqui pones los botones y cosas que cambien
+ // aqui pones los botones y cosas que cambien
 function muestraImg(cont, arch, ids) {
     window.onbeforeunload = function(e) {
         sessionStorage.setItem('lista', null);
@@ -29,23 +29,26 @@ function muestraImg(cont, arch, ids) {
         for (i = 0; i < archivos.length; i++) {
 
             id_veri = archivos2.replace('imagen', '');
-            console.log(ids, id_veri);;
+            //console.log(ids, id_veri);;
 
             if(id_veri == ids){
                 imgTag = document.createElement("img");
-                imgTag.height = 225;                                  //ESTAS LINEAS NO SON "NECESARIAS" 
-                imgTag.width = 350;                                   //ÚNICAMENTE HACEN QUE LAS IMÁGENES SE VEAN 
+                //imgTag.height = 100;//225 + 100;                                  //ESTAS LINEAS NO SON "NECESARIAS" 
+                //imgTag.height = 260;
+                //imgTag.width = 100;//350 + 275;                                   //ÚNICAMENTE HACEN QUE LAS IMÁGENES SE VEAN 
                 imgTag.id = ids;
-                imgTag.className = "rounded";                                      // ORDENADAS CON UN TAMAÑO ESTÁNDAR
+                
+                //imgTag.style = "object-fit: contain;";////////
+                imgTag.className = "rounded limited";                                      // ORDENADAS CON UN TAMAÑO ESTÁNDAR
                 imgTag.src = URL.createObjectURL(archivos[0]);
                 if (sessionStorage.getItem('lista') == "null") {
                     sessionStorage.setItem('lista', "files0")
-                    console.log("si y ha sido remplazada por files0")
+                    //console.log("si y ha sido remplazada por files0")
                 } else {
-                    console.log("no")
+                    //console.log("no")
                 }
                 contenedor.appendChild(imgTag);
-
+                console.log(imgTag)
                 // estooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooy aqui          
             }
             if(id_veri != ids){
@@ -60,13 +63,13 @@ function muestraImg(cont, arch, ids) {
             if (guardar) {
                 guardar.remove()
                 agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small text-light bg-orange m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿ Listo ?</button>')
-                console.log("true");
+                //console.log("true");
             
             } else {
                 if (listo) {
                     listo.remove()
                 }
-                console.log("falso");
+                //console.log("falso");
                 agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small text-light bg-orange m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿ Listo ?</button>')
             }
             
@@ -88,12 +91,12 @@ function OtherCamp() {
     if ((num % 2) == 0) {
         //objeto 1
         inputs1.insertAdjacentHTML("beforeend", '<input type="file" class="form-control" style="width: max-content" id="imagen'+num+'" name="files'+num+'" onchange="muestraImg(\'muestrasImg'+num+'\', \'imagen'+num+'\', \''+num+'\');">')
-        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
+        divImagenes.insertAdjacentHTML('beforeend', '<div class=" p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
 
     } else {
         //objeto 2
         inputs.insertAdjacentHTML("beforeend", '<input type="file" class="form-control" style="width: max-content" id="imagen'+num+'" name="files'+num+'" onchange="muestraImg(\'muestrasImg'+num+'\', \'imagen'+num+'\', \''+num+'\');">')
-        divImagenes.insertAdjacentHTML('beforeend', '<div class="border p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
+        divImagenes.insertAdjacentHTML('beforeend', '<div class=" p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg'+num+'"></div>');
 
     }
 
@@ -101,12 +104,12 @@ function OtherCamp() {
         var files = ' '+sessionStorage.getItem('lista')
         sessionStorage.setItem('lista', ['files'+num]+files )
     }
-    console.log(sessionStorage.getItem('lista'))
+    //console.log(sessionStorage.getItem('lista'))
 
     if (guardar) {
         guardar.remove()
         agregar.insertAdjacentHTML('beforebegin', '<button id="listo" class="btn small text-light bg-orange m-1 p-1 extension" style="width: fit-content !important;" type="button" onclick="Enviolist(sessionStorage.getItem(\'lista\'))">¿ Listo ?</button>')
-        console.log("true");
+        //console.log("true");
     }
 }
 
@@ -128,13 +131,15 @@ function Enviolist(list) {
     
 }
 
-function ImagenVerif(img, url) {
+function ImagenVerif(img, url, urldoc) {
     var contenedor = document.getElementById('imagenes');
 
-    if (img > 1) {
-        console.log("si esta "+img);
+    if (img > 1 && (urldoc)) {
+        //console.log("si esta "+img);
+
+        contenedor.insertAdjacentHTML('beforeend', '<a class="btn btn-light m-1"  style="width:fit-content;" href="'+urldoc+'" >Documentos antiguos</a>');
     } else {
-        console.log('no esta');
+        //console.log('no esta');
         contenedor.insertAdjacentHTML('afterbegin', '<a class="btn btn-success text-light m-1" style="width:fit-content;" href="'+url+'"><b>Agregar documentos</b></a>')
         
         contenedor.insertAdjacentHTML('afterbegin', '<label class="form-label text-center">No posee ninguna imagen o documento aun   <b>¿Desea subir alguno?</b> </label>')
@@ -211,7 +216,7 @@ function users(id, name, user, email, cedula, tipo_user) {
         tipo_opt.value = tipo_user;
         
         
-        console.log(id, name, user, email, cedula, tipo_user)
+        //console.log(id, name, user, email, cedula, tipo_user)
     } else {
         body.style.visibility = 'hidden';
     }
@@ -260,7 +265,7 @@ function mapaItem(estaciones) {
     ];
 
     var mapa = document.getElementById('mapa');
-
+    //console.log(estaciones); 
     for (i = 0; i < nombres.length; i++){
         if (estaciones['siglas'] == nombres[i]) {
             y = altura[i].replace('bottom: ', '');
@@ -270,10 +275,102 @@ function mapaItem(estaciones) {
 
             //'<div id="'+nombres[i]+'" class="triangulo  small position-absolute" role="status" style="'+altura[i]+izquierda[i]+'--bs-spinner-width: 1.2rem; --bs-spinner-height: 1.2rem;">  <span class="text">'+nombres[i]+'</span></div>');
             // '+'"'+estaciones['nombre']+'"'+','+'"'+estaciones['siglas']+'"'+','+'"'+estaciones['ubicacion']+'"'+','+'"'+altura[i]+'"'+','+'"'+izquierda[i]+'     onclick='''etiqueta('+'"   '+estaciones['nombre']+'   "'+','+'"'+"mk"+'"'+','+'"'+"guatire"+'"'+','+'"'+"ayer"+'"'+','+'"'+"1"+'"'+','+'"'+"2"+'"'+')'''
-            mapa.insertAdjacentHTML('afterbegin', "<div id="+nombres[i]+" class='triangulo small position-absolute' role='status' style='"+altura[i]+izquierda[i]+"'> <span class='text' onclick='etiqueta(\" "+estaciones['nombre']+" \",  \" "+estaciones['siglas']+" \", \" "+estaciones['ubicacion']+" \", \" "+estaciones['estado']+" \", \" "+estaciones['operativa']+" \", \" "+estaciones['updated_at']+" \", \" "+y+" \", \""+x+"\")'> "+nombres[i]+" </span> </div");
+            if(estaciones['operativa'] == 'Operativa'){
+                mapa.insertAdjacentHTML('afterbegin', "<div id="+nombres[i]+" class='triangulo-green small position-absolute' role='status' style='"+altura[i]+izquierda[i]+"'> <span class='text' onclick='etiqueta(\" "+estaciones['nombre']+" \",  \" "+estaciones['siglas']+" \", \" "+estaciones['ubicacion']+" \", \" "+estaciones['estado']+" \", \" "+estaciones['operativa']+" \", \" "+estaciones['updated_at']+" \", \" "+y+" \", \""+x+"\")'> "+nombres[i]+" </span> </div");
+            } else {
+                mapa.insertAdjacentHTML('afterbegin', "<div id="+nombres[i]+" class='triangulo-red small position-absolute' role='status' style='"+altura[i]+izquierda[i]+"'> <span class='text' onclick='etiqueta(\" "+estaciones['nombre']+" \",  \" "+estaciones['siglas']+" \", \" "+estaciones['ubicacion']+" \", \" "+estaciones['estado']+" \", \" "+estaciones['operativa']+" \", \" "+estaciones['updated_at']+" \", \" "+y+" \", \""+x+"\")'> "+nombres[i]+" </span> </div");
+
+            }
             //console.log(estaciones);            
         }
 
     }
     
 }
+
+function quita(objeto, valor){
+    valor = valor.slice(0,19)
+    valor = valor.slice(0,10)
+    valor = valor.replace('T',' ')
+
+    obj = document.getElementById(objeto)
+
+    obj.value = valor
+
+}
+
+function fechaNow(objeto){
+    let date = new Date()
+
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+    if (day < 10) {
+        day = `0${day}`
+        
+    } 
+    if(month < 10) {
+        month = `0${month}`
+    }
+
+    dia = `${year}-${month}-${day}`
+
+    console.log(dia)
+    objeto = document.querySelector(objeto);
+    objeto.max = dia
+
+}
+
+function qSmall(objeto, valor){
+    valor = valor.slice(0,19)
+    valor = valor.slice(0,10)
+    valor = valor.replace('T',' ')
+    objeto.innerHTML = `<b>Actualizado:</b> ${valor}`
+    
+}
+
+function valorObj(objeto, valor){
+    var objeto = document.querySelector(objeto)
+    objeto.value = valor;
+}
+
+// ------------------------------------------------------------------ animaciones --------------------------------------------------------------------
+function animate(options) {
+
+    var start = performance.now();
+  
+    requestAnimationFrame(function animate(time) {
+      // timeFraction от 0 до 1
+      var timeFraction = (time - start) / options.duration;
+      if (timeFraction > 1) timeFraction = 1;
+  
+      var progress = options.timing(timeFraction)
+      
+      options.draw(progress);
+  
+      if (timeFraction < 1) {
+        requestAnimationFrame(animate);
+      }
+  
+    });
+  }
+
+
+
+function makeEaseOut(timing) {
+    return function(timeFraction) {
+      return 1 - timing(1 - timeFraction);
+    }
+  }
+
+  function quad(timeFraction) {
+    return Math.pow(timeFraction, 2)
+  }
+
+  function bounce(timeFraction) {
+    for (let a = 0, b = 1; 1; a += b, b /= 2) {
+      if (timeFraction >= (7 - 4 * a) / 11) {
+        return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+      }
+    }
+  }

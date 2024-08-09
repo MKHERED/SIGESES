@@ -5,7 +5,9 @@
     <link rel="stylesheet" href="{{asset('css/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
 </head>
+<style>
 
+</style>
 <body class="update">
     <div class="box border text-primary text-center text-bold bg-dark">
         @if (Session::has('mensaje'))
@@ -15,10 +17,13 @@
     <div class="p-1 bg-orange card-header text-center">             
         <h4 class="p-0 m-0 text-light">Zona para subir los domumentos</h4>
     </div>
+    <div class="alert alert-warning border-0 rounded-0 m-0 text-center p-1" role="alert">
+        <strong>Tenga en Cuenta </strong> el maximo de archivos por subir es de 20 en total y cada archivo no se puede exceder de los 20 megabites (20mb)
+    </div>
     <section class="update container">
 
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row border">
+            <div class="col-md-12 bg-white">
                 <div class="card-body ">
 
 
@@ -43,7 +48,7 @@
                                 </div>
                             </div>
                             <div id="divImagenes" class="col-sm-12 row mb-3 pb-3 mt-2">
-                                <div class="border p-0 m-1 rounded" style="width:350px; height:225px " id="muestrasImg"></div>
+                                <div class="p-0 m-1 rounded" style="width:350px; height:225px; max-width: 350px; max-height: 225px" id="muestrasImg"></div>
                             </div>
                             
                             <script src="{{asset('js/gestion.js') }}"></script>

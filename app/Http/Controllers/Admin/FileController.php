@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Estaciones;
 use App\Http\Controllers\Controller;
 use App\Models\Link_doc;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+
 
 class FileController extends Controller
 {
@@ -65,15 +67,16 @@ class FileController extends Controller
 
         foreach ($lista[0] as $value) {
             if ($estaciones && $request->hasFile($value)) {
-
+                //$valor = $request->file($value);
                 
+                //return response()->json(print_r($valor->getClientOriginalName()));
                 
                 $direccion = $request->file($value)->store('uploads/'.$estaciones["nombre"].'/'.'doc/', 'public');
                 
                 $file = $request->file($value);
                 $documento = new Link_doc;
                 $documento->id_estacion = $estaciones["id"];
-                $documento->nombre = time().'_'.$file->getClientOriginalExtension();
+                $documento->nombre = $file->getClientOriginalName();                   //time().'_'.$file->getClientOriginalExtension();
                 $documento->nombre_estacion = $estaciones["nombre"];
                 
                 
@@ -159,4 +162,6 @@ class FileController extends Controller
     {
         //
     }
+
+    // PRUEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 }

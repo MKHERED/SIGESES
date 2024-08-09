@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Estacion;
 use App\Http\Controllers\Controller;
 use App\Models\Details;
 use App\Models\Estaciones;
+use App\Models\Visitas;
 use finfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,36 +24,16 @@ class DetailsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
-         
-        $id = $_SERVER['REQUEST_URI'];
         
-         $id1 = str_replace("details?", "", $id);
-         $id = str_replace("//", "", $id1);
+        if (!$request->doc) {
+            $doc = 'No';
+            $estacion = Estaciones::where('id', '=', $id)->first();
+            return view('estaciones.details.details',compact('id', 'doc', 'estacion'));
+        }
         
-         if ($id.str_contains(" * ", "/")) {
-             $id2 = str_replace("/", "", $id);
-         }
-         $id = str_replace("&on", "", $id2);
-
-         if (str_replace($id, "", $id2) == "") {
-            $doc = "No";
-         } else {
-            $respusta = str_replace($id."&", "", $id2);
-            if ($respusta == "on") {
-                $doc = "Si";
-            }
-         }
-
-        
-         //
-
-        return view('estaciones.details.details')->with(["id"=>$id, "doc"=>$doc]);
-        
-        //$data = $id . " // " . $id1; 
-        //return response()->json($data);
-     }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -70,117 +51,100 @@ class DetailsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        
-        
-        $details = new Details;
-        
-        $details->id = $request->id;
-        
-        if ($details) {
-            $estaciones = Estaciones::findOrFail($details['id']); 
-            $details->estacion = $estaciones['nombre'];
-            $details->siglas = $estaciones['siglas'];            
-            $details->autor = $request->autor;
-        //return response()->json($details);
-        }
+        $estacion = Estaciones::find($id);
 
-        $details->antena_gps = $request->antena_gps;
-        $details->antena_gps_fab = $request->antena_gps_fab;
-        $details->antena_gps_esp = $request->antena_gps_esp;
-
-        $details->antena_parabolica = $request->antena_parabolica;
-        $details->antena_parabolica_fab = $request->antena_parabolica_fab;
-        $details->antena_parabolica_esp = $request->antena_parabolica_esp;
-        
-        $details->bateria = $request->bateria;
-        $details->bateria_fab = $request->bateria_fab;
-        $details->bateria_esp = $request->bateria_esp;
-
-        $details->controlador_carga = $request->controlador_carga;
-        $details->controlador_carga_fab = $request->controlador_carga_fab;
-        $details->controlador_carga_esp = $request->controlador_carga_esp;
-        
-        $details->digitalizador = $request->digitalizador;
-        $details->digitalizador_fab = $request->digitalizador_fab;
-        $details->digitalizador_esp = $request->digitalizador_esp;
-
-        $details->modem_satelital = $request->modem_satelital;
-        $details->modem_satelital_fab = $request->modem_satelital_fab;
-        $details->modem_satelital_esp = $request->modem_satelital_esp;
-
-        $details->panel_solar = $request->panel_solar;
-        $details->panel_solar_fab = $request->panel_solar_fab;
-        $details->panel_solar_esp = $request->panel_solar_esp;
-
-        $details->regulador_carga = $request->regulador_carga;
-        $details->regulador_carga_fab = $request->regulador_carga_fab;
-        $details->regulador_carga_esp = $request->regulador_carga_esp;
-
-        $details->sismometro = $request->sismometro;
-        $details->sismometro_fab = $request->sismometro_fab;
-        $details->sismometro_esp = $request->sismometro_esp;
-
-        $details->trompeta_satelital = $request->trompeta_satelital;
-        $details->trompeta_satelital_fab = $request->trompeta_satelital_fab;
-        $details->trompeta_satelital_esp = $request->trompeta_satelital_esp;
-
-        $details->instalacion_satelital = $request->inst;
-
-        $doc = $request->doc;
-        
-        
-        $validador = $this->regist($details);
-        //return response()->json(var_dump($validador));
-        
-        ///*        
-        if ($doc == 'Si'){
-            $id = $request->id;
-
-            return redirect()->route("update",compact('id'))->with(["mensaje" => "Creada con exito",]);
-        }
-
-        if (array_key_exists('msj', $validador)) {
-            // registrado
-            if ($validador['msj'] == ["mensaje" => "Componentes registrados exitosamente",]) {
-                $details->__unset('autor');  //except(['autor']); //except(['_token', '_method', 'inst']);
-                $details->save(); 
-                return redirect()->route("estaciones.index")->with($validador['msj']);
-            }            
-        }
-        
-        if (array_key_exists('var', $validador)){
-            // Componente ya registrado
-            $id ="/".$request->id;
-            if ($validador['msj'] == ["mensaje" => "Componente ya registrado: "]) {
-                $validador['msj'] = ["mensaje" => "Componente ya registrado: ".$validador['detail']." en ".$validador['var']];                
-            
-            } elseif ($validador['msj'] == ["mensaje" => "Esta estacion ya tiene un componente registrado en: "]) {
-                $validador['msj'] = ["mensaje" => "Esta estacion ya tiene un componente registrado en: ".$validador['detail']];
-            }
+        if ($estacion) {
+            $detail = new Details;
+            //$data = $estacion + $request;
+            $array = json_decode(json_encode($request), true);
             
             
-            return redirect()->route("details.index", $id)->with($validador['msj']);
+            $detail->id = $estacion['id'];
+            $detail->siglas = $estacion['siglas'];
+            $detail->estacion = $estacion['nombre'];
+            $detail->autor = $request['autor'];
+            
 
+            $detail = $detail->fill($array);
+            
+            //return response()->json($request);
+            $list = [
+                "transceptor_marca","transceptor_modelo","transceptor_serial",
+                "antena_gps_marca","antena_gps_modelo","antena_gps_serial",
+                "BUC_marca","BUC_modelo","BUC_frecuencia","BUC_serial",
+                "LNB_marca","LNB_modelo","LNB_frecuencia","LNB_banda","LNB_serial",
+                "trompeta_marca","trompeta_serial",
+                "digitalizador_marca","digitalizador_modelo","digitalizador_serial",
+                "parabolica_marca","parabolica_diametro","parabolica_serial",
+                "sensor_marca","sensor_modelo","sensor_serial","sensor_sen",
+                "regulador_voltaje_marca","regulador_voltaje_modelo","regulador_voltaje_serial","regulador_voltaje_watts",
+                "banco_baterias_marca","banco_baterias_modelo","banco_baterias_serial","banco_baterias_cantidad","banco_baterias_watts",
+                "panel_solar_a_marca","panel_solar_a_modelo","panel_solar_a_serial","panel_solar_a_watts",
+                "panel_solar_b_marca","panel_solar_b_modelo","panel_solar_b_serial","panel_solar_b_watts",
+                "panel_solar_c_marca","panel_solar_c_modelo","panel_solar_c_serial","panel_solar_c_watts",
+                "panel_solar_d_marca","panel_solar_d_modelo","panel_solar_d_serial","panel_solar_d_watts",
+                "panel_solar_e_marca","panel_solar_e_modelo","panel_solar_e_serial","panel_solar_e_watts",
+            ];
+
+            $list2 = [
+                "transceptor_fecha","antena_gps_fecha","BUC_fecha",
+                "LNB_fecha","trompeta_fecha","digitalizador_fecha",
+                "parabolica_fecha","sensor_fecha","regulador_voltaje_fecha",
+                "banco_baterias_fecha","panel_solar_a_fecha","panel_solar_b_fecha",
+                "panel_solar_c_fecha","panel_solar_d_fecha","panel_solar_e_fecha"
+            ];
+
+        foreach ($list as $item => $value){
+            if ($request[$value] == null) {
+                $detail[$value] = " ";   
+            } else {
+                $detail[$value] = $request[$value];
+            }         
+        } 
+        
+        foreach ($list2 as $item => $value){
+            if ($request[$value] == null) {
+                $detail[$value] = null;   
+            } else {
+                $detail[$value] = $request[$value];
+            }         
+        } 
+
+
+        // Pensar en como analizar los datos sin que arroje los datos vacios *ese es el problema*
+
+        //return response()->json($request);
+        //return response()->json($detail);
+        /*$report = $this->regist($detail);
+        
+        return response()->json([$report, "hola"]);
+        if (in_array('validador', $report)) {
+            $equipo = $report[0];
+            $objeto = $report[1];
+            $donde = $report[2][0]['estacion'];
+            $detail = $report[3];
+            
+            //return redirect()->route('details.index', $id)->with('mensaje', 'Ya fue registrado '.$objeto.' en '.$donde, $detail, $equipo);          
+        } else {
+            $nombre = $estacion['nombre'];
+            //return view('estaciones.details.edit', compact('detail', 'id', 'nombre'))->with('mensaje', 'hola');
+            $mensaje = $report[0];
+            return redirect()->route('details.index', $id)->with('mensaje', $report[0], [$detail, $id, $nombre, $mensaje]);
+        }
+        */
+
+        //$ver = Details::find($id);
+        //return response()->json($detail);
+
+        if (TRUE) {
+            $detail->save();
+            return redirect()->route('estaciones.show', $id)->with('mensaje', ' Se guardaron los datos exitosamente');
+            
+        }
         
         }
-
-
-        if (array_key_exists('error', $validador)) {
-            // Componente Faltante no pasa
-            
-            $id ="/".$request->id;
-            return redirect()->route("details.index", $id)->with(["mensaje" => $validador['validador']['msj'].$validador['validador']['detail'] ]);
-            
-        }
-
-
-        //*/  
-        
-        
-        
-        //-- aqui hacer guardado de details y empezar a dividir los datos
 
     }
 
@@ -203,16 +167,18 @@ class DetailsController extends Controller
      */
     public function edit($id)
     {
+        
         $estaciones = Estaciones::findOrFail($id);
         $sigla = $estaciones['siglas'];
         $nombre = $estaciones['nombre'];
         $details = DB::table('details')->where('siglas', $sigla)->first();
-
-
-        return view('estaciones.details.edit', compact('details', 'id', 'nombre'));
+        $detail = $details;
+        //return response()->json($detail); 
+        
+        return view('estaciones.details.edit', compact('detail', 'id', 'nombre'));
         //aqui hay un archivo Javascrip que se encarga de cambiar ""estaciones.details"" como un edit
         
-        //return response()->json($details); 
+        //
     }
 
     /**
@@ -222,504 +188,176 @@ class DetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
+
     public function update(Request $request, $id)
     {
-        $details = request()->except(['_token', '_method', 'inst']);
         $estacion = Estaciones::findOrFail($id);
-        
-        $siglas = $estacion['siglas'];
-        $estacion = $estacion['nombre'];
+        if ($estacion) {
+            $cambios = json_decode(json_encode($request->except('_token', '_method')), true);
+            $cambios = array_diff($cambios, array("", null));
 
-        
-        $details["siglas"]= $siglas;
-        $details["estacion"]= $estacion;
-        $details["instalacion_satelital"]=$request->inst;
+            //"comprobar cuando un componente este ya registrado con ·Regist·"
+         
+            //$report = $this->regist($cambios); 
+            
+            $lista3 = [
+                "transceptor_serial","antena_gps_serial","BUC_serial",
+                "LNB_serial","trompeta_serial","digitalizador_serial",
+                "parabolica_serial","sensor_serial","regulador_voltaje_serial",
+                "banco_baterias_serial","panel_solar_a_serial", "panel_solar_b_serial",
+                "panel_solar_c_serial","panel_solar_d_serial","panel_solar_e_serial"
+            ]; 
 
-        Details::where('estacion', '=' ,$details['estacion'])->update($details);
-        
-        return redirect()->route("estaciones.index")->with(["mensaje" => "Se actualizaron correctamente los componentes",]);
+            $lista4 = [
+                "transceptor_serial" => "transceptor",
+                "antena_gps_serial" => "antena gps",
+                "BUC_serial" => "BUC",
+                "LNB_serial" => "LNB",
+                "trompeta_serial" => "trompeta",
+                "digitalizador_serial" => "digitalizador",
+                "parabolica_serial" => "parabolica",
+                "sensor_serial" => "sensor",
+                "regulador_voltaje_serial" => "regulador voltaje",
+                "banco_baterias_serial" => "banco baterias",
+                "panel_solar_a_serial" => "panel solar a",
+                "panel_solar_b_serial" => "panel solar b",
+                "panel_solar_c_serial" => "panel solar c",
+                "panel_solar_d_serial" => "panel solar d",
+                "panel_solar_e_serial" => "panel solar e"
+            ];
 
-       
+            $registrados = '';
+            foreach ($lista3 as $value) {
+                
+                    $objeto = $request[$value];
+                    if ($objeto != "") {
+                        $verifi = Details::where($value, $objeto)->exists();
+                        
+
+                        if($verifi) {
+                            //'id', '!=', $id, "and" ,
+                            $donde = Details::where($value, '=' ,$objeto)->get("estacion");
+                            $nombre = Details::where('id', '=' ,$id)->get("estacion");
+                            
+                            if ($nombre == $donde) {
+                                $text = 'Se actualizaron los datos correctamente';
+                            } else {
+                                $text = 'Este componente ya se encuentra registrado "'.$objeto.'" en '.$lista4[$value].', estacion: '.$donde[0]['estacion'];
+                            }
+
+                            /*
+                            if ($registrados == "") {
+                                $registrados = '"'.$value.'"';
+                            } else {
+                                $registrados =$registrados.','.'"'.$value.'"';
+                            }*/
+                            //$registrados = $registrados.",";
+                            break;
+                        }
+                        //
+                        
+                                   
+                }
+            }
+
+            
+            if ($verifi) {
+                $actualizacion = Details::find($id);
+                //return response()->json($registrados);
+                $cambios_n = $request->except($value);
+
+                
+                $actualizacion->fill($cambios_n);
+                $actualizacion->save();    
+
+                //return redirect()->route('details.edit', $id)->with('mensaje', ":".$text)->with('mensaje', 'Se actualizaron los datos correctamente', 'marcador', $registrados);  
+                return redirect()->route('estaciones.show', $id)->with('mensaje', $text);
+            } else {
+
+                $actualizacion = Details::find($id);
+                $actualizacion->fill($request->all());
+                $actualizacion->save(); 
+
+                return redirect()->route('estaciones.show', $id)->with('mensaje', ' Se actualizaron los datos correctamente');
+            }
+
+
+            //Details::where('id', '=', $estacion->id)->update($cambios);
+            
+            
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
-    {
-        // guarar para cuando se necesite eliminar una tabla
-        /* no se esta utilizando
-        
-        $list3 = [
-            'antena_gps', 'antena_gps_fab','antena_gps_esp','antena_parabolica','antena_parabolica_fab','antena_parabolica_esp','bateria','bateria_fab','bateria_esp','controlador_carga','controlador_carga_fab', 
-            'controlador_carga_esp','digitalizador','digitalizador_fab','digitalizador_esp','modem_satelital','modem_satelital_fab','modem_satelital_esp','panel_solar','panel_solar_fab','panel_solar_esp',
-            'regulador_carga','regulador_carga_fab','regulador_carga_esp','sismometro','sismometro_fab','sismometro_esp','trompeta_satelital','trompeta_satelital_fab','trompeta_satelital_esp','instalacion_satelital'
-        ];
-        
-        $list = [
-            'antenagps','antenaparabolica','bateria','controladorcarga', 
-            'digitalizador','modemsatelital','panelsolar',
-            'reguladorcarga','sismometro','trompetasatelital'
-        ];
-
-        $list2 = [
-            ['antenagps'=>'antena_gps',
-            'antenaparabolica'=>'antena_parabolica',
-            'bateria'=>'bateria',
-            'controladorcarga'=>'controlador_carga', 
-            'digitalizador'=>'digitalizador',
-            'modemsatelital'=>'modem_satelital',
-            'panelsolar'=>'panel_solar',
-            'reguladorcarga'=>'regulador_carga',
-            'sismometro'=>'sismometro',
-            'trompetasatelital'=>'trompeta_satelital'],
-            
-            ['antenagps'=>'antena_gps_fab',
-            'antenaparabolica'=>'antena_parabolica_fab',
-            'bateria'=>'bateria_fab',
-            'controladorcarga'=>'controlador_carga_fab', 
-            'digitalizador'=>'digitalizador_fab',
-            'modemsatelital'=>'modem_satelital_fab',
-            'panelsolar'=>'panel_solar_fab',
-            'reguladorcarga'=>'regulador_carga_fab',
-            'sismometro'=>'sismometro_fab',
-            'trompetasatelital'=>'trompeta_satelital_fab'],
-
-            ['antenagps'=>'antena_gps_esp',
-            'antenaparabolica'=>'antena_parabolica_esp',
-            'bateria'=>'bateria_esp',
-            'controladorcarga'=>'controlador_carga_esp', 
-            'digitalizador'=>'digitalizador_esp',
-            'modemsatelital'=>'modem_satelital_esp',
-            'panelsolar'=>'panel_solar_esp',
-            'reguladorcarga'=>'regulador_carga_esp',
-            'sismometro'=>'sismometro_esp',
-            'trompetasatelital'=>'trompeta_satelital_esp']
-    
-        ];
-        
-        foreach ($list as $tables){
-            $details = DB::table('details')->where('id', $id)->get(); //iterar y hacer 10mil cosas
-            
-            if ($tables == $request->component) {
-                
-            
-                $component = DB::table($tables)->where('id', $id)->get(); // solo borrar
-                //return response()->json(print_r($component));
-                
-                //mysqli_num_rows()
-                if (count($component)>=1) {
-                    DB::table($tables)->where('id','=', $id)->delete(); //aqui se destruye el componente en su tabla correspondiente
-                    //este array contiene las claves para cada details
-                    $iterador = $list2[0][$tables];
-                    $details[0]->$iterador = " ";
-                    // aqui estoy obteniendo el nombre del componente en details
-                    
-                    $iterador = $list2[1][$tables];
-                    $details[0]->$iterador = " ";
-
-                    $iterador = $list2[2][$tables];
-                    $details[0]->$iterador = " ";
-                    // ya aqui se editaron las propiedades de los componentes en details
-                    // ahora solo se debe eliminar el componente
-
-                    
-                    //para solucionar este error puedo solo convertir 
-                    //el array que llega en los componentes nuevamente 
-                    //con un forearh
-
-                    $nuevo['id'] = $details[0]->id;
-                    $nuevo['estacion'] = $details[0]->estacion;
-                    $nuevo['siglas'] = $details[0]->siglas;
-
-                    for ($i=0; $i < 31; $i++) { 
-                        $iterador = $list3[$i];
-                        $nuevo[$iterador] = $details[0]->$iterador;
-                    }
-
-                    $estacion = $component[0]->estacion;
-                    
-                    //return response()->json($estacion);
-                    
-                    Details::where('estacion', '=', $estacion)->update($nuevo);                      
-                    return redirect()->route("panel.detail")->with(["mensaje" => "Se elimino con exito"]);
-                } else {
-                    return redirect()->route("panel.detail")->with(["mensaje" => "Ya se elimino anteriormente"]);
-                    
-                }
-          
-                
-            }
-
-            
-
-
-              
-        }
-        */
-
-        // consultar el id
-        //$serial = DB::table('details')->where('id', $id)->get('')
-        
-        // primero traerme el tipo de componente listo
-        // el id del mismo en este caso id=3 details es == id=3 estaciones
-        // y luego borrar el componetne dependiendo la tabla, hacer un for para igualar con una lista donde esten grabados todos los nombres de las tablas
-        // y luego borrar el componente de la estacion details
-        // luego hacer una opcion para agregar dicho componente solamente
-
+    public function destroy(Request $request, $id) {
 
     }
 
     public function borrarData(Request $request){
-        // solo para borrar los datos de una tabla
-        $list3 = [
-            ['antenagps'=>'antena_gps',
-            'antenaparabolica'=>'antena_parabolica',
-            'bateria'=>'bateria',
-            'controladorcarga'=>'controlador_carga', 
-            'digitalizador'=>'digitalizador',
-            'modemsatelital'=>'modem_satelital',
-            'panelsolar'=>'panel_solar',
-            'reguladorcarga'=>'regulador_carga',
-            'sismometro'=>'sismometro',
-            'trompetasatelital'=>'trompeta_satelital'],
-            
-            ['antenagps'=>'antena_gps_fab',
-            'antenaparabolica'=>'antena_parabolica_fab',
-            'bateria'=>'bateria_fab',
-            'controladorcarga'=>'controlador_carga_fab', 
-            'digitalizador'=>'digitalizador_fab',
-            'modemsatelital'=>'modem_satelital_fab',
-            'panelsolar'=>'panel_solar_fab',
-            'reguladorcarga'=>'regulador_carga_fab',
-            'sismometro'=>'sismometro_fab',
-            'trompetasatelital'=>'trompeta_satelital_fab'],
-
-            ['antenagps'=>'antena_gps_esp',
-            'antenaparabolica'=>'antena_parabolica_esp',
-            'bateria'=>'bateria_esp',
-            'controladorcarga'=>'controlador_carga_esp', 
-            'digitalizador'=>'digitalizador_esp',
-            'modemsatelital'=>'modem_satelital_esp',
-            'panelsolar'=>'panel_solar_esp',
-            'reguladorcarga'=>'regulador_carga_esp',
-            'sismometro'=>'sismometro_esp',
-            'trompetasatelital'=>'trompeta_satelital_esp']
-    
-        ];
-
-        $id = $request->id;
-        $detail = $request->detail;
-        // borrar datos de las tablas privadas
-        
-        if ($list3[0][$detail] && $id) {
-            $iterador = $list3[0][$detail];
-            $iterador1 = $list3[1][$detail];
-            $iterador2 = $list3[2][$detail];
-
-            $array = DB::table($detail)->where('id', '=', $id)->first();
-
-            $array->autor = '';
-            $array->$iterador = '';
-            $array->$iterador1 = '';
-            $array->$iterador2 = '';
-            $array->created_at= null; // aqui pensar como poner la fecha en un formato nulo
-            $array->updated_at= null;
-
-            //return response()->json($array);
-            $array = json_decode(json_encode($array), true);
-            DB::table($detail)->where('id', '=', $id)->update($array);
-            ;
-            // borrar datos de la tabla principal
-        
-            $details = DB::table('details')->where('id', '=', $id)->first();
-
-            $details->$iterador = '';
-            $details->$iterador1 = '';
-            $details->$iterador2 = '';
-            $details = json_decode(json_encode($details), true);
-
-            //
-
-            $details = DB::table('details')->where('id', '=', $id)->update($details);
+            //return response()->json($request);
+            Details::destroy($request->id);
             return redirect()->route('panel.detail');
 
-        }
-
-        
-
-
     }
-    public function updateEdit(Request $request){
-        //   return response()->json($request);
-        $list = [
-            ['Antena gps'=>'antena_gps',
-            'Antena parabolica'=>'antena_parabolica',
-            'Bateria'=>'bateria',
-            'Controlador de carga'=>'controlador_carga', 
-            'Digitalizador'=>'digitalizador',
-            'Modem'=>'modem_satelital',
-            'Panel solar'=>'panel_solar',
-            'Regulador de carga'=>'regulador_carga',
-            'Sismometro'=>'sismometro',
-            'Trompeta'=>'trompeta_satelital'],
-            
-            ['antena_gps'=>'antenagps',
-            'antena_parabolica'=>'antenaparabolica',
-            'bateria'=>'bateria',
-            'controlador_carga'=>'controladorcarga', 
-            'digitalizador'=>'digitalizador',
-            'modem_satelital'=>'modemsatelital',
-            'panel_solar'=>'panelsolar',
-            'regulador_carga'=>'reguladorcarga',
-            'sismometro'=>'sismometro',
-            'trompeta_satelital'=>'trompetasatelital'],
-        ];
-        
-
-        $id = $request->id;
-        $serial  = $request->serial;
-        $detail = $request->detail;
-        $update = $request->inst;
-
-        $autor_new = DB::table('users')->where('id','=', $request->autor)->first('name');
-
-        if ($serial == null || $request->fabricante == null || $request->especifi == null) {
-            return redirect()->route("panel.detail")->with(["mensaje" => "No puede enviar un componete vacios"]);
-            
-        }
-
-        $conver = $list[0][$detail];
-        $fabricante = $conver."_fab";
-        $especifi = $conver."_esp";
-        
-        $conver1 = $list[1][$conver];
-
-        $details = DB::table($conver1)->where('id', $id)->get();
-        
-        
-        if (count($details)>=1) {
-            $details[0]->$conver = $serial;
-            $details[0]->autor = $autor_new->name;
-            $details[0]->$fabricante = $request->fabricante;
-            $details[0]->$especifi = $request->especifi;
-            $details[0]->updated_at = $update;
-            //este pedacito convierte stdclass a array... ----------
-            $array = json_decode(json_encode($details[0]), true);
-            //------------------------------------------------------
-            DB::table($conver1)->where('id', '=' ,$id)->update($array);
-            $details = DB::table('details')->where('id','=', $id, "and", 'estacion', '=', $details[0]->estacion)->get();
-            $details[0]->$conver = $serial;
-            $details[0]->$fabricante = $request->fabricante;
-            $details[0]->$especifi = $request->especifi;
-            $array = json_decode(json_encode($details[0]), true);
-            
-            DB::table('details')->where('id','=', $id, "and", 'estacion', '=', $details[0]->estacion)->update($array);
-            
-            
-            
-        } else {
-            return redirect()->route("panel.detail")->with(["mensaje" => "Por favor dirijase a editar todos los componentes"]);
-            
-        }
-
-
-        //------------------------------------------------------------
-        $details = DB::table('details')->where('id', '=', $id)->get();
-        $details[0]->$conver = $serial;
-        $array = json_decode(json_encode($details[0]), true);
-        DB::table('details')->where('id', '=' ,$id)->update($array);
-        //------------------------------------------------------------
-
-        return redirect()->route("panel.detail")->with(["mensaje" => "Se actualizo con exito"]);
-    }
-
+    
+    
     // revisar y optimisar mejor regist ya que es muy largo XD
     public function regist($details)
     {
-     
-        $msj = ["mensaje" => "Componente ya registrado",];
-        $detail = null;
-        $var = null;
-        
+        // un foreach dentro de otro, uno para las estaciones y otro para los valores a expesion de algunos datos (id, estacion, siglas, aunto y todas las fechas, created_at y updated_at)
+        //"iterador para los componentes de details"
 
-        $list = [
-            'antena_gps','antena_parabolica','bateria','controlador_carga', 
-            'digitalizador','modem_satelital','panel_solar',
-            'regulador_carga','sismometro','trompeta_satelital'
-        ];
-        $list2 = [
-            'antenagps','antenaparabolica','bateria','controladorcarga', 
-            'digitalizador','modemsatelital','panelsolar',
-            'reguladorcarga','sismometro','trompetasatelital'
+        $lista3 = [
+            "transceptor_serial","antena_gps_serial","BUC_serial",
+            "LNB_serial","trompeta_serial","digitalizador_serial",
+            "parabolica_serial","sensor_serial","regulador_voltaje_serial",
+            "banco_baterias_serial","panel_solar_a_serial", "panel_solar_b_serial",
+            "panel_solar_c_serial","panel_solar_d_serial","panel_solar_e_serial"
         ];
 
-        $list3 = [
-            ['antenagps'=>'antena_gps',
-            'antenaparabolica'=>'antena_parabolica',
-            'bateria'=>'bateria',
-            'controladorcarga'=>'controlador_carga', 
-            'digitalizador'=>'digitalizador',
-            'modemsatelital'=>'modem_satelital',
-            'panelsolar'=>'panel_solar',
-            'reguladorcarga'=>'regulador_carga',
-            'sismometro'=>'sismometro',
-            'trompetasatelital'=>'trompeta_satelital'],
+        $donde= "";
+
+        foreach ($lista3 as $value) {
             
-            ['antenagps'=>'antena_gps_fab',
-            'antenaparabolica'=>'antena_parabolica_fab',
-            'bateria'=>'bateria_fab',
-            'controladorcarga'=>'controlador_carga_fab', 
-            'digitalizador'=>'digitalizador_fab',
-            'modemsatelital'=>'modem_satelital_fab',
-            'panelsolar'=>'panel_solar_fab',
-            'reguladorcarga'=>'regulador_carga_fab',
-            'sismometro'=>'sismometro_fab',
-            'trompetasatelital'=>'trompeta_satelital_fab'],
-
-            ['antenagps'=>'antena_gps_esp',
-            'antenaparabolica'=>'antena_parabolica_esp',
-            'bateria'=>'bateria_esp',
-            'controladorcarga'=>'controlador_carga_esp', 
-            'digitalizador'=>'digitalizador_esp',
-            'modemsatelital'=>'modem_satelital_esp',
-            'panelsolar'=>'panel_solar_esp',
-            'reguladorcarga'=>'regulador_carga_esp',
-            'sismometro'=>'sismometro_esp',
-            'trompetasatelital'=>'trompeta_satelital_esp']
-    
-        ];
-        
-        $error = 'a';
-        
-        foreach ($list2 as $tables) {
-            $iterador = $list3[0][$tables];
-            $iterador1 = $list3[1][$tables];
-            $iterador2 = $list3[2][$tables];
-            $msj = 'No puede dejar este campo vacio: ';
-            
-
-            if($details[$iterador]==null){
-                //$error[] = [$details[$iterador], $iterador];
-                $error = 'b';
-                $validador = [
-                    'msj'=>$msj,
-                    'detail'=>$iterador
-                ];
-            } 
-            if($details[$iterador1] == null){
-                //$error[] = [$details[$iterador1], $iterador1];
-                $error = 'b';
-                $validador = [
-                    'msj'=>$msj,
-                    'detail'=>$iterador1
-                ];
-            } 
-            if($details[$iterador2] == null) {
-                //$error[] = [$details[$iterador2], $iterador2];
-                $error = 'b';
-                $validador = [
-                    'msj'=>$msj,
-                    'detail'=>$iterador2
-                ];
-
-            }
-            if($details['instalacion_satelital']==null){
-                //$error[] = $details['instalacion_satelital'];
-                $error = 'b';
-                $validador = [
-                    'msj'=>$msj,
-                    'detail'=>'Fecha'
-                ];
+            $objeto = $details->$value;
+            if ($objeto != " " | $objeto != "") {
+                $donde = Details::where($value, $objeto)->get("estacion");
+                $valor = Details::where($value, $objeto)->get("panel_solar_e_serial");
+                
+                $objeto = $details->$value;
+                $equipo = $value;
+                
             }
             
+
             
         }
 
-        if ($error == 'a') {
-            
-        
-            for ($i=0; $i <= 9; $i++) { 
-                $column = $list[$i];
-                $consult = DB::table($list2[$i])->where($column, $details[$column])->first();
-                $consult_id = DB::table($list2[$i])->where('id', '=', $details['id'])->first();
-                if (($consult == null) && ($consult_id == null)) {
-                    $db = false;
-                } elseif (($consult_id->id == $details['id']) && ($consult == null)) {
-                    global $db;
-                    $db = $consult_id->estacion;
-                    $detail = $column;
-                    $msj = ["mensaje" => "Esta estacion ya tiene un componente registrado en: "];
-                    break;                   
-                } else {
-                    global $db;
-                    $db = $consult_id->estacion;
-                    $detail = $column;
-                    $msj = ["mensaje" => "Componente ya registrado: "];
-                    break;
-                }
-                        
-            }
-            //Revisar aqui..... hacer un json pra saber porque dece consul == null cuando no deberia
-            //return compact('db', 'consult', 'consult_id');
-
-                    
-            
-            if ($db == false) {
-                
-                $msj = ["mensaje" => "Componentes registrados exitosamente",];    
-                $validador = [
-                    'msj'=>$msj,
-                ];
-
-                
-                foreach ($list2 as $tables) {
-                    $detail = [];
-                    foreach($list as $item) { 
-                        
-                        if ($list3[0][$tables] == $item) {
-                        
-                            $detail['id'] = $details->id;
-                            $detail['estacion'] = $details->estacion;
-                            $detail['siglas']= $details->siglas;
-                            $detail['autor']= $details->autor;
-
-                            $iterador = $list3[0][$tables];
-                            $detail[$iterador] =  $details->$iterador;
-
-                            $iterador = $list3[1][$tables];
-                            $detail[$iterador] =  $details->$iterador;
-
-                            $iterador = $list3[2][$tables];
-                            $detail[$iterador] =  $details->$iterador;
-
-                            $detail['created_at']=$details->instalacion_satelital;
-                            $detail['updated_at']=$details->instalacion_satelital;
-
-                            $array = json_decode(json_encode($detail), true);
-                            
-                            DB::table($tables)->insert($array);
-                            sleep(1 );
-                        } 
-                    }
-                    
-                }
-                 //aqui registrar
-            } elseif ($db != false ) {
-                $validador = [
-                    'msj'=>$msj,
-                    'detail'=>$detail,
-                    'var'=>$db,
-                ];
-            };
-            return $validador;
-            
+        if ($objeto != " " | $objeto != "") {
+            return [$equipo ,$objeto, $donde, $details, $valor, 'validador'];
         }
         
-        return compact('error', 'validador');
+        /*
+        if ($donde == "[]") {
+            return [$equipo ,$objeto, $donde, $details, 'false'];
+        }
+        if ($donde != "[ ]") {
+            return [$equipo ,$objeto, $donde, $details, 'validador'];
+        }
+        if ($donde == "") {
+            return [" Por favor llene alguna de las casillas por completo incluyendo sus seriales"];
+        }*/
+        
+
+
+
+
+
     }
 
 

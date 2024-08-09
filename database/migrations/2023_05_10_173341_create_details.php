@@ -15,228 +15,99 @@ return new class extends Migration
     {
         Schema::create('details', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            
             //------------------------------------------------- Originales --------------
             $table->string("estacion");
             $table->string("siglas");
+            $table->string("autor");
             //------------------------------------------------- A Registrar -------------
-            $table->string("antena_gps");
-            $table->string("antena_gps_fab");
-            $table->string("antena_gps_esp");
-            //------------------------------
-            $table->string("antena_parabolica");
-            $table->string("antena_parabolica_fab");
-            $table->string("antena_parabolica_esp");
-            //------------------------------
-            $table->string("bateria");
-            $table->string("bateria_fab");
-            $table->string("bateria_esp");
-            //------------------------------
-            $table->string("controlador_carga");
-            $table->string("controlador_carga_fab");
-            $table->string("controlador_carga_esp");
-            //------------------------------
-            $table->string("digitalizador");
-            $table->string("digitalizador_fab");
-            $table->string("digitalizador_esp");
-            //------------------------------
-            $table->string("modem_satelital");
-            $table->string("modem_satelital_fab");
-            $table->string("modem_satelital_esp");
-            //------------------------------
-            $table->string("panel_solar");
-            $table->string("panel_solar_fab");
-            $table->string("panel_solar_esp");
-            //------------------------------
-            $table->string("regulador_carga");
-            $table->string("regulador_carga_fab");
-            $table->string("regulador_carga_esp");
-            //------------------------------
-            $table->string("sismometro");
-            $table->string("sismometro_fab");
-            $table->string("sismometro_esp");
-            //------------------------------
-            $table->string("trompeta_satelital");
-            $table->string("trompeta_satelital_fab");
-            $table->string("trompeta_satelital_esp");
-            //------------------------------
-            $table->string("instalacion_satelital");
+            $table->string('transceptor_marca')->nullable(true);
+            $table->string('transceptor_modelo')->nullable(true);
+            $table->string('transceptor_serial')->nullable(true);
+            $table->date('transceptor_fecha')->nullable(true);
+
+            $table->string('digitalizador_marca')->nullable(true);
+            $table->string('digitalizador_modelo')->nullable(true);
+            $table->string('digitalizador_serial')->nullable(true);
+            $table->date('digitalizador_fecha')->nullable(true);
+            
+            $table->string('sensor_marca')->nullable(true);
+            $table->string('sensor_modelo')->nullable(true);
+            $table->string('sensor_serial')->nullable(true);
+            $table->string('sensor_sen')->nullable(true);
+            $table->date('sensor_fecha')->nullable(true);
+            
+            $table->string('BUC_marca')->nullable(true);
+            $table->string('BUC_modelo')->nullable(true);
+            $table->string('BUC_frecuencia')->nullable(true);
+            $table->string('BUC_serial')->nullable(true);
+            $table->date('BUC_fecha')->nullable(true);
+            
+            $table->string('LNB_marca')->nullable(true);
+            $table->string('LNB_modelo')->nullable(true);
+            $table->string('LNB_frecuencia')->nullable(true);
+            $table->string('LNB_banda')->nullable(true);
+            $table->string('LNB_serial')->nullable(true);
+            $table->date('LNB_fecha')->nullable(true);
+            
+            $table->string('gps_marca')->nullable(true);
+            $table->string('gps_modelo')->nullable(true);
+            $table->string('gps_serial')->nullable(true);
+            $table->date('gps_fecha')->nullable(true);
+
+            $table->string('parabolica_marca')->nullable(true);
+            $table->string('parabolica_serial')->nullable(true);
+            $table->string('parabolica_diametro')->nullable(true);
+            $table->date('parabolica_fecha')->nullable(true);
+
+            $table->string('trompeta_marca')->nullable(true);
+            $table->string('trompeta_serial')->nullable(true);
+            $table->date('trompeta_fecha')->nullable(true);
+
+            $table->string('regulador_voltaje_marca')->nullable(true);
+            $table->string('regulador_voltaje_modelo')->nullable(true);
+            $table->string('regulador_voltaje_serial')->nullable(true);
+            $table->string('regulador_voltaje_watts')->nullable(true);
+            $table->date('regulador_voltaje_fecha')->nullable(true);
+
+            $table->string('banco_baterias_marca')->nullable(true);
+            $table->string('banco_baterias_modelo')->nullable(true);
+            $table->string('banco_baterias_serial')->nullable(true);
+            $table->string('banco_baterias_watts')->nullable(true);
+            $table->string('banco_baterias_cantidad')->nullable(true);
+            $table->date('banco_baterias_fecha')->nullable(true);
+
+            $table->string('panel_solar_a_marca')->nullable(true);
+            $table->string('panel_solar_a_modelo')->nullable(true);
+            $table->string('panel_solar_a_serial')->nullable(true);
+            $table->string('panel_solar_a_watts')->nullable(true);
+            $table->date('panel_solar_a_fecha')->nullable(true);
+
+            $table->string('panel_solar_b_marca')->nullable(true);
+            $table->string('panel_solar_b_modelo')->nullable(true);
+            $table->string('panel_solar_b_serial')->nullable(true);
+            $table->string('panel_solar_b_watts')->nullable(true);
+            $table->date('panel_solar_b_fecha')->nullable(true);
+
+            $table->string('panel_solar_c_marca')->nullable(true);
+            $table->string('panel_solar_c_modelo')->nullable(true);
+            $table->string('panel_solar_c_serial')->nullable(true);
+            $table->string('panel_solar_c_watts')->nullable(true);
+            $table->date('panel_solar_c_fecha')->nullable(true);
+
+            $table->string('panel_solar_d_marca')->nullable(true);
+            $table->string('panel_solar_d_modelo')->nullable(true);
+            $table->string('panel_solar_d_serial')->nullable(true);
+            $table->string('panel_solar_d_watts')->nullable(true);
+            $table->date('panel_solar_d_fecha')->nullable(true);
+
+            $table->string('panel_solar_e_marca')->nullable(true);
+            $table->string('panel_solar_e_modelo')->nullable(true);
+            $table->string('panel_solar_e_serial')->nullable(true);
+            $table->string('panel_solar_e_watts')->nullable(true);
+            $table->date('panel_solar_e_fecha')->nullable(true);
             //-----------------------------------------------------------------------
+            $table->string('trabajo')->nullable(true);
             
-            $table->timestamps();
-        });
-        Schema::create('antenagps', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("antena_gps");
-            $table->string("antena_gps_fab");
-            $table->string("antena_gps_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('antenaparabolica', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("antena_parabolica");
-            $table->string("antena_parabolica_fab");
-            $table->string("antena_parabolica_esp");
-            //-----------------------------------------------------------------------------------
-            
-            $table->timestamps();
-        });
-        Schema::create('bateria', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("bateria");
-            $table->string("bateria_fab");
-            $table->string("bateria_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('controladorcarga', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("controlador_carga");
-            $table->string("controlador_carga_fab");
-            $table->string("controlador_carga_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('digitalizador', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("digitalizador");
-            $table->string("digitalizador_fab");
-            $table->string("digitalizador_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('modemsatelital', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("modem_satelital");
-            $table->string("modem_satelital_fab");
-            $table->string("modem_satelital_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('panelsolar', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("panel_solar");
-            $table->string("panel_solar_fab");
-            $table->string("panel_solar_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('reguladorcarga', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("regulador_carga");
-            $table->string("regulador_carga_fab");
-            $table->string("regulador_carga_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('sismometro', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("sismometro");
-            $table->string("sismometro_fab");
-            $table->string("sismometro_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('trompetasatelital', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("trompeta_satelital");
-            $table->string("trompeta_satelital_fab");
-            $table->string("trompeta_satelital_esp");
-            //-----------------------------------------------------------------------------------
-
-            $table->timestamps();
-        });
-        Schema::create('instalacionsatelital', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            
-            //------------------------------------------------- Datos a pertenecer --------------
-            $table->string("estacion");
-            $table->string("siglas");
-            $table->string('autor');            
-
-            //------------------------------------------------- Componente ----------------------
-            $table->string("instalacion_satelital");
-            //-----------------------------------------------------------------------------------
-
             $table->timestamps();
         });
     }
@@ -249,16 +120,5 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('details');
-        Schema::dropIfExists('antenagps');
-        Schema::dropIfExists('antenaparabolica');
-        Schema::dropIfExists('bateria');
-        Schema::dropIfExists('controladorcarga');
-        Schema::dropIfExists('digitalizador');
-        Schema::dropIfExists('modemsatelital');
-        Schema::dropIfExists('panelsolar');
-        Schema::dropIfExists('reguladorcarga');
-        Schema::dropIfExists('sismometro');
-        Schema::dropIfExists('trompetasatelital');
-        Schema::dropIfExists('instalacionsatelital');
     }
 };
