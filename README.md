@@ -1,3 +1,8 @@
-<h1 align="center"><a class="navbar-brand " href="http://127.0.0.1:8000" style="text-decoration: underline; text-decoration-color:orange;">SIGESES</a></h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-<p>Sistema de Gestion de Estaciones Sismologicasm </p>
+
+<h1 align="center" style="text-decoration: underline; text-decoration-color:orange;">
+    SIGESES
+</h1>
+
+<p>Sistema de Gestion de Estaciones Sismologicas</p>
