@@ -1,0 +1,89 @@
+notas.txt
+
+
+
+
+Panel detail buscador
+
+                        <form action="{{route('panel.detail')}}" method="post">
+                            @csrf
+                            <div class="input-group ">
+                                <label for="id"  class="form-control border-warning w-25 text-center small">Filtro de equipos</label>
+                                <select class="form-control small p-1 border-warning w-25" type="list" name="id" >
+                                        <option class="" value="all">Todas</option>
+                                    @foreach ($options as $option)
+                                        <option class="" value="{{$option->id}}">{{$option->estacion}}</option>
+                                    @endforeach
+                                </select>
+                                <button class="btn btn-warning form-control text-center" type="submit">Buscar</button>
+                                
+                                @if (isset($select))
+                                
+                                    <script>
+                                        var value = String(@json($select))
+                                        valorObj('select[name="id"]', value)
+                                    </script>
+                                @endif
+                            </div>
+
+                        </form>
+
+
+
+
+Panel detail controlador
+
+       $DB = Details::all();
+
+
+        $autores = [];
+        $autor_detail = [];
+        $updated_detail = [];
+        
+        
+        $options = Details::all();
+
+        if ($request->id == 'all' || $request->id == null){
+
+            foreach ($DB as $detail){
+               
+
+                $autor = $detail->autor;
+                $autor = User::where('id', '=', $autor)->first('name');
+                $detail->autor = $autor['name'];
+                $details[] = $detail;
+            
+            }
+
+            //return response()->json($details);
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail'));
+        } elseif ($request->id) {
+
+            $details = Details::where('id' ,$request->id)->get();
+            $autor = $details[0]["autor"];
+            $autor = User::where('id', $autor)->first('name');
+            $details[0]->autor = $autor->name;
+
+            $select = $details[0]["id"];
+            //return response()->json($details);
+
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail', 'select')); 
+        } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

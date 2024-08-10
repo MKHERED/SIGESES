@@ -1,0 +1,962 @@
+        $list2 = [
+            'antenagps','antenaparabolica','bateria','controladorcarga', 
+            'digitalizador','modemsatelital','panelsolar',
+            'reguladorcarga','sismometro','trompetasatelital'
+        ];
+        
+        $autores = User::all();
+
+        if ($request->id == 'all') {
+            $details = [];
+            foreach (Details::all() as $detail){
+                $details[] = $detail;
+
+                foreach ($list2 as $tables) {
+                    $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
+                    $updated = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('updated_at');
+                    if ($updated == '') {
+                        $updated['updated_at'] = date('Y-m-d');
+                    }
+                    if ($autor == '') {
+                        $autor['autor'] = 'sin autor';
+                        
+                    }
+                    
+                    $autor_detail[] = [$autor, $tables];
+                    $updated_detail[] = [$updated, $tables];
+                }
+            
+            }
+            //return response()->json($updated_detail[0][0]->updated_at);
+            $updated_detail = json_decode(json_encode($updated_detail));
+            $autor_detail = json_decode(json_encode($autor_detail));
+            $options = Details::all();
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 
+        
+        } elseif ($request->id) {
+            $details = [];
+            $details = DB::table('details')->where('id', $request->id)->get();            
+            foreach ($list2 as $tables) {
+                $autor = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('autor');
+                $updated = DB::table($tables)->where('estacion', '=', $details[0]->estacion)->first('updated_at');
+                if ($updated == '') {
+                    $updated['updated_at'] = date('Y-m-d');
+                }
+                if ($autor == '') {
+                    $autor['autor'] = 'sin autor';
+                    
+                }
+                $autor_detail[] = [$autor ,$tables];
+                $updated_detail[] = [$updated, $tables];
+
+            }
+            //return response()->json($updated_detail[0][0]->updated_at);
+            $updated_detail = json_decode(json_encode($updated_detail));
+            $autor_detail = json_decode(json_encode($autor_detail));
+            
+            $options = Details::all();
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail')); 
+        
+        } else {
+            $details = [];
+            $autor_detail = [];
+            $updated_detail = [];
+            foreach (Details::all() as $detail){
+                $details[] = $detail;
+                foreach ($list2 as $tables) {
+                    $autor = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('autor');
+                    $updated = DB::table($tables)->where('estacion', '=', $detail->estacion)->first('updated_at');
+                    // desde aqui este codcgo resuelve error de ralta de updated-------------------------------------------------------------
+                    if ($updated == '') {
+                        $updated['updated_at'] = date('Y-m-d');
+                    }
+                    if ($autor == '') {
+                        $autor['autor'] = 'sin autor';
+                        
+                    }
+                    $autor_detail[] = [$autor ,$updated];
+                    $updated_detail[] = [$updated, $tables];
+
+                }
+            }
+            //return response()->json($autor_detail);
+            $updated_detail = json_decode(json_encode($updated_detail));
+            $autor_detail = json_decode(json_encode($autor_detail));
+
+            //$array = json_decode(json_encode($User), true);
+            //hasta aqui-----------------------------------------------------------------------------------------------------------------
+            $options = Details::all();
+            return view('admin/panel/detail', compact('details', 'options', 'autores', 'autor_detail', 'updated_detail'));            
+        }
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <td>{{ $detail->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+                <div class="">
+                    <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena gps','{{$detail->id}}', '{{$detail->antena_gps}}', '{{$detail->antena_gps_fab}}', '{{$detail->antena_gps_esp}}')">
+                    @if ( $detail->antena_gps == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                    </button>
+                    
+                    <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='antenagps' hidden>
+                    
+                    </form>
+                    
+                </div>   
+            @endif
+            </td>
+        </tr>
+        <tr >
+            <td>
+                <div class="accordion" id="ant{{$detail->digitalizador_serial}}2">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->digitalizador_serial}}12" aria-expanded="true" aria-controls="#ant{{$detail->digitalizador_serial}}12">
+                    Digitalizador
+                </button>
+                </h4>
+                <div id="ant{{$detail->digitalizador_serial}}12" class="accordion-collapse collapse " data-bs-parent="#ant{{$detail->digitalizador_serial}}2">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 <p class="m-0 p-0">Serial: <b>{{$detail->digitalizador_serial}} y modelo: {{$detail->digitalizador_modelo}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->digitalizador_marca}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->digitalizador_fecha}}</b></p>
+
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[1][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Antena parabolica','{{$detail->id}}', '{{$detail->antena_parabolica}}', '{{$detail->antena_parabolica_fab}}', '{{$detail->antena_parabolica_esp}}')">
+                @if ( $detail->antena_parabolica == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='antenaparabolica' hidden>
+                    
+                </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="accordion" id="ant{{$detail->bateria}}3">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->bateria}}13" aria-expanded="true" aria-controls="#ant{{$detail->bateria}}13">
+                    Bateria
+                </button>
+                </h4>
+                <div id="ant{{$detail->bateria}}13" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->bateria}}3">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 <p class="m-0 p-0">Serial: <b>{{$detail->bateria}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->bateria_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[2][0]->updated_at }}</b></p>
+
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[2][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Bateria','{{$detail->id}}', '{{$detail->bateria}}', '{{$detail->bateria_fab}}', '{{$detail->bateria_esp}}')">
+                @if ( $detail->bateria == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='bateria' hidden>
+                    
+                </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="accordion" id="ant{{$detail->controlador_carga}}4">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->controlador_carga}}14" aria-expanded="true" aria-controls="#ant{{$detail->controlador_carga}}14">
+                    Controlador de carga
+                </button>
+                </h4>
+                <div id="ant{{$detail->controlador_carga}}14" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->controlador_carga}}4">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 
+                 <p class="m-0 p-0">Serial: <b>{{$detail->controlador_carga}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->controlador_carga_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[3][0]->updated_at }}</b></p>
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[3][0]->autor }}</td>            
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Controlador de carga','{{$detail->id}}', '{{$detail->controlador_carga}}', '{{$detail->controlador_carga_fab}}', '{{$detail->controlador_carga_esp}}')">
+                @if ( $detail->controlador_carga == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='controladorcarga' hidden>
+                    
+                    </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="accordion" id="ant{{$detail->digitalizador}}5">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->digitalizador}}15" aria-expanded="true" aria-controls="#ant{{$detail->digitalizador}}15">
+                    Digitalizador
+                </button>
+                </h4>
+                <div id="ant{{$detail->digitalizador}}15" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->digitalizador}}5">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 <p class="m-0 p-0">Serial: <b>{{$detail->digitalizador}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->digitalizador_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[4][0]->updated_at }}</b></p>
+                
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[4][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Digitalizador','{{$detail->id}}', '{{$detail->digitalizador}}', '{{$detail->digitalizador_fab}}', '{{$detail->digitalizador_esp}}')">
+                @if ( $detail->digitalizador == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='digitalizador' hidden>
+                    
+                    </form>
+            </div>    
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="accordion" id="ant{{$detail->modem_satelital}}6">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->modem_satelital}}16" aria-expanded="true" aria-controls="#ant{{$detail->modem_satelital}}16">
+                    Modem
+                </button>
+                </h4>
+                <div id="ant{{$detail->modem_satelital}}16" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->modem_satelital}}6">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 
+                 <p class="m-0 p-0">Serial: <b>{{$detail->modem_satelital}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->modem_satelital_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[5][0]->updated_at }}</b></p>
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[5][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Modem','{{$detail->id}}', '{{$detail->modem_satelital}}', '{{$detail->modem_satelital_fab}}', '{{$detail->modem_satelital_esp}}')">
+                @if ( $detail->modem_satelital == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='modemsatelital' hidden>
+                    
+                    </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <div class="accordion" id="ant{{$detail->panel_solar}}7">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->panel_solar}}17" aria-expanded="true" aria-controls="#ant{{$detail->panel_solar}}17">
+                    Panel solar
+                </button>
+                </h4>
+                <div id="ant{{$detail->panel_solar}}17" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->panel_solar}}7">
+                <div class="accordion-body p-1 border-0 bg-light">
+                
+                 <p class="m-0 p-0">Serial: <b>{{$detail->panel_solar}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->panel_solar_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[6][0]->updated_at }}</b></p>
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[6][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Panel solar','{{$detail->id}}', '{{$detail->panel_solar}}', '{{$detail->panel_solar_fab}}', '{{$detail->panel_solar_esp}}')">
+                @if ( $detail->panel_solar == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='panelsolar' hidden>
+                    
+                    </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <div class="accordion" id="ant{{$detail->regulador_carga}}8">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->regulador_carga}}18" aria-expanded="true" aria-controls="#ant{{$detail->regulador_carga}}18">
+                    Regulador de carga
+                </button>
+                </h4>
+                <div id="ant{{$detail->regulador_carga}}18" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->regulador_carga}}8">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 <p class="m-0 p-0">Serial: <b>{{$detail->regulador_carga}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->regulador_carga_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[7][0]->updated_at }}</b></p>
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[7][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Regulador de carga','{{$detail->id}}', '{{$detail->regulador_carga}}','{{$detail->regulador_carga_fab}}', '{{$detail->regulador_carga_esp}}')">
+                @if ( $detail->regulador_carga == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='reguladorcarga' hidden>
+                    
+                    </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="accordion" id="ant{{$detail->sismometro}}9">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->sismometro}}19" aria-expanded="true" aria-controls="#ant{{$detail->sismometro}}19">
+                    Sismometro
+                </button>
+                </h4>
+                <div id="ant{{$detail->sismometro}}19" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->sismometro}}9">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 <p class="m-0 p-0">Serial: <b>{{$detail->sismometro}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->sismometro_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[8][0]->updated_at }}</b></p>
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[8][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Sismometro','{{$detail->id}}', '{{$detail->sismometro}}', '{{$detail->sismometro_fab}}','{{$detail->sismometro_esp}}')">
+                @if ( $detail->sismometro == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='sismometro' hidden>
+                    
+                    </form>
+            </div>
+            @endif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="accordion" id="ant{{$detail->trompeta_satelital}}0">
+                <div class="accordion-item border-0">
+                <h4 class="accordion-header border-0">
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->trompeta_satelital}}10" aria-expanded="true" aria-controls="#ant{{$detail->trompeta_satelital}}10">
+                    Trompeta
+                </button>
+                </h4>
+                <div id="ant{{$detail->trompeta_satelital}}10" class="accordion-collapse collapse" data-bs-parent="#ant{{$detail->trompeta_satelital}}0">
+                <div class="accordion-body p-1 border-0 bg-light">
+                 <p class="m-0 p-0">Serial: <b>{{$detail->trompeta_satelital}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->trompeta_satelital_fab}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[9][0]->updated_at }}</b></p>
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>{{ $autor_detail[9][0]->autor }}</td>
+            <td>
+            @if (Auth::user()->tipo_usuario)
+            <div class="">
+                <button type="button" class="btn btn-sm btn-outline-dark text-success" onclick="detail('Trompeta','{{$detail->id}}', '{{$detail->trompeta_satelital}}', '{{$detail->trompeta_satelital_fab}}', '{{$detail->trompeta_satelital_esp}}')">
+                @if ( $detail->trompeta_satelital == '')
+                        Añadir
+                    @else
+                        Editar
+                    @endif
+                </button>
+                <form action="{{route('details.borrarData')}}" method="POST" class="btn p-0 m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-dark text-danger" >Borrar</button>
+                        <input type="number" name="id" value='{{$detail->id}}' hidden>
+                        <input type="text" name="detail" value='trompetasatelital' hidden>
+                    
+                    </form>
+            </div>
+            @endif
+            </td>
+
+
+
+
+            	<div class="position-relative">
+		<div class="position-absolute top-100 start-50 translate-middle">
+			<h1 class="">SIGESES</h1>
+			<h2>Sistema de Gestión de Estaciones Sismologicas</h2>
+			<h3>Estamos construyendo algo <strong>FANTASTICO! </strong></h3>
+			<p>Si necesita alguna asistencia con relacion al sistema, por favor comuniquese con la oficina OTIC </p>
+
+		</div>
+	</div>	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6 p-2 row mt-0">
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Transceptor</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="transceptor_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="transceptor_modelo" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="transceptor_serial" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="transceptor_fecha">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Digitalizador</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="digitalizador_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="digitalizador_modelo" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="digitalizador_serial" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="digitalizador_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Sensor</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="sensor_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="sensor_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="sensor_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Sensibilidad</label>
+                    <input class="form-control" name="sensor_sen" type="text" value="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="sensor_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>BUC</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="BUC_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="BUC_modelo" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="BUC_serial" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="BUC_fecha"  >
+                </div>  
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>LNB</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="LNB_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="LNB_modelo" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="LNB_serial" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="LNB_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Regulador de Voltaje</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_watts" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="regulador_voltaje_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Banco de Baterias</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="banco_baterias_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="banco_baterias_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="banco_baterias_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Cantidad</label>
+                    <input class="form-control"type="text" name="banco_baterias_cantidad" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="banco_baterias_fecha">
+                </div>
+                
+            </div>
+            
+            <div class="col-md-6 p-2 row mt-0  align-self-baseline" >
+
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Antena GPS</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="antena_gps_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="antena_gps_modelo" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="antena_gps_serial" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="antena_gps_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G1</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_a_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_a_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_a_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_a_watts" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_a_fecha"  >
+                </div>
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G2</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_b_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_b_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_b_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_b_watts" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_b_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G3</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_c_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_c_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_c_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_c_watts" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_c_fecha"  >
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G4</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_d_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_d_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_d_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_d_watts" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_d_fecha"  >
+                </div>
+                
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G5</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_e_marca" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_e_modelo" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_e_serial" velue="" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_e_watts" velue="" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_e_fecha"  >
+                </div>
+                
+            </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

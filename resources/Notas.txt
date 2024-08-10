@@ -99,3 +99,575 @@
                         void(validador);                    
                     </script>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+                        <li class="nav-item col">
+
+                    @if (Route::is('estaciones.index'))
+                        
+                        @if (!$estaciones == [])
+                            <form action="{{route('estaciones.index')}}" method="get" class="col">
+                           
+                                <div class="text-center input-group">
+                                    <select type="list" class="form-control-sm border-warning bg-dark text-light " id="buscador"   name="buscador" value="all">
+                                            <option value="all">Todos</option>
+                                        @foreach ($estaciones as $estacion)
+                                            <option value="{{$estacion->siglas}}">{{$estacion->nombre}}: {{$estacion->siglas}}</option>
+                                        @endforeach
+                                           
+                                    </select>
+                                    <input class="btn btn-dark border-warning btn-sm p-1" style=" width:55px" type='submit' value='Buscar'>
+                                </div>
+                            </form>
+                                        
+                        @endif                        
+                    @endif
+                    </li>                            
+                    
+                    @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="m-1 btn-group">
+      </div> 
+      <div class="m-1 btn-group">
+      </div>
+      <div class="p-1 m-1 btn-group">   
+        &nbsp;
+        <p class="m-1 small"><b>Longitud: <br></b>{{ $estacion->longitud }}</p>
+        &nbsp;
+        <p class="m-1 small"><b>Latitud: <br></b>{{ $estacion->latitud }}</p>
+        &nbsp;
+        <p class="m-1 small"><b>Altitud: <br></b>{{ $estacion->altitud }}</p>
+      </div>
+
+
+    <div class="album py-0 bg-body-tertiary" >
+        <div class="container">
+           
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    </div>
+
+
+                            @foreach ($estaciones as $estacion)
+        <!-- Un truco que ni yo se como funciona XD pero funciona, es con relacion a \/ las comillas dan error al programar, pero esta bien -->
+        <div class="col btn btn-light" role="link" onclick='window.location="{{route('estaciones.show', $estacion->id)}}"'>
+        
+        <div class="card shadow-sm small">
+            <img class="bd-placeholder-img card-img-top" src="{{ asset('storage').'/'.$estacion->imagen_n}}" width="100%" height="225" alt="Foto de {{ $estacion->nombre }}">
+            <div class="card-body small">
+            
+              <p class="card-text h5">{{ $estacion->nombre }}</p>
+                <div class="p-2 card-body bg-light">
+                    <h6 class="text-center">Ubicación</h6>
+                    <p class="card-text p-1">{{ $estacion->ubicacion }}</p>
+
+                </div>
+              <div class="m-1 btn-group">
+                <p class="p-1 m-1"><b>Siglas: </b>{{ $estacion->siglas}}</p>              
+                <p class="p-1 m-1"><b>Operativa: </b>{{ $estacion->operativa}}</p>                
+              </div> 
+              <div class="m-1 btn-group">
+                <p class="p-1 m-1"><b>Ubicación Estadal: </b> {{ $estacion->estado }}</p>
+              </div>
+              <div class="p-1 m-1 btn-group">   
+                &nbsp;
+                <p class="m-1 small"><b>Longitud: <br></b>{{ $estacion->longitud }}</p>
+                &nbsp;
+                <p class="m-1 small"><b>Latitud: <br></b>{{ $estacion->latitud }}</p>
+                &nbsp;
+                <p class="m-1 small"><b>Altitud: <br></b>{{ $estacion->altitud }}</p>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+              @if (Auth::user()->username == 'root' )
+                <form action="{{ route('estaciones.destroy', $estacion->id) }}" method="POST">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <input type="submit" class="btn btn-sm btn-outline-secondary text-danger" type="submit" onclick="return confirm('¿Quieres borrar? {{$estacion->nombre}}' )" value="Borrar">
+                </form>
+
+                <a   type="button" class="btn btn-sm btn-outline-secondary text-primary" href="{{ route('estaciones.edit', $estacion->id) }}">Editar</a>                
+              @endif
+
+
+                </div>
+                <small class="text-body-secondary"><b>Actualizado: </b> {{ $estacion->updated_at}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @endforeach 
+
+
+
+
+
+
+
+
+
+
+
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="#" aria-current="page">Nav 1 <span class="visually-hidden">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Nav 2</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+
+
+
+
+
+                <ul class="list-group">
+                    @if (Route::is('panel.index'))
+                        <li class="list-group-item bg-warning">
+                                <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.index') }}">Estaciones</a>
+                        </li>                       
+                    @else
+                        <li class="list-group-item ">
+                                <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.index') }}">Estaciones</a>
+                        </li>                        
+                    @endif
+
+
+                    @if (Route::is('panel.document') || Route::is('panel.show'))
+                        <li class="list-group-item bg-warning" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.document') }}">Documentos</a>
+                        </li>   
+                    @else
+                        <li class="list-group-item" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.document') }}">Documentos</a>
+                        </li>                        
+                    @endif
+
+                    
+                    
+                    @if (Route::is('panel.detail'))
+                        <li class="list-group-item bg-warning" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
+                        </li>                        
+                    @else
+                        <li class="list-group-item" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
+                        </li>                         
+                    @endif
+                    @if (Auth::user()->username == 'root')
+                        @if (Route::is('panel.user'))
+                            <li class="list-group-item bg-warning" >
+                                    <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Usuarios</a>
+                            </li>                        
+                        @else
+                            <li class="list-group-item" >
+                                    <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
+                            </li>                         
+                        @endif                        
+                    @endif
+
+
+                </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <aside class="aside bd-code-snippet col-2 sidebar-sticky">
+                <ul class="">
+                    @if (Route::is('panel.index'))
+                        <li class="list-group-item bg-warning">
+                                <a class="btn btn-link eneable btn-sm" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.index') }}">Estaciones ss</a>
+                        </li>                       
+                    @else
+                        <li class="list-group-item ">
+                                <a class="btn btn-link " style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.index') }}">Estaciones</a>
+                        </li>                        
+                    @endif
+
+
+                    @if (Route::is('panel.document') || Route::is('panel.show'))
+                        <li class="list-group-item bg-warning" >
+                                <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.document') }}">Documentos</a>
+                        </li>   
+                    @else
+                        <li class="list-group-item" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.document') }}">Documentos</a>
+                        </li>                        
+                    @endif
+
+                    
+                    
+                    @if (Route::is('panel.detail'))
+                        <li class="list-group-item bg-warning" >
+                                <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
+                        </li>                        
+                    @else
+                        <li class="list-group-item" >
+                                <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
+                        </li>                         
+                    @endif
+
+                    @if (Auth::user()->username == 'root')
+                        @if (Route::is('panel.user'))
+                            <li class="list-group-item bg-warning" >
+                                    <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Usuarios</a>
+                            </li>                        
+                        @else
+                            <li class="list-group-item" >
+                                    <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
+                            </li>                         
+                        @endif                        
+                    @endif
+
+
+                </ul>
+            </aside> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <nav class="col-md-2 d-none d-md-block bg-light border sticky-top">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+
+            @if (Route::is('panel.index'))
+                    <li class="nav-item bg-warning">
+                            <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.index') }}">Estaciones</a>
+                    </li>                       
+                @else
+                    <li class="nav-item ">
+                            <a class="btn btn-link " style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.index') }}">Estaciones</a>
+                    </li>                        
+                @endif
+
+            @if (Route::is('panel.document') || Route::is('panel.show'))
+                    <li class="nav-item bg-warning" >
+                            <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.document') }}">Documentos</a>
+                    </li>   
+                @else
+                    <li class="nav-item" >
+                            <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.document') }}">Documentos</a>
+                    </li>                        
+                @endif
+
+                @if (Route::is('panel.detail'))
+                    <li class="nav-item bg-warning" >
+                            <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
+                    </li>                        
+                @else
+                    <li class="nav-item" >
+                            <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Componentes</a>
+                    </li>                         
+                @endif
+
+                @if (Auth::user()->username == 'root')
+                        @if (Route::is('panel.user'))
+                            <li class="nav-item bg-warning" >
+                                    <a class="btn btn-link eneable" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.detail') }}">Usuarios</a>
+                            </li>                        
+                        @else
+                            <li class="nav-item" >
+                                    <a class="btn btn-link" style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
+                            </li>                         
+                        @endif                        
+                    @endif
+
+            </ul>
+          </div>
+        </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <ul class="nav justify-content-around container-lg mt-1">
+                <li class="nav-item flex-grow-1">
+                    <h4 class="">
+                    @if (Route::is('panel.document'))
+                        Documentos
+                    @elseif (Route::is('panel.detail'))
+                        Componentes                   
+                    @elseif (Route::is('panel.user'))
+                        Usuarios
+                    @endif
+                    </h4>
+
+                </li>
+                <li class="nav-item ">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-warning small " id="buscador" name="buscador" >
+                        <input class="btn border-warning btn-sm p-1" style=" width:55px" type="submit" value="Buscar">
+                                    
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ route('panel.index') }}">Estaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ route('panel.document') }}">Documentos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ route('panel.detail') }}">Componentes</a>
+                </li>
+                @if (Auth::user()->username == 'root')
+                <li class="nav-item">
+                    <a class="btn btn-link " style="width: 100%; text-decoration: none; color: black;" href="{{ route('panel.user') }}">Usuarios</a>
+
+                </li>
+                @endif
+            </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">Profile</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" tabindex="-1">Contact</button>
+          </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    if ($estaciones == '[]') {
+                $estaciones = Estaciones::where('siglas','like',"%$buscar%")->get();
+                if ($estaciones == '[]'){
+                    $mensaje = 'lo sentimos no encontramos una estación sismologica con ese nombre';
+                    return view('admin.panel.index', compact('mensaje', 'estaciones', 'buscar'));                    
+                }
+            }   

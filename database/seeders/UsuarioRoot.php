@@ -37,7 +37,7 @@ class UsuarioRoot extends Seeder
                     'updated_at'            => '2023-09-22 11:57:10'
                 )
             );
-        }*/
+        }
 
         DB::table('users')->insert(
             array(
@@ -54,66 +54,67 @@ class UsuarioRoot extends Seeder
                 'updated_at'            => date('Y-m-d H:m:s'),
             )
         );
-
+        */
         DB::table('estaciones')->insert(
             array(
                 'id' => '1',
                 'siglas' => 'PD',
                 'nombre' => 'Prueba',
+                'seg_satelital' => '12',
+                'asig_frecuencia'=> '10',
+                'carina' => '3',
                 'autor' => '1',
+                'custodio'=>'mike',
+                'tlf_custodio'=>'04120000000',
+                'frecuencia'=>'12000', 
+                'nivel'=>'150',
                 'ubicacion' => 'Guatire',
+                'estado'=>'1',
+                'municipio'=>'petare',
+                
                 'longitud'=>'123',
                 'latitud'=>'344',
-                'altitud'=>'567',
-                'region'=>'0',
-                'estado'=>'1',
+                'elevacion'=>'567',
+                'azimut'=>'100',
+                
                 'operativa'=>'3',
-                'imagen_n'=>'uploads/Prueba//HBv9CES8Ytng5jrQsL5VV38dZInlr0guMWVgklSP.png',
-                'img_dir'=>'uploads/Prueba//HBv9CES8Ytng5jrQsL5VV38dZInlr0guMWVgklSP.png',
+                'imagen_n'=>'uploads/Prueba//prueba.png',
+                'img_dir'=>'uploads/Prueba//prueba.png',
                 'created_at'=>'2023-08-21 17:18:34',
                 'updated_at'=>'2023-08-21 17:26:42',
             )
         );
-
+        /*
         DB::table('details')->insert(
             array(
                 'id' => '1',
                 'estacion' => 'Prueba',
                 'siglas' => 'PD',
+
                 'antena_gps' => '1',
-                'antena_gps_fab' => '1',
-                'antena_gps_esp' => '1',
+
                 'antena_parabolica' => '1',
-                'antena_parabolica_fab' => '1',
-                'antena_parabolica_esp' => '1',
+
                 'bateria' => '1',
-                'bateria_fab' => '1',
-                'bateria_esp' => '1',
-                'controlador_carga' => '1',
-                'controlador_carga_fab' => '1',
-                'controlador_carga_esp' => '1',
+
                 'digitalizador' => '1',
-                'digitalizador_fab' => '1',
-                'digitalizador_esp' => '1',
+
                 'modem_satelital' => '1',
-                'modem_satelital_fab' => '1',
-                'modem_satelital_esp' => '1',
+
                 'panel_solar' => '1',
-                'panel_solar_fab' => '1',
-                'panel_solar_esp' => '1',
+
+                'controlador_carga' => '1',
+
                 'regulador_carga' => '1',
-                'regulador_carga_fab' => '1',
-                'regulador_carga_esp' => '1',
+
                 'sismometro' => '1',
-                'sismometro_fab' => '1',
-                'sismometro_esp' => '1',
+
                 'trompeta_satelital' => '1',
-                'trompeta_satelital_fab' => '1',
-                'trompeta_satelital_esp' => '1',
-                'instalacion_satelital' => '1',
+
                 'created_at' => date('Y-m-d H:m:s'),
                 'updated_at' => date('Y-m-d H:m:s'),
             )
         );
+        */
     }
 }

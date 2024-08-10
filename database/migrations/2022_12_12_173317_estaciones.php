@@ -17,16 +17,31 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('siglas');
             $table->string('nombre');
-            $table->string('autor');            
+
+            $table->string('seg_satelital');
+            $table->string('asig_frecuencia');
+            $table->string('carina');
+
+            $table->string('autor');
+
+            $table->string('custodio');
+            $table->string('tlf_custodio');
+            $table->string('dependencia');
+
+            $table->string('frecuencia');
+            $table->string('nivel');
+
             $table->string('ubicacion');
+            $table->string('estado');
+            $table->string('municipio');                      
+
             $table->string('longitud');
             $table->string('latitud');
-            $table->string('altitud');
-            $table->string('region');
-            $table->string('estado');
-            $table->boolean('operativa')->default(0); // 0=desactivado 1=activado
-            //$table->timestamp('created_at');
-            //$table->timestamp('update_at');
+            $table->string('elevacion');
+            $table->string('azimut');
+
+
+            $table->string('operativa');
             $table->string('imagen_n');
             $table->string('img_dir');
             $table->timestamps();

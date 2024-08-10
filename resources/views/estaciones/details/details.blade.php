@@ -11,193 +11,525 @@
     <title>Registro de Estación</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('js/gestion.js' )}}"></script>
     
 </head>
 <body >
   <!------------------------------------------------------------------------------------------------ Registros de los detalles de la estacion -->  
-    <main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
-        <h5 class="m-2" style="text-decoration: underline; text-decoration-color:orange;" >Ingrese los siguientes datos de la Estación</h5>
-        <div class="form-center text-start">
-            <form id="form" method='POST' class="form" action="{{route('details.index')}}" enctype="multipart/form-data">
-                @csrf
-                <tag id="foreach" >
-                <div class="text-center">
-                    <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
-                    <input type="hidden" name="autor" value="{{ Auth::user()->name }}">
-                    
-                    <table class="table">
-                        <tr class="row">
-                            <td class="col-4">
-                                <label class="form-label" for="inst">Instalación</label>
-                            </td>
-                            <td class="col-4">
-                                <input class="form-control" style=" width: 150px" type="date" name="inst" id="inst" value="">
-                                <script>
-                                    var obj = document.getElementById('inst');
-                                    var fecha = new Date();
-                                    var dia = fecha.getDate();
-                                    var mes = fecha.getMonth()+1;
-                                    var año = fecha.getFullYear();
-                                    if (mes < 10){
-                                        var valor = año + "-"+ "0"+mes+"-"+dia ;
-                                    } else {
-                                        var valor = año + "-"+mes+"-"+dia ;
-                                    } 
-                                    
-                                    console.log(valor);
-                                    obj.value = valor;
-                                </script>
-                            </td>
-                            <td class="col-4">
-                                <label for="doc" class="form-label">Se subirán documentos: {{$doc}}</label>
-                                <input class="form-control" type="text" style=" width: 50px" name="doc" id="doc" value="{{ $doc }}" hidden>  
-                            </td>
-                                                                
+    <main class="bg-light border-hidden container-fluid " style="border: hidden;">
+        <div class="text-center">
+        <h2 class="h5 m-3" style="text-decoration: underline; text-decoration-color:orange;">Ingrese los componentes más actuales</h2>
+        </div>
+        
+        <form method='POST' class="small" action="{{route('details.store', $id)}}" enctype="multipart/form-data">
+            @csrf
+            <div class="row form-center">
+            <input type="number" hidden name='autor' value="{{Auth::user()->id}}">
+            
+            <div class="col-md-6 p-2 row mt-0 align-self-start">
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mt-0 p-1">
+                        <p class="text-center p-0 m-0 bg-dark text-light"><b>Transmisión</b></p>
+                    </div>                    
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>Transceptor</b></p>
+                        </div>
 
-                        </tr>
-                    </table>    
-                
-                    
-                </div>                
-                <div class="row w-max">
-                    
-                    <div class="col-6">
-                        <table class="table">
-                            <tr>
-                                <td>
-                                    <label for="antena_gps">Antena GPS</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial">
-                                    <input class="form-control" type="text" name="antena_gps_fab" id="antena_gps_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="antena_gps_esp" id="antena_gps_esp" placeholder="Especificaciones">
-                                    
-                                </td>
-                            </tr>
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <tr>
-                                <td>
-                                <label for="antena_parabolica">Antena Parabolica</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="antena_parabolica" id="antena_parabolica" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="antena_parabolica_fab" id="antena_parabolica_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="antena_parabolica_esp" id="antena_parabolica_esp" placeholder="Especificaciones">
-                                </td> 
-                            </tr>
-                                <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="transceptor_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="transceptor_modelo" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Serial</label>
+                            <input class="form-control"type="text" name="transceptor_serial" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="transceptor_fecha" id="transceptor_fecha">
+                            <script>
+                                fechaNow('input[name="transceptor_fecha"]')                                
+                            </script>
+                            
 
-                            <tr>
-                                <td>
-                                <label for="digitalizador">Digitalizador</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="digitalizador" id="digitalizador" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="digitalizador_fab" id="digitalizador_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="digitalizador_esp" id="digitalizador_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <tr>
-                                <td>
-                                <label for="modem_satelital">Modem Satelital</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="modem_satelital" id="modem_satelital" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="modem_satelital_fab" id="modem_satelital_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="modem_satelital_esp" id="modem_satelital_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <tr>
-                                <td>
-                                <label for="trompeta_satelital">Trompeta Satelital</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="trompeta_satelital" id="trompeta_satelital" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="trompeta_satelital_fab" id="trompeta_satelital_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="trompeta_satelital_esp" id="trompeta_satelital_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-
-
-
-                        </table>
-                    </div>  
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                    <div class="col-6">
-                        <table class="table">
-                        <tr>
-                                <td>
-                                <label for="bateria">Bateria</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="bateria_fab" id="bateria_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="bateria_esp" id="bateria_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <tr>
-                                <td>
-                                <label for="regulador_carga">Regulador de Carga</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="regulador_carga_fab" id="regulador_carga_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="regulador_carga_esp" id="regulador_carga_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr> 
-                             <!-- ---------------------------------------------------------------------------------------------------------------------------- -->  
-                            <tr>
-                                <td>
-                                <label for="controlador_carga">Controlador de carga</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="controlador_carga_fab" id="controlador_carga_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="controlador_carga_esp" id="controlador_carga_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <tr>
-                                <td>
-                                <label for="panel_solar">Panel Solar</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="panel_solar_fab" id="panel_solar_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="panel_solar_esp" id="panel_solar_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-                            <tr>
-                                <td>
-                                <label for="sismometro">Sismometro</label>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial" >
-                                    <input class="form-control" type="text" name="sismometro_fab" id="sismometro_fab" placeholder="Fabricante">
-                                    <input class="form-control" type="text" name="sismometro_esp" id="sismometro_esp" placeholder="Especificaciones">
-
-                                </td> 
-                            </tr>
-
-                        </table>    
+                        </div>
                     </div>
-            <div class="row m-0 text-center align-items-center justify-content-center">
-                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
-                <a class="btn btn-warning m-1 text-light" style="width: 200px;" href="{{route('estaciones.index')}}">Terminar mas tarde</a>
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>GPS</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="antena_gps_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="antena_gps_modelo" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Serial</label>
+                            <input class="form-control"type="text" name="antena_gps_serial" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="antena_gps_fecha"> 
+                            <script>
+                                fechaNow('input[name="antena_gps_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>  
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>BUC</b></p>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="BUC_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="BUC_modelo" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Frecuencia</label>
+                            <input class="form-control"type="text" name="BUC_frecuencia" value="" >
+                        </div>                           
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Serial</label>
+                            <input class="form-control"type="text" name="BUC_serial" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="BUC_fecha">
+                            <script>
+                                fechaNow('input[name="BUC_fecha"]')                                
+                            </script>
+                        </div> 
+                    </div>  
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>LNB</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="LNB_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="LNB_modelo" value="" >
+                        </div>
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Frecuencia</label>
+                                <input class="form-control"type="text" name="LNB_frecuencia" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Banda</label>
+                                <input class="form-control"type="text" name="LNB_banda" value="" >
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Serial</label>
+                            <input class="form-control"type="text" name="LNB_serial" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="LNB_fecha">
+                            <script>
+                                fechaNow('input[name="LNB_fecha"]')                                
+                            </script>
+                        </div>          
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>Trompeta</b></p>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="trompeta_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Serial</label>
+                            <input class="form-control"type="text" name="trompeta_serial" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="trompeta_fecha"  >
+                            <script>
+                                fechaNow('input[name="trompeta_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                    
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>Digitalizador</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="digitalizador_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="digitalizador_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-5">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="digitalizador_serial" value="" >
+                            </div>
+                            <div class="col-sm-7">
+                                <label class="form-label" for="">Fecha de instalación</label>
+                                <input class="form-control" type="date" name="digitalizador_fecha"  >
+                                <script>
+                                fechaNow('input[name="digitalizador_fecha"]')                                
+                            </script>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>Parabola</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="parabolica_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Diametro</label>
+                            <input class="form-control"type="text" name="parabolica_diametro" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Serial</label>
+                            <input class="form-control"type="text" name="parabolica_serial" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="parabolica_fecha">
+                            <script>
+                                fechaNow('input[name="parabolica_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-dark text-light"><b>Sensor</b></p>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="sensor_marca" value="" >
+                        </div>                    
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="sensor_modelo" value="" >
+                        </div>
+                        <div class=" row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="sensor_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Sensibilidad</label>
+                                <input class="form-control" name="sensor_sen" type="text" value="" >
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="sensor_fecha"  >
+                            <script>
+                                fechaNow('input[name="sensor_fecha"]')                                
+                            </script>
+                        </div>  
+                    </div>   
+                                     
+                </div>
+
+
+
             </div>
+
+            <div class="col-md-6 p-2 row mt-0">
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mt-0 p-1">
+                        <p class="text-center p-0 m-0 bg-dark text-light"><b>Energia</b></p>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>Regulador de Voltaje</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="regulador_voltaje_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="regulador_voltaje_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="regulador_voltaje_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="regulador_voltaje_watts" value="" >
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="regulador_voltaje_fecha"  >
+                            <script>
+                                fechaNow('input[name="regulador_voltaje_fecha"]')                                
+                            </script>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>Banco de Baterias</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="banco_baterias_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="banco_baterias_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="banco_baterias_serial" value="" >
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="form-label" for="">Cantidad</label>
+                                <input class="form-control"type="text" name="banco_baterias_cantidad" value="" >
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="banco_baterias_watts" value="" >
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="banco_baterias_fecha">
+                            <script>
+                                fechaNow('input[name="banco_baterias_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G1</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="panel_solar_a_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="panel_solar_a_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="panel_solar_a_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="panel_solar_a_watts" value="" >
+
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="panel_solar_a_fecha"  >
+                            <script>
+                                fechaNow('input[name="panel_solar_a_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G2</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="panel_solar_b_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="panel_solar_b_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="panel_solar_b_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="panel_solar_b_watts" value="" >
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="panel_solar_b_fecha"  >
+                            <script>
+                                fechaNow('input[name="panel_solar_b_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G3</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="panel_solar_c_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="panel_solar_c_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="panel_solar_c_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="panel_solar_c_watts" value="" >
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="panel_solar_c_fecha"  >
+                            <script>
+                                fechaNow('input[name="panel_solar_c_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G4</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="panel_solar_d_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="panel_solar_d_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="panel_solar_d_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="panel_solar_d_watts" value="" >
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="panel_solar_d_fecha"  >
+                            <script>
+                                fechaNow('input[name="panel_solar_d_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-md-12 mt-0 p-1">
+                            <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G5</b></p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Marca</label>
+                            <input class="form-control"type="text" name="panel_solar_e_marca" value="" >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Modelo</label>
+                            <input class="form-control"type="text" name="panel_solar_e_modelo" value="" >
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Serial</label>
+                                <input class="form-control"type="text" name="panel_solar_e_serial" value="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="">Watts</label>
+                                <input class="form-control"type="text" name="panel_solar_e_watts" value="" >
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label" for="">Fecha de instalación</label>
+                            <input class="form-control" type="date" name="panel_solar_e_fecha"  >
+                            <script>
+                                fechaNow('input[name="panel_solar_e_fecha"]')                                
+                            </script>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+            <div class="col-12 align-items-center justify-content-center d-flex">
+                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
+            </div>
+            </div>
+        </form>
+        <script>
+            function camOld(objeto, valor) {
+                objeto = document.getElementBy(objeto)
+                objeto.value = valor
+            }
+        </script>  
+        <ul>
+        @if(isset($detail))
+            @foreach ($detail as $objeto)
+                <li>
+                    $objeto
+                </li>
+            @endforeach
+        @endif        
+        </ul>      
+
     </main>
     
 </body>

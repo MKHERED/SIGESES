@@ -372,12 +372,204 @@
             return response()->json($estaciones);
         }
 
+---------------------------------------------------------------------------------------------------------------------------
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+        <div class="form-center text-start">
+            <form id="form" method='POST' class="form" action="{{route('details.index')}}" enctype="multipart/form-data">
+                @csrf
+                <tag id="foreach" >
+                <div class="text-center">
+                    <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
+                    <input type="hidden" name="autor" value="{{ Auth::user()->name }}">
+                    
+                    <table class="table">
+                        <tr class="row">
+                            <td class="col-4">
+                                <label class="form-label" for="inst">Instalación</label>
+                            </td>
+                            <td class="col-4">
+                                <input class="form-control" style=" width: 150px" type="date" name="inst" id="inst" value="">
+                                <script>
+                                    var obj = document.getElementById('inst');
+                                    var fecha = new Date();
+                                    var dia = fecha.getDate();
+                                    var mes = fecha.getMonth()+1;
+                                    var año = fecha.getFullYear();
+                                    if (mes < 10){
+                                        var valor = año + "-"+ "0"+mes+"-"+dia ;
+                                    } else {
+                                        var valor = año + "-"+mes+"-"+dia ;
+                                    } 
+                                    
+                                    console.log(valor);
+                                    obj.value = valor;
+                                </script>
+                            </td>
+                            <td class="col-4">
+                                <label for="doc" class="form-label">Se subirán documentos: {{$doc}}</label>
+                                <input class="form-control" type="text" style=" width: 50px" name="doc" id="doc" value="{{ $doc }}" hidden>  
+                            </td>
+                                                                
+
+                        </tr>
+                    </table>    
+                
+                    
+                </div>                
+                <div class="row w-max">
+                    
+                    <div class="col-6">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <label for="antena_gps">Antena GPS</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial">
+                                    <input class="form-control" type="text" name="antena_gps_fab" id="antena_gps_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="antena_gps_esp" id="antena_gps_esp" placeholder="Especificaciones">
+                                    
+                                </td>
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="antena_parabolica">Antena Parabolica</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="antena_parabolica" id="antena_parabolica" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="antena_parabolica_fab" id="antena_parabolica_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="antena_parabolica_esp" id="antena_parabolica_esp" placeholder="Especificaciones">
+                                </td> 
+                            </tr>
+                                <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
+                            <tr>
+                                <td>
+                                <label for="digitalizador">Digitalizador</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="digitalizador" id="digitalizador" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="digitalizador_fab" id="digitalizador_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="digitalizador_esp" id="digitalizador_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="modem_satelital">Modem Satelital</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="modem_satelital" id="modem_satelital" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="modem_satelital_fab" id="modem_satelital_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="modem_satelital_esp" id="modem_satelital_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="trompeta_satelital">Trompeta Satelital</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="trompeta_satelital" id="trompeta_satelital" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="trompeta_satelital_fab" id="trompeta_satelital_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="trompeta_satelital_esp" id="trompeta_satelital_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+
+
+
+                        </table>
+                    </div>  
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                    <div class="col-6">
+                        <table class="table">
+                        <tr>
+                                <td>
+                                <label for="bateria">Bateria</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="bateria_fab" id="bateria_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="bateria_esp" id="bateria_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="regulador_carga">Regulador de Carga</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="regulador_carga_fab" id="regulador_carga_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="regulador_carga_esp" id="regulador_carga_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr> 
+                             <!-- ---------------------------------------------------------------------------------------------------------------------------- -->  
+                            <tr>
+                                <td>
+                                <label for="controlador_carga">Controlador de carga</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="controlador_carga_fab" id="controlador_carga_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="controlador_carga_esp" id="controlador_carga_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="panel_solar">Panel Solar</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="panel_solar_fab" id="panel_solar_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="panel_solar_esp" id="panel_solar_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="sismometro">Sismometro</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="sismometro_fab" id="sismometro_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="sismometro_esp" id="sismometro_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+
+                        </table>    
+                    </div>
+            <div class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
+                <a class="btn btn-warning m-1 text-light" style="width: 200px;" href="{{route('estaciones.index')}}">Terminar mas tarde</a>
+            </div>
+        </div>
 
 
 
@@ -575,3 +767,2167 @@
           </div>
         </div>
         </div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <style>
+
+    main {
+        height: 90vh !important;
+        height: -webkit-fill-available;
+        max-height: 100vh;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+    </style>
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 260px;">
+
+
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item ">
+            <a class="nav-link text-white border" href="#">Añadir visita</a>
+        </li>
+
+    </ul>
+</div>
+<div class="col-md-8 ms-sm-auto col-lg-8 px-md-4">
+    gholllllllllllllllll
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
+    <h2 class="h5 m-4" style="text-decoration: underline; text-decoration-color:orange;">Ingrese los siguientes datos</h2>
+    <div class="form-center text-start">
+       
+        <form method='POST' class="form small" action="{{route('estaciones.store')}}" enctype="multipart/form-data">
+             @csrf
+             <input type="text" name="autor" value="{{ Auth::user()->id }}" hidden>
+             <div class="row w-max">
+                <div class="col-6">
+                <table class="table">
+                        <tr>
+                            <td>
+                                <label for="Estacion">Estación</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="Estacion" placeholder="Nombre de la estación" name="nombre" value="{{old('nombre')}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Abreviatura">Siglas</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="Abreviatura" placeholder="Abreviatura de la estación" name="siglas" value="{{old('siglas')}}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Ubicacion">Ubicación</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="Ubicacion" placeholder="Ubicacion de la estación" name="ubicacion" value="{{old('ubicacion')}}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                           
+                            <td>
+                                <label for="dec">¿Que tipo de coordenada es?</label>
+                            </td>
+                            <td class="text-center">
+                                <label for="dec">GMS: &nbsp;</label><input type="checkbox" name="gms" id="gms" onclick="gmsutm()">
+                            
+                            </td>
+   
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Longitud">Longitud</label>
+                            </td>
+                            <td style="display: flex" id="Long"> 
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="">                               
+                            </td>                                             
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Latitud">Latitud</label>
+                            </td>
+                            <td style="display: flex"id="Lat">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="">
+
+                            </td>                    
+                        </tr>
+                        <script src="{{ asset('js/gmsutm.js') }}"></script>  
+                        <tr>
+                            <td>
+                                <label for="Altitud">Altitud</label>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" id="Altitud" placeholder="Altitud de la estación" name="altitud" value="{{old('altitud')}}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="doc">¿Subira algún documento?</label>
+                            </td>
+                            <td class="text-center">
+                                <label for="doc">Si: &nbsp;</label><input type="checkbox" name="doc" id="doc">
+                            </td> 
+
+                        </tr>
+                    </table>
+                </div>
+            
+                <div class="col-6" >
+                    <table class="table">
+
+                        <tr>
+                            <td>
+                                <label for="Estado">Estado</label>
+                            </td>
+                            <td>
+                                <select type="list" class="form-control" id="Estado" name="estado" value="{{old('estado')}}" onclick="estadoslist()">
+                                    <script src="{{asset('js/estadoslist.js') }}">
+                                       
+                                    </script>
+                                   
+                                </select>
+                            </td>   
+                        </tr>
+                        <tr>
+                            <td>
+                                
+                            </td>
+                            <td>
+
+                            </td>   
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Operativa">Condición</label>
+                            </td>
+                            <td>
+                                <select type="list" class="form-control" id="Operativa"   name="operativa" value="{{old('operativa')}}">
+                                    <option value="0">No operativa</option>
+                                    <option value="1">Desinstalada</option>
+                                    <option value="2">Vandalizada</option>
+                                    <option value="3">Infraestructura</option>
+                                    <option value="4">Operativa</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Imagen">Imagen</label>
+                            </td>
+                            <td>
+                                <input type="file" class="form-control" id="imagen0" name="imagen_n" onchange="muestraImg('muestrasImg', 'imagen0', '0');">
+                            </td>
+                              
+                        </tr>
+                        <tr style="border-style: hidden !important;">
+                            <td>
+                                <label for="Vista">Vista Previa</label>
+                            </td>
+                            <td>
+                                <div class="border p-0" style="width:350px; height:225px " id="muestrasImg">
+
+
+                                </div>
+                                <script src="{{asset('js/gestion.js') }}"></script>
+                            </td>
+                        </tr>
+                    </table>
+
+            </div>
+            <div class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
+            </div>
+        </form>
+    </div>
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// return response()->json($request); 
+        $detail = new Details();
+
+        //$detail->id = $request->id;
+
+        $estacion = Estaciones::findOrFail($request->id);
+
+        $detail->estacion = $estacion->nombre;
+        $detail->siglas = $estacion->siglas;
+        $detail->antena_gps = $request->antena_gps;
+        $detail->antena_parabolica = $request->antena_parabolica;
+        $detail->bateria = $request->bateria;
+        $detail->controlador_carga = $request->controlador_carga;
+        $detail->digitalizador = $request->digitalizador;
+        $detail->modem_satelital = $request->modem_satelital;
+        $detail->panel_solar = $request->panel_solar;
+        $detail->regulador_carga = $request->regulador_carga;
+        $detail->sismometro = $request->sismometro;
+        $detail->trompeta_satelital = $request->trompeta_satelital;
+        $detail->created_at = date('Y-m-d');
+        $detail->updated_at = $request->inst;
+
+        $visita = new Visitas();
+
+        $visita->estacion = $estacion->nombre;
+        $visita->siglas = $estacion->siglas;
+        $visita->autor = $request->autor;
+        $visita->participantes = $request->autores;
+        $visita->descripcion_trabajo = $request->descripcion_trabajo;
+        $visita->tipo_visita = $request->tipo_visita;
+        $visita->condicion_final = $request->condicion;
+        $visita->operativa = $request->operativa;
+        $visita->comentario = $request->comentario;
+
+        $visita->antena_gps = $request->antena_gps;
+        $visita->antena_parabolica = $request->antena_parabolica;
+        $visita->bateria = $request->bateria;
+        $visita->controlador_carga = $request->controlador_carga;
+        $visita->digitalizador = $request->digitalizador;
+        $visita->modem_satelital = $request->modem_satelital;
+        $visita->panel_solar = $request->panel_solar;
+        $visita->regulador_carga = $request->regulador_carga;
+        $visita->sismometro = $request->sismometro;
+        $visita->trompeta_satelital = $request->trompeta_satelital;
+        $visita->created_at = date('Y-m-d');
+        $visita->updated_at = $request->inst;
+
+        $var = json_decode(json_encode($detail), true);
+    
+    $list = ['estacion', 'siglas', 'autor', 'participantes', 'descripcion_trabajo', 'tipo_visita', 'condicion_final', 'antena_gps', 'antena_parabolica', 'bateria',
+            'controlador_carga', 'digitalizador', 'modem_satelital' ,'panel_solar',
+            'regulador_carga', 'sismometro', 'trompeta_satelital','comentario' ,'created_at', 'updated_at'];
+        
+        foreach ($list as $item) {
+            if (array_key_exists($item, $var) && ($detail->$item == null)) {
+                $detail->$item = ' ';
+                //$result[$item] = $detail->$item;
+                //return redirect()->route('details.index', $request->id)->with('mensaje', 'Por favor complete todos los campos: '.$item);
+                
+            }
+            if ($visita->$item == null) {
+                $visita->$item = ' ';
+            }
+
+        }
+        //$list = [$visita, $detail];
+        //return response()->json($list);
+        $consulta = Details::findOrFail($estacion->nombre);
+        if ($consulta != []) {
+            $detail->__unset('updated_at');
+            $detail->__unset('created_at');
+
+            //return response()->json($detail);
+            
+            $var = json_decode(json_encode($detail), true);
+            
+            Details::where('estacion', '=' ,$detail->estacion)->update($var);
+        } else {
+            $detail->save();
+            
+        }
+        
+        $visita->save();
+        return redirect()->route('estaciones.index');
+
+
+
+
+
+
+
+
+
+
+
+        //return response()->json($request);
+        $estacion = request()->except(['_token', '_method']);
+        // $array = [];
+        
+        $consulta = Estaciones::where('id', '=', $id)->first();
+
+        //hacer sentencia para controlar cuando vengan mas de dos longitudes y latitudes...
+        if ($request->gms == 'on') {
+            $longitud = $request->longitud."º ".$request->longitud1.'" '.$request->longitud2."'";
+            $latitud = $request->latitud."º ".$request->latitud1.'" '.$request->latitud2."'";
+            $estacion['longitud'] = $longitud;
+            $estacion['latitud'] = $latitud;
+
+            $objetos = ['gms', 'longitud1', 'longitud2', 'latitud1', 'latitud2'];
+            
+            foreach ($objetos as $item) {
+                unset($estacion[$item]);
+            }
+
+            
+        }
+        //return response()->json($estacion);
+        
+
+
+        $objetos = ["nombre", "siglas", "ubicacion", "longitud", "latitud", "altitud", "region", "operativa", "imagen_n"];
+        foreach ($objetos as $item) {
+            if (array_key_exists($item, $estacion)) {
+                if ($estacion[$item] != '') {
+                    //$array[$item] = true;
+                    
+                    // Ordenar aqui y poner la URL donde se guarda la imagen
+                    $imagen_n = $request->imagen_n;
+                    $estacion['img_dir'] = $imagen_n;
+                    //------------------------------------------------------
+
+                    //guardado de la imagen
+                    if ($request->hasFile('imagen_n')) {
+                        $db = Estaciones::findOrFail($id);
+                        Storage::delete('public/' . $db->img_dir);
+
+                        $estacion['imagen_n'] = $request->file('imagen_n')->store('uploads/' . $estacion["nombre"] . '/', 'public');
+
+                    }               
+                } else {
+                    $estacion[$item] = $consulta[$item];
+
+                }
+
+            } else {
+                $estacion[$item] = $consulta[$item];
+
+                //$array[$item] = false;
+
+            }
+        }
+        $estacion['img_dir'] = $estacion['imagen_n'];       
+       
+        
+        //return response()->json($estacion);
+        Estaciones::where('id', '=', $id)->update($estacion);
+       
+        return redirect()->route("estaciones.index")->with(["mensaje" => "Estación actualizada",]); //response()->json($estacion);//
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $table->string("antena_gps");
+
+            //------------------------------
+            $table->string("antena_parabolica");
+            //------------------------------
+            $table->string("bateria");
+            //------------------------------
+            $table->string("controlador_carga");
+            //------------------------------
+            $table->string("digitalizador");
+            //------------------------------
+            $table->string("modem_satelital");
+            //------------------------------
+            $table->string("panel_solar");
+            //------------------------------
+            $table->string("regulador_carga");
+            //------------------------------
+            $table->string("sismometro");
+            //------------------------------
+            $table->string("trompeta_satelital");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <table class="table">
+                        <tr class="row">
+                            <td class="col-4">
+                                <label class="form-label" for="inst">Instalación</label>
+                            </td>
+                            <td class="col-4">
+                                <input class="form-control" style=" width: 150px" type="date" name="inst" id="inst" value="">
+                                <script>
+                                    var obj = document.getElementById('inst');
+                                    var fecha = new Date();
+                                    var dia = fecha.getDate();
+                                    var mes = fecha.getMonth()+1;
+                                    var año = fecha.getFullYear();
+                                    if (mes < 10){
+                                        var valor = año + "-"+ "0"+mes+"-"+dia ;
+                                    } else {
+                                        var valor = año + "-"+mes+"-"+dia ;
+                                    } 
+                                    
+                                    console.log(valor);
+                                    obj.value = valor;
+                                </script>
+                            </td>
+                            <td class="col-4">
+                                <label for="doc" class="form-label">Se subirán documentos: {{$doc}}</label>
+                                <input class="form-control" type="text" style=" width: 50px" name="doc" id="doc" value="{{ $doc }}" hidden>  
+                            </td>
+                                                                
+
+                        </tr>
+                    </table>    
+                
+                    
+                </div>                
+                <div class="row w-max">
+                    
+                    <div class="col-6">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <label for="antena_gps">Antena GPS</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial">
+                                    <input class="form-control" type="text" name="antena_gps_fab" id="antena_gps_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="antena_gps_esp" id="antena_gps_esp" placeholder="Especificaciones">
+                                    
+                                </td>
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="antena_parabolica">Antena Parabolica</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="antena_parabolica" id="antena_parabolica" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="antena_parabolica_fab" id="antena_parabolica_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="antena_parabolica_esp" id="antena_parabolica_esp" placeholder="Especificaciones">
+                                </td> 
+                            </tr>
+                                <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
+                            <tr>
+                                <td>
+                                <label for="digitalizador">Digitalizador</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="digitalizador" id="digitalizador" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="digitalizador_fab" id="digitalizador_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="digitalizador_esp" id="digitalizador_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="modem_satelital">Modem Satelital</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="modem_satelital" id="modem_satelital" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="modem_satelital_fab" id="modem_satelital_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="modem_satelital_esp" id="modem_satelital_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="trompeta_satelital">Trompeta Satelital</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="trompeta_satelital" id="trompeta_satelital" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="trompeta_satelital_fab" id="trompeta_satelital_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="trompeta_satelital_esp" id="trompeta_satelital_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+
+
+
+                        </table>
+                    </div>  
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                    <div class="col-6">
+                        <table class="table">
+                        <tr>
+                                <td>
+                                <label for="bateria">Bateria</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="bateria_fab" id="bateria_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="bateria_esp" id="bateria_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="regulador_carga">Regulador de Carga</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="regulador_carga_fab" id="regulador_carga_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="regulador_carga_esp" id="regulador_carga_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr> 
+                             <!-- ---------------------------------------------------------------------------------------------------------------------------- -->  
+                            <tr>
+                                <td>
+                                <label for="controlador_carga">Controlador de carga</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="controlador_carga_fab" id="controlador_carga_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="controlador_carga_esp" id="controlador_carga_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="panel_solar">Panel Solar</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="panel_solar_fab" id="panel_solar_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="panel_solar_esp" id="panel_solar_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+                            <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+                            <tr>
+                                <td>
+                                <label for="sismometro">Sismometro</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial" >
+                                    <input class="form-control" type="text" name="sismometro_fab" id="sismometro_fab" placeholder="Fabricante">
+                                    <input class="form-control" type="text" name="sismometro_esp" id="sismometro_esp" placeholder="Especificaciones">
+
+                                </td> 
+                            </tr>
+
+                        </table>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <form id="form" method='POST' class="" action="{{route('details.index', $id)}}" enctype="multipart/form-data">
+                @csrf
+                
+                    <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
+                    <input type="hidden" name="autor" value="{{ Auth::user()->name }}">
+                <div class="col-md-12">    
+                    <div class="col-sm-6">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="updated_at">fecha de ultima visita</label>
+                            <input class="form-control" type="date" id="updated_at" name="updated_at">
+                            <script>
+                                    var obj = document.getElementById('updated_at');
+                                    var fecha = new Date();
+                                    var dia = fecha.getDate();
+                                    var mes = fecha.getMonth()+1;
+                                    var año = fecha.getFullYear();
+                                    if (mes < 10){
+                                        var valor = año + "-"+ "0"+mes+"-"+dia ;
+                                    } else {
+                                        var valor = año + "-"+mes+"-"+dia ;
+                                    } 
+                                    
+                                    console.log(valor);
+                                    obj.value = valor;
+                                </script>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="updated_at">fecha de ultima visita</label>
+                            <input class="form-control" type="date" id="updated_at" name="updated_at">                            
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                </div>
+            <div class="row m-0 text-center align-items-center justify-content-center">
+                <input class="btn btn-success m-1 " style=" width:100px" type='submit' value='Guardar'>
+                <a class="btn btn-warning m-1 text-light" style="width: 200px;" href="{{route('estaciones.index')}}">Terminar mas tarde</a>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <!------------------------------------------------------------------------------------------------ Registro -->  
+<main class="text-center presentacion-main bg-light border-hidden" style="border: hidden;">
+    <h3 class="h3 m-4">Actualice los siguientes datos</h3>
+    <div class="form-center ">
+       
+        <form method='POST' class="form small" action="{{route('estaciones.update', $estaciones->id)}}" enctype="multipart/form-data">
+             @csrf
+             {{ method_field('PATCH')}}
+             <div class="row container">
+                <div class="col-6  text-start">
+                <table class="table">
+                        <tr>
+                            <td>
+                                <label for="Estacion">Estación</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="Estacion" placeholder="Nombre de la estación" name="nombre" value="{{$estaciones->nombre }}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Abreviatura">Siglas</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="Abreviatura" placeholder="Abreviatura de la estación" name="siglas" value="{{ $estaciones->siglas }}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Ubicacion">Ubicación</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="Ubicacion" placeholder="Ubicacion de la estación" name="ubicacion" value="{{ $estaciones->ubicacion }}">
+                            </td>                    
+                        </tr>
+                        <tr>
+                           
+                            <td>
+                                <label for="dec">¿Que tipo de coordenada es?</label>
+                            </td>
+                            <td class="text-center">
+                                <label for="dec">GMS: &nbsp;</label><input type="checkbox" name="gms" id="gms" onclick="gmsutm()">
+                            
+                            </td>
+   
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Longitud">Longitud</label>
+                            </td>
+                            <td style="display: flex" id="Long"> 
+                                <input type="number" class="form-control" style="width: 100px" id="Longitud" name="longitud" value="">                               
+                            </td>                                             
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Latitud">Latitud</label>
+                            </td>
+                            <td style="display: flex"id="Lat">
+                                <input type="number" class="form-control" style="width: 100px" id="Latitud" name="latitud" value="">
+
+                            </td>                    
+                        </tr>
+                        <script src="{{ asset('js/gmsutm.js') }}"></script>
+                        <script>
+                            const valor1 = @json($estaciones->longitud);
+                            const valor2 = @json($estaciones->latitud);
+                            
+                            var long = document.getElementById('Longitud');
+                            var lati = document.getElementById('Latitud');
+
+                            long.value = valor1;
+                            lati.value = valor2;
+                        </script>
+                        <tr>
+                            <td>
+                                <label for="Altitud">Altitud</label>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" id="Altitud" placeholder="Altitud de la estación" name="altitud" value="{{ $estaciones->altitud }}">
+                            </td>                    
+                        </tr>
+                    </table>
+                </div>
+            
+                <div class="col-6" >
+                    <table class="table">
+
+                        <tr>
+                            <td>
+                                <label for="Estado">Estado</label>
+                            </td>
+                            <td>
+                                <select type="list" class="form-control" id="Estado" name="estado" value="{{$estaciones->estado}}">
+                                    <script src="{{asset('js/estadoslist.js') }}">
+                                       
+                                    </script>
+                                   
+                                </select>
+                                <script>
+                                    document.onload= estadoslist();
+                                    var select = document.getElementById('Estado');
+                                    const valor = @json($estaciones->estado);
+                                    select.value = valor;
+                                </script>
+                            </td>   
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Region">Región</label>
+                            </td>
+                            <td>
+                                <select type="list" class="form-control" id="Region"   name="region" value="{{$estaciones->region}}">
+                                    <option value="0">Occidente</option>
+                                    <option value="1">Centro</option>
+                                    <option value="2">Oriente</option>
+                                </select>
+                            </td>   
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Operativa">Condición</label>
+                            </td>
+                            <td>
+                                <select type="list" class="form-control" id="Operativa"   name="operativa" value="{{$estaciones->operativa}}">
+                                    <option value="0">No operativa</option>
+                                    <option value="1">Desinstalada</option>
+                                    <option value="2">Vandalizada</option>
+                                    <option value="3">Infraestructura</option>
+                                    <option value="4">Operativa</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Imagen">Imagen</label>
+                            </td>
+                            <td>
+                                <input type="file" class="form-control" id="imagen0" name="imagen_n" onchange="muestraImg('muestrasImg', 'imagen0', '0');">
+                            </td>
+                              
+                        </tr>
+                        <tr style="border-style: hidden !important;">
+                            <td>
+                                <label for="Vista">Vista Previa</label>
+                            </td>
+                            <td>
+                                <div class="border p-0" style="width:350px; height:225px " id="muestrasImg">
+
+
+                                </div>
+                                <script src="{{asset('js/gestion.js') }}"></script>
+                            </td>
+                        </tr>
+                    </table>
+
+            
+            </div>
+            <div id="guardar" class="col">
+                <input type="submit" class='btn btn-success m-1' style="width:fit-content;" value="Guardar">
+                <script> 
+                    const validador =  @json($validador);
+                    var guardar = document.getElementById('guardar');
+
+                    if (validador == "agregar") {
+                        guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.index', $estaciones->id)}}'>Agregar Componentes</a>");
+                    } 
+                    if (validador == "cambiar"){
+                        guardar.insertAdjacentHTML("beforeend", "<a class='btn btn-warning text-light m-1' style='width:fit-content;' href='{{route('details.edit',$estaciones->id)}}'>Cambiar Componentes</a>");
+                    }                  
+                </script>
+
+
+            </div>
+            <div>
+
+            </div>
+        </form>
+    </div>
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (($link_docs == "[]") && ($detail=='Sin resultados')) {
+            // details and link == null
+            $detail = new Details();              //Details::findOrFail(1);
+            
+             $list = [
+                     'antena_gps', 'antena_gps_fab','antena_gps_esp','antena_parabolica','antena_parabolica_fab','antena_parabolica_esp','bateria','bateria_fab','bateria_esp','controlador_carga','controlador_carga_fab', 
+                     'controlador_carga_esp','digitalizador','digitalizador_fab','digitalizador_esp','modem_satelital','modem_satelital_fab','modem_satelital_esp','panel_solar','panel_solar_fab','panel_solar_esp',
+                     'regulador_carga','regulador_carga_fab','regulador_carga_esp','sismometro','sismometro_fab','sismometro_esp','trompeta_satelital','trompeta_satelital_fab','trompeta_satelital_esp','instalacion_satelital'
+             ];
+            
+             foreach ($list as $item){
+                 $detail->$item = ' ';
+             }
+            
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+         
+        } elseif (($detail=='Sin resultados') && $link_docs) {  
+            //details == null
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));
+        
+        } elseif ($detail && ($link_docs == "[]")) { 
+            //link == null  
+        
+            //return response()->json(print_r($detail));
+            //aunque parece adsurdo* este pedasito de codigo hace milagro, por algo el blade no agarra datos con where pero si con modelos
+            $detail = Details::findOrFail($id);
+            //---------------------------------
+
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));  
+        } elseif ($detail && $link_docs) {
+             //completo            
+            
+            //aunque parece adsurdo* este pedasito de codigo hace milagro, por algo el blade no agarra datos con where pero si con modelos
+            $detail = Details::findOrFail($id);
+            //---------------------------------
+
+            return view('estaciones.show', compact('estacion', 'detail', 'link_docs'));  
+            
+        } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <main class="presentacion-main bg-light border-hidden" style="border: hidden;">
+        <h5 class="m-2 text-center" style="text-decoration: underline; text-decoration-color:orange;" >Hoja de inspección de visita</h5>
+        
+        <form class="needs-validation container" action="{{route('details.update', $id)}}" method="POST">
+            <!-- requisitos ocultos -->
+            @csrf
+            <input type="hidden" name="id" id="id" placeholder="id" value="{{ $id }}">
+            <input type="hidden" name="autor" value="{{ Auth::user()->name }}">
+           <!-- <input class="form-control" type="hidden" style=" width: 50px" name="doc" id="doc" value="" hidden>  doc -->
+            
+            <div class="row g-5">
+                <div class="col-md-12 col-lg-12">
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            <label class="form-label" for="inst">Fecha de la inspección</label>
+                            <input class="form-control" style=" width: auto" type="date" name="inst" id="inst" value="">
+                            <script>
+                                    var obj = document.getElementById('inst');
+                                    var fecha = new Date();
+                                    var dia = fecha.getDate();
+                                    var mes = fecha.getMonth()+1;
+                                    var año = fecha.getFullYear();
+                                    if (mes < 10){
+                                        var valor = año + "-"+ "0"+mes+"-"+dia ;
+                                    } else {
+                                        var valor = año + "-"+mes+"-"+dia ;
+                                    } 
+                                    
+                                    console.log(valor);
+                                    obj.value = valor;
+                            </script>
+                            <label for="">Tipo de visita</label>
+                            <select class="form-control" name="tipo_visita" id="">
+                                <option value="Mantenimiento Correctivo">Mantenimiento Correctivo</option>
+                                <option value="Mantenimiento Preventivo">Mantenimiento Preventivo</option>
+                            </select>
+                            <label class="form-label" for="autores">Participantes</label>
+                            <textarea class="form-control" name="autores" id="" cols="2" rows="2" placeholder="Ing. Pepito, Ing. Juan,"></textarea>
+
+                            <label for="">Descripción del trabajo</label>
+                            <textarea class="form-control" name="descripcion_trabajo" id="" cols="3" rows="4"></textarea>
+                        
+                            <label for="">Condición final</label>
+                            <select class="form-control" name="condicion" id="">
+                                <option value="Operativa">Operativa</option>
+                                <option value="Fuera de servicio">Fuera de servicio</option>
+                                <option value="En Observacion">En Observacion</option>
+                            </select>
+
+                            <label for="">Operativa</label>
+                            <select class="form-control" name="operativa" id="">
+                                    <option value="No operativa">No operativa</option>
+                                    <option value="Desinstalada">Desinstalada</option>
+                                    <option value="Vandalizada">Vandalizada</option>
+                                    <option value="Infraestructura">Infraestructura</option>
+                                    <option value="Operativa">Operativa</option>                            
+                            </select>
+                        </div>
+                        <div class="row g-2 col-sm-8">
+                            <div class="col-sm-6 mb-0 pb-0">
+                                <label class="form-label" for="antena_gps">Antena GPS</label>
+                                <input class="form-control" type="text" name="antena_gps" id="antena_gps" placeholder="Serial/Fabricante">
+                                
+                                <label class="form-label" for="antena_parabolica">Antena Parabolica</label>
+                                <input class="form-control" type="text" name="antena_parabolica" id="antena_parabolica" placeholder="Serial/Fabricante">
+
+                                <label class="form-label" for="digitalizador">Digitalizador</label>
+                                <input class="form-control" type="text" name="digitalizador" id="digitalizador" placeholder="Serial/Fabricante" >                        
+                            
+                                <label class="form-label" for="modem_satelital">Modem Satelital</label>
+                                <input class="form-control" type="text" name="modem_satelital" id="modem_satelital" placeholder="Serial/Fabricante" >
+
+                                <label class="form-label" for="trompeta_satelital">Trompeta Satelital</label>
+                                <input class="form-control" type="text" name="trompeta_satelital" id="trompeta_satelital" placeholder="Serial/Fabricante" >
+                                
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label class="form-label" for="bateria">Bateria</label>
+                                <input class="form-control" type="text" name="bateria" id="bateria" placeholder="Serial/Fabricante" >
+                                
+                                <label class="form-label" for="regulador_carga">Regulador de Carga</label>
+                                <input class="form-control" type="text" name="regulador_carga" id="regulador_carga" placeholder="Serial/Fabricante" >
+                                
+                                <label class="form-label" for="controlador_carga">Controlador de carga</label>
+                                <input class="form-control" type="text" name="controlador_carga" id="controlador_carga" placeholder="Serial/Fabricante" >
+
+                                <label class="form-label" for="panel_solar">Panel Solar</label>
+                                <input class="form-control" type="text" name="panel_solar" id="panel_solar" placeholder="Serial/Fabricante" >
+
+                                <label class="form-label" for="sismometro">Sismometro</label>
+                                <input class="form-control" type="text" name="sismometro" id="sismometro" placeholder="Serial/Fabricante" >
+
+                            </div>
+                            <div class="col-sm-8">
+                                <label class="form-label" for="">Especificación o comentario</label>
+                                <textarea class="form-control" name="comentario" id="" cols="25" rows="3"></textarea>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <label class="form-label" for="">¿Ya Termino?</label>
+
+                                <input class="btn btn-success m-1 form-control"  type='submit' value='Guardar'>
+                                <a class="btn btn-warning m-1 text-light form-control" href="{{route('estaciones.index')}}">Terminar mas tarde</a>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+
+
+
+
+                $fechas  = Visitas::where('estacion', '=' ,$estacion->nombre)->get('created_at');
+            $a = [];
+            foreach ($fechas as $value) {
+                foreach ($visitas as $value2) {
+                    
+                    $a = new DateTime($value[0]);
+                    $b = new DateTime($value2[0]);
+
+                 if ($value2 > $value) {
+                     $c[$value[0]] = $value2 .'>'. $value; 
+                 } else {
+                     $c[$value[0]] = $value2 .'<'. $value;
+                 }
+                 
+                //$a = new DateTime($value[0]);   
+                //$b = new DateTime($value2[0]);         
+
+                }
+
+                
+            }
+
+
+                    
+        $hoy = Carbon::now();
+        $n = 0;
+        foreach ($visitas as $value) {
+            
+            $n = $n + 1;
+            
+            $h = new DateTime($hoy);
+            $v = new DateTime($value->create_at);
+
+            $h = $h->format('Y-m-d');
+            //$v = $v->format('Y-m-d');
+
+
+            if ($h > $v) {
+                $a[$n] = 'si'.$v. $h;
+            } else {
+                $a[$n] = 'no '.' '.$h.' '.$value->created_at;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    if(patronNumerico.test(caracter)) {
+                                console.log(caracter + "\n" + "es un número!");
+                                return true;
+                            }
+                            else if(patronLetra.test(caracter)){
+                                console.log(caracter + "\n" + "es una letra!");
+                                return true;
+                            }
+                            else {
+
+                                // evitamos que se escriba la letra en el input
+                                j.preventDefault(); 
+                                return false; 
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function gmsutm() {                            
+    var gms = document.getElementById("gms");
+
+    var longitud = document.getElementById('Long');
+    var latitud = document.getElementById('Lat') 
+
+    var longitu = document.getElementById("Longitud");
+    var latitu = document.getElementById("Latitud");
+    longitu.remove();
+    latitu.remove();  
+    
+    longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control"step="0.1" placeholder="10.00" style="" id="Longitud" name="longitud" value="">');
+    latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control"step="0.1" placeholder="60.00" style="" id="Latitud" name="latitud" value="">');
+    if (gms.checked) {
+        var longitu = document.getElementById("Longitud");
+        var latitu = document.getElementById("Latitud");
+        longitu.remove();
+        latitu.remove();  
+
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control col-md-3" step="any" style="" id="Longitud" name="longitud" placeholder="Grados" value="">');
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control col-md-3" step="any" style="" id="Longitud1" name="longitud1" placeholder="Minutos" value="">');
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control col-md-3" step="any" style="" id="Longitud2" name="longitud2" placeholder="Segundos" value="">');
+        
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control col-md-3" step="any" style="" id="Latitud" name="latitud" placeholder="Grados" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control col-md-3"  step="any" style="" id="Latitud1" name="latitud1" placeholder="Minutos" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control col-md-3" step="any" style="" id="Latitud2" name="latitud2" placeholder="Segundos" value="">');         
+    } else {
+        var longitud1 = document.getElementById("Longitud1");
+        var latitud1 = document.getElementById("Latitud1");
+        longitud1.remove();
+        latitud1.remove();
+        var longitud2 = document.getElementById("Longitud2");
+        var latitud2 = document.getElementById("Latitud2");
+        longitud2.remove();
+        latitud2.remove(); 
+        var longitu = document.getElementById("Longitud");
+        var latitu = document.getElementById("Latitud");
+        longitu.remove();
+        latitu.remove();  
+
+        longitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" step="0.1" placeholder="10.00" style="" id="Longitud" name="longitud" value="">');
+        latitud.insertAdjacentHTML("beforeend", '<input type="number" class="form-control" step="0.1" placeholder="60.00" style="" id="Latitud" name="latitud" value="">');
+    }
+
+
+   
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Transceptor</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca </label>
+                    <input class="form-control"type="text" name="transceptor_marca" value="{{$detail->transceptor_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="transceptor_modelo" value="{{$detail->transceptor_modelo}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="transceptor_serial" value="{{$detail->transceptor_serial}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="transceptor_fecha" value="{{$detail->transceptor_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Digitalizador</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="digitalizador_marca" value="{{$detail->digitalizador_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="digitalizador_modelo" value="{{$detail->digitalizador_modelo}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="digitalizador_serial" value="{{$detail->digitalizador_serial}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="digitalizador_fecha"  value="{{$detail->digitalizador_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Sensor</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="sensor_marca" value="{{$detail->sensor_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="sensor_modelo" value="{{$detail->sensor_modelo}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="sensor_serial" value="{{$detail->sensor_serial}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="sensor_fecha" value="{{$detail->sensor_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>BUC</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="BUC_marca" value="{{$detail->BUC_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="BUC_modelo" value="{{$detail->BUC_modelo}}">
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="BUC_serial" value="{{$detail->BUC_serial}}">
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="BUC_fecha"  value="{{$detail->BUC_fecha}}">
+                </div>  
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>LNB</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="LNB_marca" value="{{$detail->LNB_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="LNB_modelo" value="{{$detail->LNB_modelo}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="LNB_serial" value="{{$detail->LNB_serial}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="LNB_fecha"  value="{{$detail->LNB_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Regulador de Voltaje</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_marca" value="{{$detail->regulador_voltaje_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_modelo" value="{{$detail->regulador_voltaje_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_serial" value="{{$detail->regulador_voltaje_serial}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="regulador_voltaje_watts" value="{{$detail->regulador_voltaje_watts}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="regulador_voltaje_fecha"  value="{{$detail->regulador_voltaje_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Banco de Baterias</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="banco_baterias_marca" value="{{$detail->banco_baterias_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="banco_baterias_modelo" value="{{$detail->banco_baterias_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="banco_baterias_serial" value="{{$detail->banco_baterias_serial}}" >
+                </div>
+                <div class="col-sm-2">
+                    <label class="form-label" for="">Cantidad</label>
+                    <input class="form-control"type="text" name="banco_baterias_cantidad" value="{{$detail->banco_baterias_cantidad}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="banco_baterias_cantidad" value="{{$detail->banco_baterias_watts}}" >
+                </div>
+                <div class="col-sm-4">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="banco_baterias_fecha">
+                </div>
+                
+            </div>
+            
+            <div class="col-md-6 p-2 row mt-0  align-self-baseline" >
+
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Antena GPS</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="gps_marca" value="{{$detail->gps_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="gps_modelo" value="{{$detail->gps_modelo}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="gps_serial" value="{{$detail->gps_serial}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="gps_fecha"  value="{{$detail->gps_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>  Panel solar G1</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_a_marca" value="{{$detail->panel_solar_a_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_a_modelo" value="{{$detail->panel_solar_a_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_a_serial" value="{{$detail->panel_solar_a_serial}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_a_watts" value="{{$detail->panel_solar_a_watts}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_a_fecha"  value="{{$detail->panel_solar_a_fecha}}">
+                </div>
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G2</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_b_marca" value="{{$detail->panel_solar_b_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_b_modelo" value="{{$detail->panel_solar_b_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_b_serial" value="{{$detail->panel_solar_b_serial}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_b_watts" value="{{$detail->panel_solar_b_watts}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_b_fecha"  value="{{$detail->panel_solar_b_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G3</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_c_marca" value="{{$detail->panel_solar_c_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_c_modelo" value="{{$detail->panel_solar_c_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_c_serial" value="{{$detail->panel_solar_c_serial}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_c_watts" value="{{$detail->panel_solar_c_watts}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_c_fecha" value="{{$detail->panel_solar_c_fecha}}">
+                </div>
+
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G4</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_d_marca" value="{{$detail->panel_solar_d_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_d_modelo" value="{{$detail->panel_solar_d_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_d_serial" value="{{$detail->panel_solar_d_serial}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_d_watts" value="{{$detail->panel_solar_d_watts}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_d_fecha" value="{{$detail->panel_solar_d_fecha}}">
+                </div>
+                
+                <div class="col-md-12 mt-0 p-1">
+                    <p class="text-center p-0 m-0 bg-warning"><b>Panel Solar G5</b></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Marca</label>
+                    <input class="form-control"type="text" name="panel_solar_e_marca" value="{{$detail->panel_solar_e_marca}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Modelo</label>
+                    <input class="form-control"type="text" name="panel_solar_e_modelo" value="{{$detail->panel_solar_e_modelo}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Serial</label>
+                    <input class="form-control"type="text" name="panel_solar_e_serial" value="{{$detail->panel_solar_e_serial}}" >
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label" for="">Watts</label>
+                    <input class="form-control"type="text" name="panel_solar_e_watts" value="{{$detail->panel_solar_e_watts}}" >
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Fecha de instalación</label>
+                    <input class="form-control" type="date" name="panel_solar_e_fecha" value="{{$detail->panel_solar_e_fecha}}">
+                </div>
+                
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!-- caja de ejemplo para las demas -->
+            <div class="col-sm-4">
+              <label class="form-label" for="">Transceptor</label>
+            </div>
+    
+            <div class="col-sm-8 row p-2 align-self-center">
+                <div class="col">
+                    <p class="m-0">{{$detail->transceptor_marca}}</p>
+                </div>
+                <div class="col">
+                    <p class="m">{{$detail->transceptor_modelo}}</p>
+                </div>
+                <div class="col">
+                  <p class="m-0">{{$detail->transceptor_serial}}</p>
+                </div>
+                <div class="col">
+                  <p class="m-0">{{$detail->transceptor_fecha}}</p>
+                </div>
+              </div>              
+          </div>
+
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="">Digitalizador</label>
+          </div>
+          
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2">
+                  <p class="m-0">{{$detail->digitalizador_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->digitalizador_modelo}}</p>
+              </div>
+              <div class="col-2">
+                <p class="m-0">{{$detail->digitalizador_serial}}</p>
+              </div>
+              <div class="col-4">
+                <p class="m-0">{{$detail->digitalizador_fecha}}</p>
+              </div>
+            </div> 
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="">Sensor</label>
+          </div>
+
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2">
+                  <p class="m-0">{{$detail->sensor_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->sensor_modelo}}</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->sensor_serial}}</p>
+              </div>
+              <div class="col-4">
+                <p class="m-0">{{$detail->sensor_fecha}}</p>
+              </div>
+            </div> 
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="">BUC</label>
+          </div>
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->BUC_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->BUC_modelo}}</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->BUC_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->BUC_fecha}}</p>
+              </div>
+            </div> 
+
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="">LNB</label>
+          </div>
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->LNB_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->LNB_modelo}}</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->LNB_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->LNB_fecha}}</p>
+              </div>
+            </div> 
+          
+          <!-- -------------------------------------------------------------- -->
+         
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="">Antena GPS</label>
+          </div>
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->antena_gps_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->antena_gps_modelo}}</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->antena_gps_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->antena_gps_fecha}}</p>
+              </div>
+            </div> 
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="">Regulador de Voltaje</label>
+          </div>
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->regulador_voltaje_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->regulador_voltaje_modelo}}</p>
+                  <p class="m-0">{{$detail->regulador_voltaje_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->regulador_voltaje_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->regulador_voltaje_fecha}}</p>
+              </div>
+            </div> 
+          <!-- -------------------------------------------------------------- -->
+          <div class="col-sm-4">
+            <label class="form-label" for="Controlador_Carga">Banco de Baterias x {{$detail->banco_baterias_cantidad}}</label>
+          </div>
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->banco_baterias_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->banco_baterias_modelo}}</p>
+                  <p class="m-0">{{$detail->banco_baterias_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->banco_baterias_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->banco_baterias_fecha}}</p>
+              </div>
+            </div> 
+
+          <!-- -------------------------------------------------------------- -->
+
+          <div class="col-sm-4">
+            <label class="form-label" for="Panel_Solar">Modulo solar G1</label>
+          </div>  
+
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->panel_solar_a_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->panel_solar_a_modelo}}</p>
+                  <p class="m-0">{{$detail->panel_solar_a_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->panel_solar_a_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->panel_solar_a_fecha}}</p>
+              </div>
+            </div> 
+
+          <div class="col-sm-4">
+            <label class="form-label" for="Panel_Solar">Modulo solar G2</label>
+          </div>  
+
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->panel_solar_b_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->panel_solar_b_modelo}}</p>
+                  <p class="m-0">{{$detail->panel_solar_b_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->panel_solar_b_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->panel_solar_b_fecha}}</p>
+              </div>
+          </div>
+
+          <div class="col-sm-4">
+            <label class="form-label" for="Panel_Solar">Modulo solar G3</label>
+          </div>  
+
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->panel_solar_c_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->panel_solar_c_modelo}}</p>
+                  <p class="m-0"> {{$detail->panel_solar_c_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->panel_solar_c_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->panel_solar_c_fecha}}</p>
+              </div>
+            </div> 
+
+
+          <div class="col-sm-4">
+            <label class="form-label" for="Panel_Solar">Modulo solar G4</label>
+          </div>  
+
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->panel_solar_d_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->panel_solar_d_modelo}}</p>
+                  <p class="m-0"> {{$detail->panel_solar_d_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->panel_solar_d_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->panel_solar_d_fecha}}</p>
+              </div>
+            </div>
+            
+          <div class="col-sm-4">
+            <label class="form-label" for="Panel_Solar">Modulo solar G5</label>
+          </div>  
+
+          <div class="col-sm-8 row p-2 align-self-center">
+              <div class="col-2 ">
+                  <p class="m-0">{{$detail->panel_solar_e_marca}}</p>
+              </div>
+              <div class="col-4 ">
+                  <p class="m-0">{{$detail->panel_solar_e_modelo}},</p>
+                  <p class="m-0">{{$detail->panel_solar_e_watts}} watts</p>
+              </div>
+              <div class="col-2 ">
+                <p class="m-0">{{$detail->panel_solar_e_serial}}</p>
+              </div>
+              <div class="col-4 ">
+                <p class="m-0">{{$detail->panel_solar_e_fecha}}</p>
+              </div>
+            </div> 
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="mt-3 row col-ms-12 text-center">
+            <p class="form-label"><b>Componentes</b></p>
+            <div class="col-sm-4">
+              <p class="">Nombre</p>
+            </div>
+            <div class="col-sm-8 row">
+              <div class="col">
+                  <p>Marca</p>
+              </div>
+              <div class="col">
+                  <p>Modelo</p>
+              </div>
+              <div class="col">
+                <p>Serial</p>
+              </div>
+              <div class="col">
+                <p>Fecha</p>
+              </div>
+            </div>
+            
+           
+          </div>
+          <hr>
+
+          <!-- -------------------------------------------------------------- -->
+         <div class="col-md-12 row">  <!-- poner esta caja a cada dato para que se ordene mejo y quitar el col-2 y .... solo dejar col, para que se ordenen lo hijos mejor -->
+            <!-- caja de ejemplo para las demas -->
+            <div class="col-12 text-center m-0 align-self-end" >
+                <p class="bg-dark text-light m-0 p-0">Energia</p>
+            </div>
+            
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="accordion" id="ant{{}}">
+    <div class="accordion-item border-0">
+        <h4 class="accordion-header border-0">
+        <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{}}1" aria-expanded="true" aria-controls="#ant{{}}1">
+            Antena gps
+        </button>
+        </h4>
+        <div id="ant{{}}1" class="accordion-collapse collapse border-0" data-bs-parent="#ant{{}}">
+            <div class="accordion-body p-1 border-0 bg-light">
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

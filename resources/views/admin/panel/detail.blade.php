@@ -15,167 +15,16 @@
 </style>
 <script src="{{asset('js/gestion.js') }}"></script>
 
-<div id="modalSheet" class="modal modal-sheet show1 p-1 py-md-5 d-flex cover bg-body-secondary bg-dark hidden">
-</div>
-
-<div id="modalCard" class="modal d-flex hidden" tabindex="-1" role="dialog" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content rounded-4 shadow pb-3" style="display: grid; align-items: end;">
-        <div class="modal-header pb-0 p-2 border-bottom-0">
-            <h1 id="modal-title" class="modal-title m-2 fs-5" style="text-decoration: underline; text-decoration-color:orange;">{}</h1>
-            <!-- aqui va el boton de cerrar -->
-        </div>
-        <div class="modal-body  py-0">
-            <p id="modal-body" class="mb-1 mt-0"></p>
-            <!-- <p>El valor de <b id="modal-body" >{}</b> esta por ser editado <br></p> -->
-        </div>
-        <form class="form" action="{{route('details.updateEdit')}}" method="post">
-            @csrf
-            <div class="form-floating mt-0 m-3 mb-3">
-                <input name="serial" type="text" class="form-control rounded-3" id="floatingInput" placeholder="abcde...">
-                <label for="floatingInput">Serial</label>
-                <!-- agregar los nombre para que pasen por el request -->
-                <input name="id" id="id-input" type="number" value="" hidden>
-                <input name="detail" id="component-input" type="text" value="" hidden>
-                <input name="inst" type="date" id="inst" value="" hidden>
-                <script>
-                    var obj = document.getElementById('inst');
-                    var fecha = new Date();
-                    var dia = fecha.getDate();
-                    var mes = fecha.getMonth()+1;
-                    var año = fecha.getFullYear();
-                    if (mes < 10){
-                        if(dia < 10){
-                            var valor = año + "-"+ "0"+mes+"-"+"0"+dia ;
-
-                        } else {
-                            var valor = año + "-"+ "0"+mes+"-"+dia ;
-                        }
-                        
-                    } else {
-                        var valor = año + "-"+mes+"-"+dia ;
-                    } 
-                    
-                    console.log(valor);
-                    obj.value = valor;
-                </script>
-
-            </div> 
-            <div class="form-floating mt-0 m-3 mb-3">
-                <input name="fabricante" type="text" class="form-control rounded-3" id="floatingInput2" placeholder="abcde..." value="">
-                <label for="floatingInput2">Fabricante</label>
-            </div>
-
-            <div class="form-floating mt-0 m-3 mb-3">
-                <input name="especifi" type="text" class="form-control rounded-3" id="floatingInput3" placeholder="abcde..." value="">
-                <label for="floatingInput3">Especificaciones</label>
-            </div>
-            <!-- agregar la seccion de los comentarios -->
-            <div class="form-floating mt-0 m-3 mb-3">                
-                
-                
-                <select class="form-control small p-1 rounded-3 text-center"  name="autor" id="floatingSelect" >
-                    
-                    @foreach ($autores as $autor)
-                        <option class="form-control text-center" value="{{$autor->id}}">{{$autor->name}}</option>
-                    @endforeach
-                    
-                </select>
-                <label for="floatingSelect">Autor</label>
-            
-            </div>       
-            
-                
-                <button type="submit" class="btn btn-outline-success m-1 position-relative" style="left: 3%;">Guardar</button>
-                       
-        </form>
-        <button type="button" class="btn btn-outline-danger m-1 position-absolute" onclick="detail()" style="left: 31%; bottom: 3.6%;">Cerrar</button>
-
-            
-        </div>
-    </div>
-    </div>
 
 
-
-<div class="mt-2 table-responsive">
-    
-    <form action="{{route('panel.detail')}}" method="get">
-    @csrf
-    <div class="row text-left justify-content-center">
-        
-            <div class="text-center col-1 small m-0 p-2">
-                <label class="label" for=""><b>Filtro: </b></label>
-            </div>
-            <div class='col-3'>
-                
-                    <select class="form-control small p-1" type="list" name="id" id="">
-                            <option class="form-control" value="all">Todas</option>
-                        @foreach ($options as $option)
-                            <option class="form-control" value="{{$option->id}}">{{$option->estacion}}</option>
-                        @endforeach
-                    </select>
-
-            </div>
-            <div class="col-1 h4">
-                <button class="btn badge btn-warning" type="submit">Buscar</button>
-            </div>
-
-
-
-       
-    </div>
-     </form>
-
-<table class="table table-hover bg-light rounded m-2">
-    <thead>
-        <tr class="">
-            <th class="">
-                Nombre
-            </th>
-            <th class="">
-                Autor
-            </th>
-            <th class="text-center col-2">
-                Opciones
-            </th>
-        </tr>
-    </thead>
-
-    @foreach ($details as $detail)
-    <tbody>
-        <tr class="bg-warning text-center">
-            <td class="col-5">
-               <h7 >Estación: <b>{{$detail->estacion}}</b></h7> 
-            </td>
-
-            <td>
-            </td>
-            
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="accordion" id="ant{{$detail->antena_gps}}">
-                <div class="accordion-item border-0">
-                <h4 class="accordion-header border-0">
-                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->antena_gps}}1" aria-expanded="true" aria-controls="#ant{{$detail->antena_gps}}1">
-                    Antena gps
-                </button>
-                </h4>
-                <div id="ant{{$detail->antena_gps}}1" class="accordion-collapse collapse border-0" data-bs-parent="#ant{{$detail->antena_gps}}">
-                <div class="accordion-body p-1 border-0 bg-light">
-                 <p class="m-0 p-0">Serial: <b>{{$detail->antena_gps}}</b></p>
-                 <p class="m-0 p-0">Fabricante: <b>{{$detail->antena_gps_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[0][0]->updated_at }}</b></p> <!-- {{$detail->instalacion_satelital}} -->
-                 
-                 
-                </div>
-                </div>
-                </div>
-            </td>
-            <td>{{ $autor_detail[0][0]->autor }}</td>
+{{--<div class="m-1 mt-2 table-responsive">
+    <table class="table table-hover bg-light mt-3">
+        <tbody>
+        @foreach ($details as $detail)
+        <?php 
+            $autor_detail[1][0]->autor = "none";
+        ?>
+        <td>{{ $detail->autor }}</td>
             <td>
             @if (Auth::user()->tipo_usuario)
                 <div class="">
@@ -201,18 +50,18 @@
         </tr>
         <tr >
             <td>
-                <div class="accordion" id="ant{{$detail->antena_parabolica}}2">
+                <div class="accordion" id="ant{{$detail->digitalizador_serial}}2">
                 <div class="accordion-item border-0">
                 <h4 class="accordion-header border-0">
-                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->antena_parabolica}}12" aria-expanded="true" aria-controls="#ant{{$detail->antena_parabolica}}12">
-                    Antena parabolica
+                <button class="accordion-button p-1 bg-light text-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#ant{{$detail->digitalizador_serial}}12" aria-expanded="true" aria-controls="#ant{{$detail->digitalizador_serial}}12">
+                    Digitalizador
                 </button>
                 </h4>
-                <div id="ant{{$detail->antena_parabolica}}12" class="accordion-collapse collapse " data-bs-parent="#ant{{$detail->antena_parabolica}}2">
+                <div id="ant{{$detail->digitalizador_serial}}12" class="accordion-collapse collapse " data-bs-parent="#ant{{$detail->digitalizador_serial}}2">
                 <div class="accordion-body p-1 border-0 bg-light">
-                 <p class="m-0 p-0">Serial: <b>{{$detail->antena_parabolica}}</b></p>
-                 <p class="m-0 p-0">Fabricante: <b>{{$detail->antena_parabolica_fab}}</b></p>
-                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{ $updated_detail[1][0]->updated_at }}</b></p>
+                 <p class="m-0 p-0">Serial: <b>{{$detail->digitalizador_serial}} y modelo: {{$detail->digitalizador_modelo}}</b></p>
+                 <p class="m-0 p-0">Fabricante: <b>{{$detail->digitalizador_marca}}</b></p>
+                 <p class="m-0 p-0">Fecha de reemplazo: <b>{{$detail->digitalizador_fecha}}</b></p>
 
                 </div>
                 </div>
@@ -564,14 +413,205 @@
             </div>
             @endif
             </td>
+            @endforeach
+        </tbody>
+    </table>
+</div>--}}
+<div class="m-1 mt-2 table-responsive">
+    <table class="table table-hover bg-light mt-3">
+    <thead class="sticky-top">
+        <tr>
+            <th colspan="7">Componentes</th>
         </tr>
+        <tr class="">
+            <th class="">
+                Marca - Cantidad
+            </th>
+            <th class="">
+                 Modelo
+            </th>
+            <th class="">
+                Watts
+            </th>
+            <th class="">
+                Frecuencia - Banda
+            </th>
+            <th class="">
+                Serial
+            </th>
+            <th class="">
+                Fecha
+            </th>
+            <th class="">
+                Estacion
+            </th>
+        </tr>
+    </thead>
+    @if (isset($item) && $item == "tipo")
+        tipo
+    @elseif (isset($item) && $item == "serial")
+        serial
+    @elseif (isset($item) && $item == "especifico")
+        especifico
+    @elseif (isset($item) && $item == "all")
+        todos
+        
+        <tbody>
+        @foreach ($details as $detail)
+            <!--tr class="text-center"-->
+                <!--tr><th colspan="6" class="" >Transcepto</th></tr-->
+                <tr>
+                    <td >{{$detail->transceptor_marca}}</td>
+                    <td>{{$detail->transceptor_modelo}}</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>{{$detail->transceptor_serial}}</td>
+                    <td>{{$detail->transceptor_fecha}}</td>
+                    <td>{{$detail->estacion}}</td>
 
-    </tbody>    
-    @endforeach
+                </tr>
+                <!--tr><th colspan="6" class="" >GPS</th></tr-->
+                <tr>
+                    <td >{{$detail->antena_gps_marca}}</td>
+                    <td>{{$detail->antena_gps_modelo}}</td>
+                    <td>--</td>
+                    <td></td>
+                    <td>{{$detail->antena_gps_serial}}</td>
+                    <td>{{$detail->antena_gps_fecha}}</td>
+                   
 
-</table>
+                </tr>
+                <!--tr><th colspan="6" class="" >Parabolica</th></tr-->
+                <tr>
+                    <td >{{$detail->parabolica_marca}}</td>
+                    <td>@if ($detail['parabolica_diametro'])
+                        {{$detail->parabolica_diametro}} mts
+                        @endif
+                    </td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>{{$detail->parabolica_serial}}</td>
+                    <td>{{$detail->parabolica_fecha}}</td>
+                    
 
+                </tr>
+                <!--tr><th colspan="6" class="" >BUC</th></tr-->
+                <tr>
+                    <td >{{$detail->BUC_marca}}</td>
+                    <td>{{$detail->BUC_modelo}}</td>
+                    <td>--</td>
+                    <td>{{$detail->BUC_frecuencia}}</td>
+                    <td>{{$detail->BUC_serial}}</td>
+                    <td>{{$detail->BUC_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >LNB</th></tr-->
+                <tr>
+                    <td >{{$detail->LNB_marca}}</td>
+                    <td>{{$detail->LNB_modelo}}</td>
+                    <td>--</td>
+                    <td>{{$detail->LNB_frecuencia}} / {{$detail->LNB_banda}} </td>
+                    <td>{{$detail->LNB_serial}}</td>
+                    <td>{{$detail->LNB_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Trompeta</th></tr-->
+                <tr>
+                    <td >{{$detail->trompeta_marca}}</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>{{$detail->trompeta_serial}}</td>
+                    <td>{{$detail->trompeta_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Digitalizador</th></tr-->
+                <tr>
+                    <td >{{$detail->digitalizador_marca}}</td>
+                    <td>{{$detail->digitalizador_modelo}}</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>{{$detail->digitalizador_serial}}</td>
+                    <td>{{$detail->digitalizador_fecha}}</td>
+                </tr>
+                <tr>
+                    <td >{{$detail->sensor_marca}}</td>
+                    <td>{{$detail->sensor_modelo}}</td>
+                    <td>--</td>
+                    <td>{{$detail->sensor_sen}}</td>
+                    <td>{{$detail->sensor_serial}}</td>
+                    <td>{{$detail->sensor_fecha}}</td>
+                </tr>
+                <tr>
+                    <td>{{$detail->regulador_voltaje_marca}}</td>
+                    <td>{{$detail->regulador_voltaje_modelo}}</td>
+                    <td>{{$detail->regulador_voltaje_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->regulador_voltaje_serial}}</td>
+                    <td>{{$detail->regulador_voltaje_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Banco de Baterias</th></tr-->
+                <tr>
+                    <td >{{$detail->banco_baterias_marca}} - {{$detail->banco_baterias_cantidad}}</td>
+                    <td>{{$detail->banco_baterias_modelo}}</td>
+                    <td>{{$detail->banco_baterias_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->banco_baterias_serial}}</td>
+                    <td>{{$detail->banco_baterias_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Panel Sorlar 1</th></tr-->
+                <tr>
+                    <td >{{$detail->panel_solar_a_marca}}</td>
+                    <td>{{$detail->panel_solar_a_modelo}}</td>
+                    <td>{{$detail->panel_solar_a_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->panel_solar_a_serial}}</td>
+                    <td>{{$detail->panel_solar_a_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Panel Sorlar 2</th></tr-->
+                <tr>
+                    <td >{{$detail->panel_solar_b_marca}}</td>
+                    <td>{{$detail->panel_solar_b_modelo}}</td>
+                    <td>{{$detail->panel_solar_b_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->panel_solar_b_serial}}</td>
+                    <td>{{$detail->panel_solar_b_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Panel Sorlar 3</th></tr-->
+                <tr>
+                    <td >{{$detail->panel_solar_c_marca}}</td>
+                    <td>{{$detail->panel_solar_c_modelo}}</td>
+                    <td>{{$detail->panel_solar_c_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->panel_solar_c_serial}}</td>
+                    <td>{{$detail->panel_solar_c_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Panel Sorlar 4</th></tr-->
+                <tr>
+                    <td>{{$detail->panel_solar_d_marca}}</td>
+                    <td>{{$detail->panel_solar_d_modelo}}</td>
+                    <td>{{$detail->panel_solar_d_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->panel_solar_d_serial}}</td>
+                    <td>{{$detail->panel_solar_d_fecha}}</td>
+                </tr>
+                <!--tr><th colspan="6" class="" >Panel Sorlar 5</th></tr-->
+                <tr>
+                    <td >{{$detail->panel_solar_e_marca}}</td>
+                    <td>{{$detail->panel_solar_e_modelo}}</td>
+                    <td>{{$detail->panel_solar_e_watts}}</td>
+                    <td>--</td>
+                    <td>{{$detail->panel_solar_e_serial}}</td>
+                    <td>{{$detail->panel_solar_e_fecha}}</td>
+                </tr>
+            <!--/tr-->
+        @endforeach
+        </tbody>
+    @endif      
+
+
+
+
+    </table>
 </div>
+
 
 
 
